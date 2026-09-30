@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hittemaatregelen Leiden</title>
+<meta name="description" content="Ideeën verzameld tijdens de BuurtKennis-workshop over hittestress op 27 augustus 2026.">
+<meta property="og:title" content="Hittemaatregelen Leiden">
+<meta property="og:description" content="Ideeën verzameld tijdens de BuurtKennis-workshop over hittestress op 27 augustus 2026.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%F0%9F%8C%A1%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+  /* CSL huisstijl: Poppins (koppen) en Work Sans (tekst).
+     Navy #20264E en blauw #3153A0 komen uit het logo.
+     Logo's staan naast dit bestand: logo-light.png en logo-dark.png. */
+
+  :root {
+    color-scheme: light dark;
+
+    /* ground + ink */
+    --ground: #F7F7F4;
+    --ink: #1D2320;
+    --ink-soft: #5C665F;
+    --line: #DFDFD8;
+
+    /* CSL merkkleuren, uit het logo */
+    --csl-navy: #20264E;
+    --csl-blue: #3153A0;
+    --heading: #20264E;
+
+    /* sticky notes — kleur per thema */
+    --note-groen:      #CBE38F;
+    --note-kennis:     #F4DE86;
+    --note-schaduw:    #C6CFDA;
+    --note-water:      #A8DBE2;
+    --note-beleid:     #F6BE86;
+    --note-activiteit: #F3ABA3;
+    --note-ink: #21261F;
+    --note-ink-soft: #4A5247;
+    --note-shadow: rgba(30, 36, 30, 0.14);
+
+    --head: "Poppins", "Helvetica Neue", Arial, sans-serif;
+    --body: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #16181B;
+      --ink: #ECEFEA;
+      --ink-soft: #97A199;
+      --line: #2B2F32;
+      --heading: #ECEFEA;
+
+      --note-groen:      #A9C46C;
+      --note-kennis:     #D7C066;
+      --note-schaduw:    #A2ACB9;
+      --note-water:      #83BCC4;
+      --note-beleid:     #D89F66;
+      --note-activiteit: #D68B83;
+      --note-shadow: rgba(0, 0, 0, 0.45);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #16181B;
+    --ink: #ECEFEA;
+    --ink-soft: #97A199;
+    --line: #2B2F32;
+    --heading: #ECEFEA;
+
+    --note-groen:      #A9C46C;
+    --note-kennis:     #D7C066;
+    --note-schaduw:    #A2ACB9;
+    --note-water:      #83BCC4;
+    --note-beleid:     #D89F66;
+    --note-activiteit: #D68B83;
+    --note-shadow: rgba(0, 0, 0, 0.45);
+  }
+
+  * { box-sizing: border-box; }
+
+  img { max-width: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 68rem;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 48px 72px;
+  }
+
+  .brand {
+    margin: 0 0 24px;
+    line-height: 0;
+  }
+
+  .brand img {
+    height: 40px;
+    width: auto;
+  }
+
+  .brand .logo-light { display: block; }
+  .brand .logo-dark { display: none; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .brand .logo-light { display: none; }
+    :root:not([data-theme="light"]) .brand .logo-dark { display: block; }
+  }
+
+  :root[data-theme="dark"] .brand .logo-light { display: none; }
+  :root[data-theme="dark"] .brand .logo-dark { display: block; }
+
+  h1 {
+    font-family: var(--head);
+    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 2.875rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    color: var(--heading);
+    margin: 0 0 12px;
+  }
+
+  .intro {
+    font-size: 1.0625rem;
+    color: var(--ink-soft);
+    max-width: 56ch;
+    margin: 0;
+  }
+
+  /* ---------- filter ---------- */
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 32px;
+    padding-bottom: 4px;
+  }
+
+  .chip {
+    font-family: var(--body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 15px 6px 11px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: border-color 120ms ease, background 120ms ease;
+  }
+
+  .chip .swatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 2px;
+    background: var(--sw, transparent);
+    border: 1px solid var(--note-shadow);
+    flex: none;
+  }
+
+  .chip[data-filter="all"] { padding-left: 15px; }
+
+  .chip:hover { border-color: var(--ink-soft); }
+
+  .chip[aria-pressed="true"] {
+    border-color: var(--ink);
+    background: var(--sw, var(--ink));
+    color: var(--note-ink);
+    font-weight: 600;
+  }
+
+  .chip[data-filter="all"][aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--ground);
+  }
+
+  .chip:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  /* ---------- sections ---------- */
+
+  .horizon { margin-top: 44px; }
+  .horizon[hidden] { display: none !important; }
+
+  .horizon h2 {
+    font-family: var(--head);
+    font-weight: 500;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    color: var(--heading);
+    margin: 0 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ---------- sticky notes ---------- */
+
+  .notes {
+    list-style: none;
+    margin: 0;
+    padding: 6px 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    align-items: start;
+    gap: 16px;
+  }
+
+  .notes li {
+    background: var(--bg);
+    color: var(--note-ink);
+    min-height: 124px;
+    padding: 15px 15px 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 2px 3px 7px var(--note-shadow);
+    border-radius: 2px;
+  }
+
+  .notes li[hidden] { display: none !important; }
+
+  .notes li:nth-child(3n+1) { transform: rotate(-0.7deg); }
+  .notes li:nth-child(3n+2) { transform: rotate(0.5deg); }
+  .notes li:nth-child(4n+3) { transform: rotate(1deg); }
+
+  li[data-tag="groen"]      { --bg: var(--note-groen); }
+  li[data-tag="kennis"]     { --bg: var(--note-kennis); }
+  li[data-tag="schaduw"]    { --bg: var(--note-schaduw); }
+  li[data-tag="water"]      { --bg: var(--note-water); }
+  li[data-tag="beleid"]     { --bg: var(--note-beleid); }
+  li[data-tag="activiteit"] { --bg: var(--note-activiteit); }
+
+  .notes .measure {
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .notes .detail {
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    color: var(--note-ink-soft);
+    margin: 0;
+  }
+
+  .notes .label {
+    margin-top: auto;
+    padding-top: 8px;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--note-ink-soft);
+    opacity: 0.75;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <p class="brand"><img class="logo-light" src="logo-light.png" alt="Citizen Science Lab"><img class="logo-dark" src="logo-dark.png" alt="Citizen Science Lab"></p>
+
+  <h1>Hittemaatregelen Leiden</h1>
+  <p class="intro">Ideeën verzameld tijdens de BuurtKennis-workshop over hittestress op 27 augustus 2026.</p>
+
+  <div class="chips" role="group" aria-label="Filter op thema">
+    <button type="button" class="chip" id="f-all" data-filter="all" aria-pressed="true">Alles</button>
+    <button type="button" class="chip" id="f-groen" data-filter="groen" aria-pressed="false" style="--sw: var(--note-groen)"><span class="swatch" aria-hidden="true"></span>Groen</button>
+    <button type="button" class="chip" id="f-kennis" data-filter="kennis" aria-pressed="false" style="--sw: var(--note-kennis)"><span class="swatch" aria-hidden="true"></span>Kennis</button>
+    <button type="button" class="chip" id="f-schaduw" data-filter="schaduw" aria-pressed="false" style="--sw: var(--note-schaduw)"><span class="swatch" aria-hidden="true"></span>Schaduw</button>
+    <button type="button" class="chip" id="f-beleid" data-filter="beleid" aria-pressed="false" style="--sw: var(--note-beleid)"><span class="swatch" aria-hidden="true"></span>Beleid</button>
+    <button type="button" class="chip" id="f-water" data-filter="water" aria-pressed="false" style="--sw: var(--note-water)"><span class="swatch" aria-hidden="true"></span>Water</button>
+    <button type="button" class="chip" id="f-activiteit" data-filter="activiteit" aria-pressed="false" style="--sw: var(--note-activiteit)"><span class="swatch" aria-hidden="true"></span>Activiteit</button>
+  </div>
+
+  <section class="horizon" id="h-quick" aria-labelledby="t-quick">
+    <h2 id="t-quick">Nu</h2>
+    <ul class="notes">
+      <li data-tag="schaduw"><p class="measure">Schaduwmakers</p><p class="detail">Bomen, doeken en alles daartussenin.</p><p class="label">Schaduw</p></li>
+      <li data-tag="schaduw"><p class="measure">Hittewerende doeken</p><p class="label">Schaduw</p></li>
+      <li data-tag="schaduw"><p class="measure">Zonneschermen</p><p class="label">Schaduw</p></li>
+      <li data-tag="schaduw"><p class="measure">Gordijnen aan de buitenkant</p><p class="detail">Opgehangen aan een douchestang.</p><p class="label">Schaduw</p></li>
+      <li data-tag="schaduw"><p class="measure">Ludieke schaduwplekken in het winkelgebied</p><p class="detail">Bijvoorbeeld gekleurde parapluutjes.</p><p class="label">Schaduw</p></li>
+      <li data-tag="groen"><p class="measure">Tegels wippen</p><p class="label">Groen</p></li>
+      <li data-tag="groen"><p class="measure">Klimop en gevelbeplanting bij hoogbouw</p><p class="label">Groen</p></li>
+      <li data-tag="groen"><p class="measure">Klimrekken en klimlijnen aanvragen</p><p class="detail">Voor klimplanten tegen de gevel.</p><p class="label">Groen</p></li>
+      <li data-tag="water"><p class="measure">Wadi's bij voortuinen</p><p class="detail">En weg met de hoge stoepen bij plantvakken.</p><p class="label">Water</p></li>
+      <li data-tag="beleid"><p class="measure">Subsidie voor groene daken en regentonnen</p><p class="label">Beleid</p></li>
+      <li data-tag="beleid"><p class="measure">Subsidieregeling groene tuinen en daken</p><p class="label">Beleid</p></li>
+      <li data-tag="kennis"><p class="measure">Welke planten tasten de gevel niet aan?</p><p class="detail">Kennisvraag die bewoners tegenhoudt bij gevelgroen.</p><p class="label">Kennis</p></li>
+      <li data-tag="kennis"><p class="measure">Tips voor slim ventileren bekendmaken</p><p class="label">Kennis</p></li>
+      <li data-tag="kennis"><p class="measure">Bewustwording van warmtebronnen in huis</p><p class="detail">Koken, tv, laptop.</p><p class="label">Kennis</p></li>
+      <li data-tag="kennis"><p class="measure">Excursie naar Zuid-Europa</p><p class="detail">Leren van plekken die hier langer mee omgaan.</p><p class="label">Kennis</p></li>
+      <li data-tag="activiteit"><p class="measure">Hittesafari door de wijk</p><p class="detail">Beleving en meting tegelijk.</p><p class="label">Activiteit</p></li>
+    </ul>
+  </section>
+
+  <section class="horizon" id="h-jaar" aria-labelledby="t-jaar">
+    <h2 id="t-jaar">Binnen een jaar</h2>
+    <ul class="notes">
+      <li data-tag="groen"><p class="measure">Bomen planten</p><p class="label">Groen</p></li>
+      <li data-tag="groen"><p class="measure">Groene gevels</p><p class="label">Groen</p></li>
+      <li data-tag="groen"><p class="measure">Gazon omvormen naar bloemenwei</p><p class="label">Groen</p></li>
+      <li data-tag="groen"><p class="measure">Hout toevoegen aan de openbare ruimte</p><p class="detail">Van snippers tot omgezaagde bomen.</p><p class="label">Groen</p></li>
+      <li data-tag="schaduw"><p class="measure">Schaduwdoeken tussen twee flatgebouwen</p><p class="detail">Als onderdeel van schaduwroutes.</p><p class="label">Schaduw</p></li>
+      <li data-tag="water"><p class="measure">Waterbronnen en slim waaien</p><p class="detail">Wind over de sloot de straat in leiden.</p><p class="label">Water</p></li>
+      <li data-tag="kennis"><p class="measure">Koeltekaart met informatievoorziening</p><p class="detail">Via de kanalen van de gemeente.</p><p class="label">Kennis</p></li>
+      <li data-tag="kennis"><p class="measure">Visuele voorbeelden van hitteverschil</p><p class="detail">20 °C naast 40 °C op hetzelfde moment.</p><p class="label">Kennis</p></li>
+      <li data-tag="kennis"><p class="measure">Kennis bij bewoners over hitte en gezondheid</p><p class="label">Kennis</p></li>
+      <li data-tag="kennis"><p class="measure">Zonneapparaten demonstreren</p><p class="detail">Zonne-ovens, om warmte de keuken uit te houden.</p><p class="label">Kennis</p></li>
+      <li data-tag="beleid"><p class="measure">Subsidieregeling klimaatadaptatie voor woningcorporaties</p><p class="label">Beleid</p></li>
+      <li data-tag="activiteit"><p class="measure">Scholen hun eigen buitenruimte laten meten</p><p class="label">Activiteit</p></li>
+      <li data-tag="activiteit"><p class="measure">“Samen aan de slag”</p><p class="detail">Bewoners data laten verzamelen over hun eigen initiatieven.</p><p class="label">Activiteit</p></li>
+    </ul>
+  </section>
+
+  <section class="horizon" id="h-beleid" aria-labelledby="t-beleid">
+    <h2 id="t-beleid">Lange termijn</h2>
+    <ul class="notes">
+      <li data-tag="groen"><p class="measure">Bomen behouden</p><p class="label">Groen</p></li>
+      <li data-tag="groen"><p class="measure">Half open stenen bij parkeerplaatsen</p><p class="label">Groen</p></li>
+      <li data-tag="groen"><p class="measure">Panoramapark: “kiem”-plekken</p><p class="label">Groen</p></li>
+      <li data-tag="water"><p class="measure">Windvriendelijk bouwen</p><p class="label">Water</p></li>
+      <li data-tag="kennis"><p class="measure">Groene kansenkaart</p><p class="label">Kennis</p></li>
+      <li data-tag="beleid"><p class="measure">Lokaal hitteplan</p><p class="label">Beleid</p></li>
+      <li data-tag="beleid"><p class="measure">Persoonlijk hitteplan</p><p class="label">Beleid</p></li>
+    </ul>
+  </section>
+
+</div>
+
+<script>
+  (function () {
+    var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+    var sections = Array.prototype.slice.call(document.querySelectorAll('.horizon'));
+
+    function apply(filter) {
+      sections.forEach(function (section) {
+        var items = Array.prototype.slice.call(section.querySelectorAll('li[data-tag]'));
+        var shown = 0;
+        items.forEach(function (li) {
+          var match = (filter === 'all') || (li.getAttribute('data-tag') === filter);
+          li.hidden = !match;
+          if (match) shown++;
+        });
+        section.hidden = shown === 0;
+      });
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+        apply(chip.getAttribute('data-filter'));
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
