@@ -9,30 +9,15 @@
 <meta property="og:description" content="Ideeën verzameld tijdens de BuurtKennis-workshop over hittestress op 27 augustus 2026.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="nl_NL">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Ctext%20y%3D%27.9em%27%20font-size%3D%2790%27%3E%F0%9F%8C%A1%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="../assets/csl-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Work+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
 <style>
-  /* CSL huisstijl: Poppins (koppen) en Work Sans (tekst).
-     Navy #20264E en blauw #3153A0 komen uit het logo.
-     Logo's staan naast dit bestand: logo-light.png en logo-dark.png. */
+  /* Pagina-specifiek: filter en sticky notes. Basisstijl staat in ../assets/site.css */
 
   :root {
-    color-scheme: light dark;
-
-    /* ground + ink */
-    --ground: #F7F7F4;
-    --ink: #1D2320;
-    --ink-soft: #5C665F;
-    --line: #DFDFD8;
-
-    /* CSL merkkleuren, uit het logo */
-    --csl-navy: #20264E;
-    --csl-blue: #3153A0;
-    --heading: #20264E;
-
-    /* sticky notes — kleur per thema */
     --note-groen:      #CBE38F;
     --note-kennis:     #F4DE86;
     --note-schaduw:    #C6CFDA;
@@ -41,20 +26,11 @@
     --note-activiteit: #F3ABA3;
     --note-ink: #21261F;
     --note-ink-soft: #4A5247;
-    --note-shadow: rgba(30, 36, 30, 0.14);
-
-    --head: "Poppins", "Helvetica Neue", Arial, sans-serif;
-    --body: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+    --note-shadow: rgba(35, 36, 76, 0.14);
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --ground: #16181B;
-      --ink: #ECEFEA;
-      --ink-soft: #97A199;
-      --line: #2B2F32;
-      --heading: #ECEFEA;
-
       --note-groen:      #A9C46C;
       --note-kennis:     #D7C066;
       --note-schaduw:    #A2ACB9;
@@ -63,82 +39,6 @@
       --note-activiteit: #D68B83;
       --note-shadow: rgba(0, 0, 0, 0.45);
     }
-  }
-
-  :root[data-theme="dark"] {
-    --ground: #16181B;
-    --ink: #ECEFEA;
-    --ink-soft: #97A199;
-    --line: #2B2F32;
-    --heading: #ECEFEA;
-
-    --note-groen:      #A9C46C;
-    --note-kennis:     #D7C066;
-    --note-schaduw:    #A2ACB9;
-    --note-water:      #83BCC4;
-    --note-beleid:     #D89F66;
-    --note-activiteit: #D68B83;
-    --note-shadow: rgba(0, 0, 0, 0.45);
-  }
-
-  * { box-sizing: border-box; }
-
-  img { max-width: 100%; }
-
-  body {
-    margin: 0;
-    background: var(--ground);
-    color: var(--ink);
-    font-family: var(--body);
-    font-size: 1rem;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .wrap {
-    max-width: 68rem;
-    margin: 0 auto;
-    padding-inline: 20px;
-    padding-block: 48px 72px;
-  }
-
-  .brand {
-    margin: 0 0 24px;
-    line-height: 0;
-  }
-
-  .brand img {
-    height: 40px;
-    width: auto;
-  }
-
-  .brand .logo-light { display: block; }
-  .brand .logo-dark { display: none; }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .brand .logo-light { display: none; }
-    :root:not([data-theme="light"]) .brand .logo-dark { display: block; }
-  }
-
-  :root[data-theme="dark"] .brand .logo-light { display: none; }
-  :root[data-theme="dark"] .brand .logo-dark { display: block; }
-
-  h1 {
-    font-family: var(--head);
-    font-weight: 600;
-    font-size: clamp(2rem, 5vw, 2.875rem);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    text-wrap: balance;
-    color: var(--heading);
-    margin: 0 0 12px;
-  }
-
-  .intro {
-    font-size: 1.0625rem;
-    color: var(--ink-soft);
-    max-width: 56ch;
-    margin: 0;
   }
 
   /* ---------- filter ---------- */
@@ -282,10 +182,18 @@
 
 <div class="wrap">
 
-  <p class="brand"><img class="logo-light" src="logo-light.png" alt="Citizen Science Lab"><img class="logo-dark" src="logo-dark.png" alt="Citizen Science Lab"></p>
+  <header class="top">
+    <a class="logo" href="../" aria-label="Citizen Science Lab, naar alle pagina's"><img class="light" src="../assets/csl-logo.png" alt="Citizen Science Lab"><img class="dark" src="../assets/csl-logo-dark.png" alt="Citizen Science Lab"></a>
+    <a class="back" href="../"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>Alle pagina's</a>
+  </header>
 
   <h1>Hittemaatregelen Leiden</h1>
   <p class="intro">Ideeën verzameld tijdens de BuurtKennis-workshop over hittestress op 27 augustus 2026.</p>
+
+  <aside class="about">
+    <img src="../assets/buurtkennis-logo.png" alt="BuurtKennis">
+    <p>BuurtKennis is een project van het Citizen Science Lab. Bewoners van Leidse wijken brengen hun vragen in, en samen met onderzoekers, groene initiatieven en instellingen zoeken we naar oplossingen voor een gezonde leefomgeving.</p>
+  </aside>
 
   <div class="chips" role="group" aria-label="Filter op thema">
     <button type="button" class="chip" id="f-all" data-filter="all" aria-pressed="true">Alles</button>
