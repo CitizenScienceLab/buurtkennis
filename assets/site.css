@@ -1,0 +1,142 @@
+/* Gedeelde stijl voor alle BuurtKennis-pagina's.
+   Kleuren uit de CSL-huisstijl (primary-dark #23244C, primary-light #2C54A3).
+   Letters: Poppins voor koppen, Work Sans voor tekst. */
+
+:root {
+  color-scheme: light dark;
+
+  --ground: #FBFBFB;
+  --card: #FFFFFF;
+  --ink: #1D2320;
+  --ink-soft: #595959;
+  --line: #E4E5EC;
+  --heading: #23244C;
+  --link: #2C54A3;
+  --link-hover: #1D7ECE;
+  --shadow: 0 2px 8px rgba(35, 36, 76, 0.08);
+
+  --head: "Poppins", "Helvetica Neue", Arial, sans-serif;
+  --body: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #16181B;
+    --card: #1E2125;
+    --ink: #ECEFEA;
+    --ink-soft: #A3ABA5;
+    --line: #2E3236;
+    --heading: #ECEFEA;
+    --link: #8FB0EE;
+    --link-hover: #B8CDF5;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  }
+}
+
+* { box-sizing: border-box; }
+img { max-width: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--link); text-underline-offset: 2px; }
+a:hover { color: var(--link-hover); }
+:focus-visible { outline: 2px solid #1D7ECE; outline-offset: 2px; }
+
+.wrap {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-inline: 20px;
+  padding-block: 40px 72px;
+}
+
+/* ---------- kop: logo + terugknop ---------- */
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 32px;
+}
+
+.logo { display: block; line-height: 0; }
+.logo img { height: 40px; width: auto; }
+.logo .dark { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .logo .light { display: none; }
+  :root:not([data-theme="light"]) .logo .dark { display: block; }
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px 6px 10px;
+  white-space: nowrap;
+}
+.back:hover { color: var(--ink); border-color: var(--ink-soft); }
+.back svg { width: 16px; height: 16px; flex: none; }
+
+/* ---------- titel ---------- */
+
+h1 {
+  font-family: var(--head);
+  font-weight: 600;
+  font-size: clamp(2rem, 5vw, 2.875rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: var(--heading);
+  margin: 0 0 12px;
+}
+
+.intro {
+  font-size: 1.0625rem;
+  color: var(--ink-soft);
+  max-width: 56ch;
+  margin: 0;
+}
+
+/* ---------- kader: uitleg BuurtKennis ---------- */
+
+.about {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 40rem;
+  margin-top: 24px;
+  padding: 14px 18px 14px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+.about img {
+  width: 64px;
+  height: auto;
+  flex: none;
+  border-radius: 10px;
+}
+.about p { margin: 0; }
+
+@media (prefers-color-scheme: dark) {
+  /* het BuurtKennis-logo heeft donkere letters: in donker op een licht tegeltje */
+  :root:not([data-theme="light"]) .about img { background: #FBFBFB; padding: 4px; }
+}
