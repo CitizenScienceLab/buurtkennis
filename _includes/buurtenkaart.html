@@ -1,0 +1,248 @@
+{%- comment -%}
+  De buurtenkaart. Wordt gebruikt door buurten/index.html (de openbare kaart)
+  en buurten/werkversie.html (de werkversie, met werkversie="ja").
+  De openbare kaart volgt de schakelaar buurtenkaart in _config.yml;
+  de werkversie laat altijd zien wat er nu in de bestanden staat.
+{%- endcomment -%}
+{%- assign stand = site.buurtenkaart | append: "" | downcase | strip -%}
+{%- assign openbaar_aan = true -%}
+{%- if stand == "uit" or stand == "false" or stand == "nee" or stand == "off" -%}{%- assign openbaar_aan = false -%}{%- endif -%}
+{%- assign werkversie = false -%}
+{%- if include.werkversie == "ja" -%}{%- assign werkversie = true -%}{%- endif -%}
+{%- assign kaart_aan = openbaar_aan -%}
+{%- if werkversie -%}{%- assign kaart_aan = true -%}{%- endif -%}
+{%- assign methode = site.data.methode -%}
+{%- assign buurten = site.buurten | where_exp: "b", "b.zichtbaar != false" | sort: "naam" -%}
+{%- assign maanden = "januari,februari,maart,april,mei,juni,juli,augustus,september,oktober,november,december" | split: "," -%}
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{%- if werkversie %}
+<title>Werkversie · BuurtKennis per buurt</title>
+<meta name="robots" content="noindex, nofollow">
+{%- else %}
+<title>BuurtKennis per buurt</title>
+<meta name="description" content="Waar BuurtKennis loopt in Leiden, en hoe ver het per buurt is.">
+<meta property="og:title" content="BuurtKennis per buurt">
+<meta property="og:description" content="Waar BuurtKennis loopt in Leiden, en hoe ver het per buurt is.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://citizensciencelab.github.io/buurtkennis/buurten/">
+<meta property="og:image" content="https://citizensciencelab.github.io/buurtkennis/buurten/voorbeeld.jpg">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="427">
+<meta property="og:image:alt" content="Kaart van Leiden met De Mors en Groenoord Zuid, naast de stappen van de BuurtKennis-methode">
+<meta name="twitter:card" content="summary_large_image">
+{%- endif %}
+<link rel="icon" type="image/png" href="../assets/csl-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Work+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+{%- if kaart_aan %}
+<link rel="stylesheet" href="kaart.css">
+<style>
+  /* Fasekleuren, uit _data/methode.yml */
+  :root {
+{%- for f in methode.fases %}
+    --fase-{{ f.code }}: {{ f.kleur }};
+{%- endfor %}
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+{%- for f in methode.fases %}
+      --fase-{{ f.code }}: {{ f.kleur_donker }};
+{%- endfor %}
+    }
+  }
+</style>
+<script>document.documentElement.classList.add('js');</script>
+{%- endif %}
+</head>
+<body>
+{%- if kaart_aan %}
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="v0" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.25" style="fill:var(--card)"/><circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="v25" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.25" style="fill:var(--card)"/><path d="M10 10V1.75A8.25 8.25 0 0 1 18.25 10Z" style="fill:var(--k)"/><circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="v50" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.25" style="fill:var(--card)"/><path d="M10 10V1.75A8.25 8.25 0 0 1 10 18.25Z" style="fill:var(--k)"/><circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="v75" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.25" style="fill:var(--card)"/><path d="M10 10V1.75A8.25 8.25 0 1 1 1.75 10Z" style="fill:var(--k)"/><circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="v100" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.25" style="fill:var(--k)"/><circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="vuit" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.25" style="fill:var(--card)"/><path d="M5.75 10h8.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+</svg>
+
+<div class="wrap breed">
+
+  <header class="top">
+    <a class="logo" href="../" aria-label="Citizen Science Lab, naar alle pagina's"><img class="light" src="../assets/csl-logo.png" alt="Citizen Science Lab"><img class="dark" src="../assets/csl-logo-dark.png" alt="Citizen Science Lab"></a>
+    <a class="back" href="../"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>Alle pagina's</a>
+  </header>
+{%- if werkversie %}
+
+  <p class="werkversie"><strong>Werkversie.</strong> Deze pagina is nergens gelinkt en laat zien wat er nu in de bestanden staat. De openbare kaart staat {% if openbaar_aan %}aan{% else %}uit{% endif %}.</p>
+{%- endif %}
+
+  <h1>BuurtKennis per buurt</h1>
+  <p class="intro">Waar BuurtKennis loopt in Leiden, en hoe ver het per buurt is. Kies een buurt op de kaart.</p>
+
+  <aside class="about">
+    <img src="../assets/buurtkennis-logo.png" alt="BuurtKennis">
+    <p>BuurtKennis is een project van het Citizen Science Lab. Bewoners van Leidse wijken brengen hun vragen in, en samen met onderzoekers, groene initiatieven en instellingen zoeken we naar oplossingen voor een gezonde leefomgeving.</p>
+  </aside>
+
+  <div class="indeling">
+
+    <div class="kaartkolom">
+      <div class="kaart" id="kaart" aria-hidden="true">
+        <noscript><p class="kaart-melding">De kaart heeft JavaScript nodig. De buurten staan hieronder.</p></noscript>
+      </div>
+      <p class="bron">Achtergrondkaart: <a href="https://www.pdok.nl/">PDOK</a>, © Kadaster</p>
+      <div class="buurtknoppen" role="group" aria-label="Kies een buurt">
+{%- for b in buurten %}
+{%- comment %} De verste stap van deze buurt bepaalt de kleur op de kaart. {% endcomment %}
+{%- assign verste = b.stap %}
+{%- for f in methode.fases %}{% for s in f.stappen %}{% for t in b.themas %}{% if t.stap == s.code %}{% assign verste = s.code %}{% endif %}{% endfor %}{% endfor %}{% endfor %}
+{%- assign verste_fase = "" %}{% assign verste_vulling = 0 %}
+{%- for f in methode.fases %}{% for s in f.stappen %}{% if s.code == verste %}{% assign verste_fase = f.code %}{% assign verste_vulling = f.vulling | times: 100 | round %}{% endif %}{% endfor %}{% endfor %}
+        <button type="button" class="buurtknop" data-kies="{{ b.slug }}" data-naam="{{ b.naam | escape }}" data-lat="{{ b.plek[0] }}" data-lon="{{ b.plek[1] }}" data-straal="{{ b.straal | default: 350 }}" data-fase="{{ verste_fase }}" data-vulling="{{ verste_vulling }}" aria-pressed="false" style="--k: var(--fase-{{ verste_fase }})"><svg class="symbool" aria-hidden="true"><use href="#v{{ verste_vulling }}"/></svg><span>{{ b.naam | escape }}</span></button>
+{%- endfor %}
+      </div>
+    </div>
+
+    <section class="paneel" id="paneel" aria-label="Buurt en methode">
+
+      <div class="paneel-kop" data-buurt="">
+        <h2>Zo werkt BuurtKennis</h2>
+        <p>Elke kwestie doorloopt dezelfde stappen, van ophalen bij bewoners tot samen onderzoek starten. Kies een buurt om te zien waar de thema's daar nu staan.</p>
+{%- if methode.handleiding and methode.handleiding != "" %}
+        <p><a href="{{ methode.handleiding | escape }}">Lees in de handleiding hoe elke stap werkt →</a></p>
+{%- endif %}
+      </div>
+{%- for b in buurten %}
+{%- assign n = b.themas | size %}
+{%- assign verste = b.stap %}
+{%- for f in methode.fases %}{% for s in f.stappen %}{% for t in b.themas %}{% if t.stap == s.code %}{% assign verste = s.code %}{% endif %}{% endfor %}{% endfor %}{% endfor %}
+{%- assign verste_naam = "" %}
+{%- for f in methode.fases %}{% for s in f.stappen %}{% if s.code == verste %}{% assign verste_naam = s.naam %}{% endif %}{% endfor %}{% endfor %}
+
+      <div class="paneel-kop" data-buurt="{{ b.slug }}">
+        <a class="terug" href="#" data-kies=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>Overzicht</a>
+        <h2>{{ b.naam | escape }}</h2>
+        <p class="meta">
+          {%- if verste %}{% if n > 0 %}Verste stap{% else %}Stap{% endif %}: {{ verste }} {{ verste_naam | escape }}{% endif %}
+          {%- if b.bijgewerkt %}{% assign m = b.bijgewerkt | date: "%-m" | minus: 1 %} · bijgewerkt {{ b.bijgewerkt | date: "%-d" }} {{ maanden[m] }} {{ b.bijgewerkt | date: "%Y" }}{% endif -%}
+        </p>
+      </div>
+{%- endfor %}
+
+      <ol class="methode" aria-label="De stappen van de methode">
+{%- for f in methode.fases %}{% unless f.zichtbaar == false %}
+        <li class="fase" style="--k: var(--fase-{{ f.code }})">
+          <svg class="symbool" aria-hidden="true"><use href="#v{{ f.vulling | times: 100 | round }}"/></svg>
+          <div class="fase-tekst">
+            <p class="fase-naam"><span class="fase-code">{{ f.code }}</span> {{ f.naam | escape }}</p>
+            <ul class="stappen">
+{%- for s in f.stappen %}
+              <li>{% if s.link and s.link != "" %}<a href="{{ s.link | escape }}">{{ s.code }} {{ s.naam | escape }}</a>{% else %}{{ s.code }} {{ s.naam | escape }}{% endif %}</li>
+{%- endfor %}
+            </ul>
+            <ul class="themas">
+{%- for b in buurten %}{% assign n = b.themas | size %}
+{%- if n > 0 %}{% assign op_stap = b.themas | sort: "stap" %}
+{%- for t in op_stap %}{% assign tf = t.stap | slice: 0 %}{% if tf == f.code %}
+              <li class="chip" data-buurt="{{ b.slug }}">{{ t.naam | escape }} <span class="chip-stap">{{ t.stap }}</span></li>
+{%- endif %}{% endfor %}
+{%- else %}{% assign bf = b.stap | slice: 0 %}{% if bf == f.code %}
+              <li class="chip" data-buurt="{{ b.slug }}">{{ b.naam | escape }} <span class="chip-stap">{{ b.stap }}</span></li>
+{%- endif %}{% endif %}
+{%- endfor %}
+            </ul>
+          </div>
+        </li>
+{%- endunless %}{% endfor %}
+      </ol>
+{%- assign heeft_afslag = false %}
+{%- for b in buurten %}{% for t in b.themas %}{% for a in methode.afslagen %}{% if t.stap == a.code %}{% assign heeft_afslag = true %}{% endif %}{% endfor %}{% endfor %}{% endfor %}
+{%- if heeft_afslag %}
+
+      <div class="afslagen">
+        <p class="fase-naam"><svg class="symbool" aria-hidden="true"><use href="#vuit"/></svg> Buiten het onderzoek</p>
+        <ul class="themas">
+{%- for b in buurten %}{% for t in b.themas %}{% for a in methode.afslagen %}{% if t.stap == a.code %}
+          <li class="chip chip-uit" data-buurt="{{ b.slug }}">{{ t.naam | escape }} <span class="chip-stap">{{ a.naam | escape }}</span></li>
+{%- endif %}{% endfor %}{% endfor %}{% endfor %}
+        </ul>
+      </div>
+{%- endif %}
+{%- for b in buurten %}
+{%- assign n = b.themas | size %}
+
+      <div class="buurt" data-buurt="{{ b.slug }}">
+        <div class="uitleg">
+{{ b.content | markdownify }}
+        </div>
+{%- if n > 0 %}
+{%- assign aantal_kwesties = 0 %}{% for t in b.themas %}{% assign nk = t.kwesties | size %}{% assign aantal_kwesties = aantal_kwesties | plus: nk %}{% endfor %}
+        <h3>{% if aantal_kwesties > 0 %}Thema's en kwesties{% else %}Thema's{% endif %}</h3>
+        <ul class="themalijst">
+{%- for t in b.themas %}
+{%- assign t_fase = "" %}{% assign t_naam = t.stap %}{% assign t_vulling = "uit" %}
+{%- for f in methode.fases %}{% for s in f.stappen %}{% if s.code == t.stap %}{% assign t_fase = f.code %}{% assign t_naam = s.naam %}{% assign t_vulling = f.vulling | times: 100 | round %}{% endif %}{% endfor %}{% endfor %}
+{%- for a in methode.afslagen %}{% if a.code == t.stap %}{% assign t_naam = a.naam %}{% endif %}{% endfor %}
+          <li class="thema" style="--k: var(--fase-{{ t_fase }})">
+            <div class="thema-kop">
+              <svg class="symbool" aria-hidden="true"><use href="#v{{ t_vulling }}"/></svg>
+              <h4>{{ t.naam | escape }}</h4>
+            </div>
+            <p class="thema-stap">{% if t_fase != "" %}Stap {{ t.stap }} · {{ t_naam | escape }}{% else %}{{ t_naam | escape }}{% endif %}</p>
+{%- assign nk = t.kwesties | size %}{% if nk > 0 %}
+            <ul class="kwesties">
+{%- for k in t.kwesties %}
+              <li>{{ k | escape }}</li>
+{%- endfor %}
+            </ul>
+{%- endif %}
+{%- if t.uitkomst %}
+            <div class="uitkomst">
+              <p class="uitkomst-label">Wat eruit kwam</p>
+              <p>{{ t.uitkomst.tekst | escape }}{% if t.uitkomst.link and t.uitkomst.link != "" %} <a href="{{ t.uitkomst.link | escape }}">Bekijk →</a>{% endif %}</p>
+            </div>
+{%- endif %}
+          </li>
+{%- endfor %}
+        </ul>
+{%- endif %}
+{%- if b.handleiding and b.handleiding != "" %}
+        <p class="verder"><a href="{{ b.handleiding | escape }}">Meer over {{ b.naam | escape }} in de handleiding →</a></p>
+{%- endif %}
+      </div>
+{%- endfor %}
+
+      <p class="sr-only" id="aankondiging" aria-live="polite"></p>
+    </section>
+
+  </div>
+</div>
+
+<script src="kaart.js"></script>
+{%- else %}
+
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="../" aria-label="Citizen Science Lab, naar alle pagina's"><img class="light" src="../assets/csl-logo.png" alt="Citizen Science Lab"><img class="dark" src="../assets/csl-logo-dark.png" alt="Citizen Science Lab"></a>
+    <a class="back" href="../"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>Alle pagina's</a>
+  </header>
+
+  <h1>BuurtKennis per buurt</h1>
+  <p class="intro">Deze kaart is op dit moment niet beschikbaar.</p>
+
+  <aside class="about">
+    <img src="../assets/buurtkennis-logo.png" alt="BuurtKennis">
+    <p>BuurtKennis is een project van het Citizen Science Lab. Bewoners van Leidse wijken brengen hun vragen in, en samen met onderzoekers, groene initiatieven en instellingen zoeken we naar oplossingen voor een gezonde leefomgeving.</p>
+  </aside>
+</div>
+{%- endif %}
+</body>
+</html>

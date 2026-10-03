@@ -1,3 +1,9 @@
+---
+# Startpagina. De link naar de buurtenkaart volgt de schakelaar buurtenkaart in _config.yml.
+---
+{%- assign stand = site.buurtenkaart | append: "" | downcase | strip -%}
+{%- assign kaart_aan = true -%}
+{%- if stand == "uit" or stand == "false" or stand == "nee" or stand == "off" -%}{%- assign kaart_aan = false -%}{%- endif -%}
 <!doctype html>
 <html lang="nl">
 <head>
@@ -58,6 +64,12 @@
   </aside>
 
   <ul class="links">
+{%- if kaart_aan %}
+    <li>
+      <a href="buurten/">BuurtKennis per buurt →</a>
+      <p>Waar BuurtKennis loopt in Leiden, en hoe ver het per buurt is.</p>
+    </li>
+{%- endif %}
     <li>
       <a href="hittemaatregelen/">Hittemaatregelen Leiden →</a>
       <p>Ideeën uit de workshop over hittestress van 27 augustus 2026.</p>
