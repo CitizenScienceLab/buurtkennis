@@ -1,0 +1,436 @@
+/* BuurtKennis per buurt: de kaart en het paneel.
+   De basis staat in ../assets/site.css; hier alleen wat deze pagina nodig heeft.
+   Indeling: kaart links (blijft staan bij scrollen), paneel rechts; op een telefoon onder elkaar. */
+
+:root {
+  --kaart-grond: #E7E8EC;
+  --zone-rand: #23244C;
+  --tint: #E9EEF6;            /* primary-light, 12 % */
+  --fase-: #C9CBD8;           /* stap onbekend */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --kaart-grond: #24272C;
+    --zone-rand: #ECEFEA;
+    --tint: #1F2838;
+  }
+}
+
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wrap.breed { max-width: 76rem; }
+
+/* Alleen op de werkversie */
+.werkversie {
+  max-width: 60rem;
+  margin: 0 0 24px;
+  padding: 10px 16px;
+  border: 1.5px dashed var(--link);
+  border-radius: 12px;
+  background: var(--tint);
+  font-size: 0.9375rem;
+}
+
+/* ---------- indeling ---------- */
+
+.indeling {
+  display: grid;
+  gap: 28px;
+  margin-top: 36px;
+}
+
+.kaartkolom {
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+@media (min-width: 900px) {
+  .indeling {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 6fr);
+    gap: 40px;
+    align-items: start;
+  }
+  .kaartkolom { position: sticky; top: 24px; }
+}
+
+/* ---------- kaart ---------- */
+
+.kaart {
+  position: relative;
+  overflow: hidden;
+  height: clamp(280px, 50vh, 420px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--kaart-grond);
+  box-shadow: var(--shadow);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 900px) {
+  .kaart { height: min(72vh, 620px); }
+}
+
+.tegels,
+.zones,
+.labels { position: absolute; inset: 0; }
+
+.tegels img { position: absolute; max-width: none; }  /* site.css zet img op max-width: 100% */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tegels { filter: invert(1) hue-rotate(180deg) brightness(0.82) contrast(0.9); }
+}
+
+.zone {
+  fill: var(--k);
+  fill-opacity: 0.5;
+  stroke: var(--zone-rand);
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: fill-opacity 120ms ease, stroke-width 120ms ease;
+}
+.zone:hover { fill-opacity: 0.65; }
+.kaart.heeft-keuze .zone { fill-opacity: 0.3; }
+.kaart.heeft-keuze .zone:hover { fill-opacity: 0.5; }
+.kaart.heeft-keuze .zone.actief { fill-opacity: 0.7; stroke-width: 3; }
+
+.labels { pointer-events: none; }
+
+.label {
+  position: absolute;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px 4px 5px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+  cursor: pointer;
+}
+.label.actief { border-color: var(--link); box-shadow: 0 0 0 1px var(--link), var(--shadow); }
+
+.kaart-melding {
+  position: absolute;
+  inset: auto 16px 16px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--card);
+  font-size: 0.875rem;
+}
+
+.bron {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  text-align: right;
+}
+.bron a { color: inherit; }
+
+/* Het rondje: hoe voller, hoe verder in de methode. */
+.symbool {
+  display: block;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--heading);
+  overflow: visible;
+}
+
+/* ---------- buurtknoppen ---------- */
+
+.buurtknoppen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.buurtknop {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 15px 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+.buurtknop:hover { border-color: var(--ink-soft); }
+.buurtknop[aria-pressed="true"] {
+  border-color: var(--link);
+  background: var(--tint);
+  box-shadow: 0 0 0 1px var(--link);
+  font-weight: 600;
+}
+
+/* ---------- paneel ---------- */
+
+.paneel {
+  min-width: 0;
+  display: grid;
+  gap: 20px;
+  align-content: start;
+}
+
+/* Met JavaScript is steeds één buurt zichtbaar, of het overzicht. */
+.js [data-buurt]:not([data-actief]) { display: none !important; }
+.js .themas:not(:has(> [data-actief])) { display: none; }
+
+.paneel-kop {
+  display: grid;
+  gap: 6px;
+}
+.paneel-kop h2 {
+  margin: 0;
+  font-family: var(--head);
+  font-weight: 600;
+  font-size: clamp(1.375rem, 2.6vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--heading);
+  text-wrap: balance;
+}
+.paneel-kop p {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--ink-soft);
+}
+.paneel-kop .meta { font-size: 0.9375rem; }
+
+.terug {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+.terug:hover { text-decoration: underline; }
+.terug svg { width: 16px; height: 16px; flex: none; }
+
+/* De methode: dezelfde plek, altijd zichtbaar. Een gekozen buurt zet er zijn thema's in. */
+.methode {
+  list-style: none;
+  margin: 0;
+  padding: 8px 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.fase {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  column-gap: 14px;
+  padding: 12px 0;
+}
+.fase .symbool { margin-top: 2px; }
+
+/* lijn tussen de rondjes: de stappen hebben een volgorde */
+.fase:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 8.25px;
+  top: 36px;
+  bottom: -10px;
+  width: 1.5px;
+  background: var(--line);
+}
+
+.fase-tekst {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.fase-naam {
+  margin: 0;
+  font-family: var(--head);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--heading);
+}
+.fase-code {
+  margin-right: 2px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.stappen {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 14px;
+  row-gap: 2px;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.themas {
+  list-style: none;
+  margin: 6px 0 2px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 3px 11px;
+  border: 1.5px solid var(--k, var(--line));
+  border-radius: 999px;
+  background: var(--tint);
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.chip-stap {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.chip-uit { border-style: dashed; border-color: var(--ink-soft); }
+
+.afslagen {
+  display: grid;
+  gap: 6px;
+  padding: 0 20px;
+}
+.afslagen .fase-naam {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ---------- een buurt ---------- */
+
+.buurt {
+  display: grid;
+  gap: 16px;
+}
+
+.uitleg { max-width: 64ch; }
+.uitleg > * { margin: 0 0 0.75em; }
+.uitleg > :last-child { margin-bottom: 0; }
+.uitleg h2,
+.uitleg h3 {
+  font-family: var(--head);
+  font-weight: 500;
+  font-size: 1.125rem;
+  color: var(--heading);
+}
+
+.buurt > h3 {
+  margin: 8px 0 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--head);
+  font-weight: 500;
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+  color: var(--heading);
+}
+
+.themalijst {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+}
+
+.thema {
+  display: grid;
+  gap: 6px;
+}
+
+.thema-kop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.thema-kop h4 {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.thema-stap {
+  margin: 0 0 0 28px;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.kwesties {
+  margin: 0 0 0 28px;
+  padding-left: 1.1em;
+  display: grid;
+  gap: 4px;
+}
+
+.uitkomst {
+  margin-left: 28px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--tint);
+  display: grid;
+  gap: 2px;
+}
+.uitkomst p { margin: 0; }
+.uitkomst-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.verder { margin: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .zone,
+  .buurtknop { transition: none; }
+}

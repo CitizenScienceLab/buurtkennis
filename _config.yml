@@ -1,0 +1,12 @@
+# Instellingen voor de bouw. GitHub Pages bouwt deze repo met Jekyll.
+# Mappen die met _ beginnen zijn bronnen: ze verschijnen niet als pagina,
+# maar pagina's lezen eruit. Ze zijn wel openbaar in deze repo.
+
+# De kaart op /buurten/: aan of uit.
+# Bij uit toont de pagina alleen een korte melding en verdwijnt de link op de startpagina.
+# De werkversie op /buurten/werkversie blijft de actuele stand laten zien (zie README).
+buurtenkaart: aan
+
+collections:
+  buurten:
+    output: false

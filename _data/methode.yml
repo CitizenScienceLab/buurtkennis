@@ -1,0 +1,74 @@
+# De BuurtKennis-methode: fases en stappen, voor de kaart op /buurten/.
+#
+# GitBook is de bron: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/
+# Namen en links volgen GitBook; de uitleg staat daar, niet hier.
+# Hier staat alleen wat GitBook niet heeft: volgorde, kleur en symbool.
+#
+#   zichtbaar: false     de fase staat niet op de kaart. A en F gaan over het project
+#                        als geheel, niet over waar een buurt staat.
+#   link: ""             de stap staat er zonder link, tot de pagina in GitBook staat
+#   vulling              hoe vol het rondje is: 0 is leeg, 1 is vol
+#   kleur, kleur_donker  voor een licht en voor een donker scherm
+
+# Link naar het overzicht van de methode in GitBook
+handleiding: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/readme"
+
+fases:
+  - code: A
+    naam: "Project opstarten"
+    zichtbaar: false
+    vulling: 0
+    kleur: "#D3DDEE"
+    kleur_donker: "#33496F"
+    stappen: []
+
+  - code: B
+    naam: "Kwesties verzamelen"
+    vulling: 0.25
+    kleur: "#9DB6E2"
+    kleur_donker: "#46669F"
+    stappen:
+      - { code: B1, naam: "Oriënteren", link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b1-orienteren" }
+      - { code: B2, naam: "Ophalen kwesties", link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b2-kwesties-verzamelen" }
+      - { code: B3, naam: "Kwesties sorteren", link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b3-kwesties-sorteren" }
+
+  - code: C
+    naam: "Vraagstuk vormen"
+    vulling: 0.5
+    kleur: "#5F86CC"
+    kleur_donker: "#6B91D9"
+    stappen:
+      - { code: C1, naam: "Werving betrokkenen", link: "" }
+      - { code: C2, naam: "Vraagstuk vormen", link: "" }
+
+  - code: D
+    naam: "Samen plannen"
+    vulling: 0.75
+    kleur: "#2C54A3"
+    kleur_donker: "#9DBBF0"
+    stappen:
+      - { code: D1, naam: "Onderzoeken levensvatbaarheid", link: "" }
+      - { code: D2, naam: "Co-creatie initiatief", link: "" }
+
+  - code: E
+    naam: "Onderzoek starten"
+    vulling: 1
+    kleur: "#23244C"
+    kleur_donker: "#D6E2F8"
+    stappen:
+      - { code: E1, naam: "Opstarten samenwerking", link: "" }
+      - { code: E2, naam: "Start onderzoek", link: "" }
+
+  - code: F
+    naam: "BuurtKennis delen"
+    zichtbaar: false
+    vulling: 1
+    kleur: "#23244C"
+    kleur_donker: "#D6E2F8"
+    stappen: []
+
+# Een thema kan de methode ook verlaten. Zet dan bij dat thema
+# stap: geen-vervolg  of  stap: doorverwezen
+afslagen:
+  - { code: geen-vervolg, naam: "Geen vervolg" }
+  - { code: doorverwezen, naam: "Doorverwezen naar de juiste persoon" }
