@@ -1,27 +1,2 @@
-# Instellingen voor de bouw. GitHub Pages bouwt deze repo met Jekyll.
-# Mappen die met _ beginnen zijn bronnen: ze verschijnen niet als pagina,
-# maar pagina's lezen eruit. Ze zijn wel openbaar in deze repo.
-
-# De kaart op de startpagina: aan of uit.
-# Bij uit toont de startpagina een korte melding; /werkversie laat de actuele stand zien.
 buurtkaart: aan
-
-# De oude kaart op /overzicht: aan of uit.
-buurtenkaart: aan
-
-collections:
-  buurten:            # waar BuurtKennis actief is: één bestand per buurt, met fase
-    output: false
-  trajecten:          # thematische trajecten: één bestand per traject
-    output: true
-    permalink: /trajecten/:name/
-  overzicht:          # bron van de oude kaart op /overzicht
-    output: false
-
-defaults:
-  - scope: { type: trajecten }
-    values: { layout: traject }
-
-# Adres van de site op GitHub Pages (nodig voor links tussen pagina's)
-baseurl: /buurtkennis
-url: https://citizensciencelab.github.io
+buurtenkaart: uit
