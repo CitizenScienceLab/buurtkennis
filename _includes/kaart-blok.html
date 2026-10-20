@@ -2,7 +2,7 @@
   De kaart met kompas en veegkaart. Data:
   _buurten/   waar BuurtKennis actief is (fase, doel, activiteiten)
   _trajecten/ thematische trajecten in één of meer buurten — elk een doosje in die buurt
-  De kleur van een buurt is de verste fase: van de buurt zelf of van een traject dat er loopt.
+  De kleur van een buurt is zijn eigen fase; zonder eigen fase de verste fase van de trajecten die er lopen.
   _data/cbs.yml  codes, namen en middens van wijken en buurten
 {%- endcomment -%}
 {% include doos-symbolen.svg %}
@@ -52,10 +52,10 @@ const buurtenInWijk = code => BUURTEN.filter(b => wijkVan(b.plek) === code);
 const naamVan = t => buurtenVan(t).map(b => b.naam).join(', ');
 const themaNaam = th => (THEMAS[th] || {}).naam || '';
 
-// --- kleur van de buurten: de verste fase, van de buurt zelf of van een traject dat er loopt ---
-const versteFase = b => [b.fase, ...trajectenBij(b.plek).map(t => t.fase)].filter(f => letter(f)).sort((x, y) => letter(y).localeCompare(letter(x)))[0] || '';
+// --- kleur van de buurten: de eigen fase; zonder eigen fase de verste fase van de trajecten die er lopen ---
+const versteTraject = b => trajectenBij(b.plek).map(t => t.fase).filter(f => letter(f)).sort((x, y) => letter(y).localeCompare(letter(x)))[0] || '';
 BUURTEN.forEach(b => {
-  b.verste = versteFase(b);
+  b.verste = letter(b.fase) ? b.fase : versteTraject(b);
   const el = document.getElementById(b.plek);
   if (el && b.verste) { el.classList.add('actief-buurt'); el.style.setProperty('--t', faseKleur(b.verste)); }
 });

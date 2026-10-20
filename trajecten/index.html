@@ -8,7 +8,7 @@ description: Waar BuurtKennis actief is, en welke trajecten er lopen.
 <h2>Buurten</h2>
 <ul class="lijst">
 {%- assign bs = site.buurten | sort: "fase" | reverse %}
-{%- for b in bs %}{% assign f = b.fase | slice: 0 | upcase %}{% for t in site.trajecten %}{% if t.buurten contains b.slug or t.buurten contains b.path %}{% assign tf = t.fase | slice: 0 | upcase %}{% if tf > f %}{% assign f = tf %}{% endif %}{% endif %}{% endfor %}{% assign fn = "" %}{% for x in site.data.methode.fases %}{% if x.code == f %}{% assign fn = x.naam %}{% endif %}{% endfor %}
+{%- for b in bs %}{% assign f = b.fase | slice: 0 | upcase %}{% if f == "" %}{% for t in site.trajecten %}{% if t.buurten contains b.slug or t.buurten contains b.path %}{% assign tf = t.fase | slice: 0 | upcase %}{% if tf > f %}{% assign f = tf %}{% endif %}{% endif %}{% endfor %}{% endif %}{% assign fn = "" %}{% for x in site.data.methode.fases %}{% if x.code == f %}{% assign fn = x.naam %}{% endif %}{% endfor %}
   <li><a href="{{ '/' | relative_url }}#{{ b.slug }}" target="_blank" rel="noopener" style="--k:{% if f == "" %}var(--doos){% else %}var(--fase-{{ f }}){% endif %}"><span class="f">{{ f }}</span><span><strong>{{ b.naam }}</strong> ↗<br><small>{% if fn == "" %}alleen trajecten{% else %}{{ fn }}{% endif %}</small></span></a></li>
 {%- endfor %}
 </ul>

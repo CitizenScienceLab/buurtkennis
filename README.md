@@ -40,7 +40,7 @@ Een bestand in `_buurten/`, bijvoorbeeld `lage-mors.md` (adres: `/#lage-mors`). 
 |---|---|
 | `naam` | naam van de buurt |
 | `plek` | CBS-code uit `_data/cbs.yml`, meestal een buurt (`BU…`) |
-| `fase` | `A` t/m `F`; een substap mag ook (`B2`). Leeg laten als er alleen een traject loopt en nog geen eigen buurtwerk. De buurt kleurt op de kaart naar de verste fase: die van de buurt zelf of van een traject dat er loopt |
+| `fase` | `A` t/m `F`; een substap mag ook (`B2`). Leeg laten als er alleen een traject loopt en nog geen eigen buurtwerk. De buurt kleurt op de kaart naar zijn eigen fase. Zonder eigen fase kleurt hij naar de verste fase van de trajecten die er lopen |
 | `sinds` | `2026-09` |
 | `doel` | één of twee zinnen |
 | `activiteiten` | lijst met `wat`, `wanneer`, `waar`, `wie` |
