@@ -77,8 +77,9 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .buurt.actief-buurt { fill: var(--t) }
 .buurt:hover { stroke-opacity: .7 }
 .buurt.gekozen { stroke: var(--inkt); stroke-opacity: 1; stroke-width: 4 }
-.wijk { fill: none; stroke: var(--lijn); stroke-width: 3; stroke-dasharray: 9 7; stroke-linecap: round; pointer-events: none }
-.wijk.gekozen { stroke-width: 5; stroke-dasharray: none }
+/* wijken: de vlakken zelf zonder lijn; de grenzen staan los in .wijkgrenzen, elke grens één keer, zodat de stippels niet dubbel liggen */
+.wijk { fill: none; stroke: none; pointer-events: none }
+.wijkgrenzen path { fill: none; stroke: var(--lijn); stroke-width: 3; stroke-dasharray: 9 7; stroke-linecap: round; stroke-linejoin: round; pointer-events: none }
 .water path { fill: var(--water); stroke: none; pointer-events: none }
 .waterlijn path { fill: none; stroke: var(--water); stroke-linecap: round; pointer-events: none } .waterlijn .river { stroke-width: 9 } .waterlijn .canal { stroke-width: 3 }
 .traject { cursor: pointer; transition: transform .15s; transform-box: fill-box; transform-origin: center }
