@@ -75,6 +75,8 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .achtergrond { fill: transparent }
 .buurt { fill: var(--vlak); stroke: var(--lijn); stroke-width: .8; stroke-opacity: .22; cursor: pointer; transition: fill .15s }
 .buurt.actief-buurt { fill: var(--t) }
+/* gekleurde buurt: doorgetrokken omtrek, los erboven getekend zodat de buren er niet half overheen vallen */
+.omtrek path { fill: none; stroke: var(--lijn); stroke-width: 2; stroke-linejoin: round; pointer-events: none }
 .buurt:hover { stroke-opacity: .7 }
 .buurt.gekozen { stroke: var(--inkt); stroke-opacity: 1; stroke-width: 4 }
 /* wijken: de vlakken zelf zonder lijn; de grenzen staan los in .wijkgrenzen, elke grens één keer, zodat de stippels niet dubbel liggen */
@@ -92,7 +94,7 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .kaart.iets-gekozen .traject:not(.gekozen) { opacity: .6 }
 
 /* veegkaart (mobiel), vaste kolom (desktop) */
-.card { background: var(--vlak); color: var(--inkt); min-width: 0; border-top: 10px solid var(--band, var(--bruin)) }
+.card { background: var(--vlak); color: var(--inkt); min-width: 0 }
 .card-kop { padding: 8px 18px 10px; touch-action: none; cursor: grab; user-select: none }
 .greep { width: 44px; height: 5px; border-radius: 3px; background: var(--inkt); opacity: .25; margin: 2px auto 10px }
 .card-kop .meta { margin: 6px 0 0 }

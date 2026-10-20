@@ -54,10 +54,15 @@ const themaNaam = th => (THEMAS[th] || {}).naam || '';
 
 // --- kleur van de buurten: de eigen fase; zonder eigen fase de verste fase van de trajecten die er lopen ---
 const versteTraject = b => trajectenBij(b.plek).map(t => t.fase).filter(f => letter(f)).sort((x, y) => letter(y).localeCompare(letter(x)))[0] || '';
+const omtrek = document.createElementNS('http://www.w3.org/2000/svg', 'g'); omtrek.setAttribute('class', 'omtrek');
+svg.querySelector('.wijken').before(omtrek);
 BUURTEN.forEach(b => {
   b.verste = letter(b.fase) ? b.fase : versteTraject(b);
   const el = document.getElementById(b.plek);
-  if (el && b.verste) { el.classList.add('actief-buurt'); el.style.setProperty('--t', faseKleur(b.verste)); }
+  if (el && b.verste) {
+    el.classList.add('actief-buurt'); el.style.setProperty('--t', faseKleur(b.verste));
+    const o = document.createElementNS('http://www.w3.org/2000/svg', 'path'); o.setAttribute('d', el.getAttribute('d')); omtrek.append(o);
+  }
 });
 
 // --- doosjes slim neerzetten: binnen hun plek, niet over elkaar ---
@@ -86,8 +91,8 @@ BUURTEN.forEach(b => {
 function zetFase(f) {
   const l = letter(f); kompas.dataset.fase = l;
   const lab = $('fase-label');
-  if (l) { lab.innerHTML = `${esc(faseNaam(f))}<small>fase ${esc(f)} · lees meer ↗</small>`; lab.href = FASEN_URL + '#' + l; card.style.setProperty('--band', `var(--fase-${l})`); }
-  else { lab.innerHTML = 'Fases van BuurtKennis<small>van kwestie tot onderzoek ↗</small>'; lab.href = FASEN_URL; card.style.removeProperty('--band'); }
+  if (l) { lab.innerHTML = `${esc(faseNaam(f))}<small>fase ${esc(f)} · lees meer ↗</small>`; lab.href = FASEN_URL + '#' + l; }
+  else { lab.innerHTML = 'Fases van BuurtKennis<small>van kwestie tot onderzoek ↗</small>'; lab.href = FASEN_URL; }
 }
 // één stippelkader met alle thema's erin, gescheiden door hun stip
 const themaTags = ths => { const ok = [...new Set(ths)].filter(th => THEMAS[th]); return ok.length ? `<span class="tags">${ok.map(th => `<span class="thema" style="--tk:${esc(THEMAS[th].kleur)}">${esc(THEMAS[th].naam)}</span>`).join('')}</span>` : ''; };
