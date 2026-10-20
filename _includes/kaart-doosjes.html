@@ -1,9 +1,14 @@
-{%- comment -%} Eén doosje per traject. Het script legt ze binnen hun buurt of wijk zonder overlap;
-hier staan ze voorlopig op het midden. Met midden: [x, y] in het trajectbestand zet je er een vast. {%- endcomment -%}
+{%- comment -%} Eén doosje per traject per buurt. Het script legt ze binnen de buurt zonder overlap;
+hier staan ze voorlopig op het midden van de buurt. Met midden: [x, y] in het trajectbestand zet je het eerste vast. {%- endcomment -%}
 {%- for t in site.trajecten -%}
-  {%- assign p = site.data.cbs[t.plek] -%}
-  {%- assign x = p.midden[0] | default: 500 -%}{%- assign y = p.midden[1] | default: 500 -%}
-  {%- if t.midden %}{% assign x = t.midden[0] %}{% assign y = t.midden[1] %}{% endif -%}
-  {%- assign f = t.fase | slice: 0 | upcase %}
-  <g class="traject" data-id="{{ t.slug }}" data-plek="{{ t.plek }}" data-fase="{{ f }}"{% if t.midden %} data-vast="1"{% endif %} transform="translate({{ x }},{{ y }})" tabindex="0" role="button" aria-label="{{ t.titel | escape }}" style="--klep:var(--fase-{{ f }})"><use href="#doos" x="-30" y="-20" width="60" height="40"/></g>
+  {%- for bs in t.buurten -%}
+    {%- assign b = site.buurten | where: "slug", bs | first -%}
+    {%- if b -%}
+      {%- assign p = site.data.cbs[b.plek] -%}
+      {%- assign x = p.midden[0] | default: 500 -%}{%- assign y = p.midden[1] | default: 500 -%}
+      {%- assign vast = false -%}
+      {%- if t.midden and forloop.first %}{% assign x = t.midden[0] %}{% assign y = t.midden[1] %}{% assign vast = true %}{% endif -%}
+      <g class="traject" data-id="{{ t.slug }}" data-plek="{{ b.plek }}"{% if vast %} data-vast="1"{% endif %} transform="translate({{ x }},{{ y }})" tabindex="0" role="button" aria-label="{{ t.titel | escape }}"><circle class="schijf" r="27"/><use href="#doos" x="-22" y="-19" width="44" height="36"/></g>
+    {%- endif -%}
+  {%- endfor -%}
 {%- endfor -%}

@@ -1,12 +1,12 @@
-<svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute"><symbol id="doos" viewBox="104 176 320 214"><g stroke-width="7" stroke-linejoin="round" style="stroke:var(--doos-lijn)">
-<polygon points="280,222 305,184 417,221 378,258" style="fill:var(--klep, var(--doos))"/>
-<polygon points="180,258 280,222 378,258 280,295" style="fill:var(--doos-binnen)"/>
-<polygon points="180,258 280,295 280,383 180,345" style="fill:var(--doos)"/>
-<polygon points="280,295 378,258 378,345 280,383" style="fill:var(--doos-zij)"/>
-<polygon points="180,258 280,295 205,296 118,246" style="fill:var(--klep, var(--doos))"/>
-</g></symbol><symbol id="doos-dicht" viewBox="104 176 320 214"><g stroke-width="7" stroke-linejoin="round" style="stroke:var(--doos-lijn)">
-<polygon points="180,258 280,222 378,258 280,295" style="fill:var(--doos)"/>
-<line x1="230" y1="240" x2="329" y2="276"/>
-<polygon points="180,258 280,295 280,383 180,345" style="fill:var(--doos)"/>
-<polygon points="280,295 378,258 378,345 280,383" style="fill:var(--doos-zij)"/>
+<svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute"><symbol id="doos" viewBox="0 -8 100 80"><g stroke-width="2.5" stroke-linejoin="round" style="stroke:var(--doos-lijn)">
+<polygon points="50,10 84,24 94,10 60,-4" style="fill:var(--doos)"/>
+<polygon points="50,10 84,24 50,38 16,24" style="fill:var(--doos-binnen)"/>
+<polygon points="16,24 50,38 50,64 16,50" style="fill:var(--doos)"/>
+<polygon points="50,38 84,24 84,50 50,64" style="fill:var(--doos)"/>
+<polygon points="16,24 50,38 38,46 4,32" style="fill:var(--doos)"/>
+</g></symbol><symbol id="doos-dicht" viewBox="0 -8 100 80"><g stroke-width="2.5" stroke-linejoin="round" style="stroke:var(--doos-lijn)">
+<polygon points="50,10 84,24 50,38 16,24" style="fill:var(--doos)"/>
+<line x1="33" y1="17" x2="67" y2="31"/>
+<polygon points="16,24 50,38 50,64 16,50" style="fill:var(--doos)"/>
+<polygon points="50,38 84,24 84,50 50,64" style="fill:var(--doos)"/>
 </g></symbol></svg>
