@@ -1,0 +1,65 @@
+{%- comment -%} De kaart met de card eronder (of ernaast op een groot scherm). Data uit _trajecten/. {%- endcomment -%}
+{%- assign volgorde = "ABCDEF" -%}
+<style>
+{%- comment %} buurttint: verste traject dat de buurt raakt; een wijktraject raakt al zijn buurten {% endcomment -%}
+{%- for pk in site.data.plekken -%}{%- assign code = pk[0] -%}{%- assign pl = pk[1] -%}
+  {%- if pl.type == "buurt" -%}
+    {%- assign best = "" -%}
+    {%- for t in site.trajecten -%}
+      {%- if t.plek == code or t.plek == pl.wijk or t.plek == "leiden" -%}
+        {%- assign f = t.fase | slice: 0 | upcase -%}
+        {%- if best == "" -%}{%- assign best = f -%}{%- elsif f > best -%}{%- assign best = f -%}{%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if best != "" %}#{{ code }}{ --t: var(--fase-{{ best }}) }{% endif -%}
+  {%- endif -%}
+{%- endfor %}
+</style>
+<p class="plek" id="plek">Leiden</p>
+<div class="hub">
+  <div class="kaartkolom">
+    <div class="kaart" id="kaart">{% include kaart-leiden.svg %}</div>
+    <p class="legenda">{% for f in site.data.methode.fases %}{% unless f.zichtbaar == false %}<span style="--k:var(--fase-{{ f.code }})">{{ f.code }} {{ f.naam }}</span>{% endunless %}{% endfor %}</p>
+  </div>
+  <section class="card" id="card" aria-live="polite">
+    <div class="greep"></div>
+    <h2 id="c-titel">Lopende trajecten</h2>
+    <p id="c-tekst">Tik op een doosje voor een traject, of op een buurt om te zien wat daar loopt.</p>
+    <div class="meta" id="c-meta"></div>
+    <ul id="c-act"></ul>
+    <p id="c-link"></p>
+  </section>
+</div>
+<script>
+const T = [{% for t in site.trajecten %}{"id":{{ t.slug | jsonify }},"titel":{{ t.titel | jsonify }},"fase":{{ t.fase | slice: 0 | upcase | jsonify }},"faseNaam":{% assign fc = t.fase | slice: 0 | upcase %}{% assign fn = "" %}{% for f in site.data.methode.fases %}{% if f.code == fc %}{% assign fn = f.naam %}{% endif %}{% endfor %}{{ fn | jsonify }},"thema":{{ site.data.themas[t.thema].naam | default: t.thema | jsonify }},"themaKleur":{{ site.data.themas[t.thema].kleur | default: "#888" | jsonify }},"plek":{{ t.plek | jsonify }},"wijk":{{ site.data.plekken[t.plek].wijk | jsonify }},"pleknaam":{{ t.pleknaam | default: site.data.plekken[t.plek].naam | jsonify }},"sinds":{{ t.sinds | jsonify }},"doel":{{ t.doel | jsonify }},"url":{{ t.url | relative_url | jsonify }},"activiteiten":{{ t.activiteiten | default: empty | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
+const P = {{ site.data.plekken | jsonify }};
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const maand = s => { if (!s) return ''; const [j, m] = String(s).split('-'); const M = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december']; return m ? M[+m - 1] + ' ' + j : j; };
+const $ = id => document.getElementById(id);
+function reset() { document.querySelectorAll('.actief').forEach(e => e.classList.remove('actief')); }
+function toonTraject(t) {
+  reset(); document.querySelector(`.traject[data-id="${t.id}"]`)?.classList.add('actief');
+  $('plek').textContent = t.pleknaam; $('c-titel').textContent = t.titel; $('c-tekst').textContent = t.doel;
+  $('c-meta').innerHTML = `<a class="tag fase" style="--k:var(--fase-${t.fase})" href="{{ '/fases/' | relative_url }}#${t.fase}">${t.fase} ${esc(t.faseNaam)}</a><span class="tag thema" style="--tk:${esc(t.themaKleur)}">${esc(t.thema)}</span>${t.sinds ? `<span class="tag">sinds ${esc(maand(t.sinds))}</span>` : ''}`;
+  $('c-act').innerHTML = t.activiteiten.map(a => `<li>${esc(a.wat)}${a.wanneer ? ` <small>(${esc(a.wanneer)})</small>` : ''}</li>`).join('');
+  $('c-link').innerHTML = `<a href="${t.url}">Meer over dit traject →</a>`;
+  try { history.replaceState(null, '', '#' + t.id); } catch (e) {}
+}
+function toonPlek(code) {
+  reset(); const p = P[code]; if (!p) return; document.getElementById(code)?.classList.add('actief');
+  const hier = T.filter(t => t.plek === code || (p.type === 'buurt' && t.plek === p.wijk) || t.plek === 'leiden');
+  $('plek').textContent = p.naam; $('c-titel').textContent = p.naam;
+  $('c-tekst').textContent = hier.length ? '' : 'Hier loopt nu geen traject van BuurtKennis.';
+  $('c-meta').innerHTML = ''; $('c-link').innerHTML = '';
+  $('c-act').innerHTML = hier.map(t => `<li><a href="#${t.id}" data-traject="${t.id}">${esc(t.titel)}</a> <small>${t.fase} ${esc(t.faseNaam)}</small></li>`).join('');
+  try { history.replaceState(null, '', location.pathname); } catch (e) {}
+}
+document.addEventListener('click', e => {
+  const tr = e.target.closest('.traject'); if (tr) return toonTraject(T.find(t => t.id === tr.dataset.id));
+  const link = e.target.closest('[data-traject]'); if (link) { e.preventDefault(); return toonTraject(T.find(t => t.id === link.dataset.traject)); }
+  const b = e.target.closest('.buurt'); if (b) return toonPlek(b.id);
+});
+document.addEventListener('keydown', e => { const tr = e.target.closest && e.target.closest('.traject'); if (tr && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toonTraject(T.find(t => t.id === tr.dataset.id)); } });
+const start = T.find(t => '#' + t.id === location.hash); if (start) toonTraject(start);
+window.addEventListener('hashchange', () => { const t = T.find(t => '#' + t.id === location.hash); if (t) toonTraject(t); });
+</script>

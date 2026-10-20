@@ -1,0 +1,13 @@
+---
+layout: bk
+title: Lopende trajecten
+description: Alle lopende trajecten van BuurtKennis in Leiden, per fase en buurt.
+---
+<h1>Lopende trajecten</h1>
+<p class="intro">Een traject is een reeks activiteiten rond één plek en meestal één thema. De letter is de fase van de <a href="{{ '/fases/' | relative_url }}">BuurtKennis-methode</a>.</p>
+{%- assign lijst = site.trajecten | sort: "fase" | reverse %}
+<ul class="lijst">
+{%- for t in lijst %}{% assign f = t.fase | slice: 0 | upcase %}
+  <li><a href="{{ t.url | relative_url }}" style="--k:var(--fase-{{ f }})"><span class="f">{{ f }}</span><span><strong>{{ t.titel }}</strong><br><small>{{ t.pleknaam | default: site.data.plekken[t.plek].naam }} · {{ site.data.themas[t.thema].naam | default: t.thema }}{% if t.sinds %} · sinds {{ t.sinds | append: '-01' | date: '%B %Y' | replace: 'January','januari' | replace: 'February','februari' | replace: 'March','maart' | replace: 'April','april' | replace: 'May','mei' | replace: 'June','juni' | replace: 'July','juli' | replace: 'August','augustus' | replace: 'September','september' | replace: 'October','oktober' | replace: 'November','november' | replace: 'December','december' }}{% endif %}</small></span></a></li>
+{%- endfor %}
+</ul>
