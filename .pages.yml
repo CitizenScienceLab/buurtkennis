@@ -19,9 +19,8 @@ content:
       - { name: naam, label: Naam, type: string, required: true }
       - { name: plek, label: "CBS-code (BU…) uit _data/cbs.yml", type: string, required: true }
       - name: fase
-        label: Fase
+        label: "Fase (leeg laten als er alleen trajecten lopen)"
         type: select
-        required: true
         options:
           values:
             - { name: A, label: "A Project opstarten" }

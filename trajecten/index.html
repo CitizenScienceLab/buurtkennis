@@ -9,7 +9,7 @@ description: Waar BuurtKennis actief is, en welke trajecten er lopen.
 <ul class="lijst">
 {%- assign bs = site.buurten | sort: "fase" | reverse %}
 {%- for b in bs %}{% assign f = b.fase | slice: 0 | upcase %}{% assign fn = "" %}{% for x in site.data.methode.fases %}{% if x.code == f %}{% assign fn = x.naam %}{% endif %}{% endfor %}
-  <li><a href="{{ '/' | relative_url }}#{{ b.slug }}" target="_blank" rel="noopener" style="--k:var(--fase-{{ f }})"><span class="f">{{ f }}</span><span><strong>{{ b.naam }}</strong> ↗<br><small>{{ fn }}</small></span></a></li>
+  <li><a href="{{ '/' | relative_url }}#{{ b.slug }}" target="_blank" rel="noopener" style="--k:{% if f == "" %}var(--doos){% else %}var(--fase-{{ f }}){% endif %}"><span class="f">{{ f }}</span><span><strong>{{ b.naam }}</strong> ↗<br><small>{% if fn == "" %}alleen trajecten{% else %}{{ fn }}{% endif %}</small></span></a></li>
 {%- endfor %}
 </ul>
 <h2 style="margin-top:20px">Trajecten</h2>

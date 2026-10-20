@@ -6,9 +6,9 @@
 {%- endcomment -%}
 {% include doos-symbolen.svg %}
 <style>
-{%- for b in site.buurten %}{% assign f = b.fase | slice: 0 | upcase %}
+{%- for b in site.buurten %}{% if b.fase %}{% assign f = b.fase | slice: 0 | upcase %}
 #{{ b.plek }}{ --t: var(--fase-{{ f }}) }
-{%- endfor %}
+{%- endif %}{% endfor %}
 </style>
 <div class="hub">
   <p class="plek naam" id="plek">Leiden</p>
@@ -40,6 +40,7 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const letter = f => String(f || '').charAt(0).toUpperCase();
 const faseNaam = f => (FASES.find(x => x.code === letter(f)) || {}).naam || '';
+const faseKleur = f => letter(f) ? `var(--fase-${letter(f)})` : 'var(--doos)';   // buurt zonder fase: alleen trajecten
 const MAANDEN = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
 const maand = s => { if (!s) return ''; const [j, m] = String(s).split('-'); return m ? MAANDEN[+m - 1] + ' ' + j : j; };
 const svg = document.querySelector('#kaart svg');
@@ -55,8 +56,8 @@ const buurtenInWijk = code => BUURTEN.filter(b => wijkVan(b.plek) === code);
 const naamVan = t => buurtenVan(t).map(b => b.naam).join(', ');
 const themaNaam = th => (THEMAS[th] || {}).naam || '';
 
-// --- kleur van de buurten uit _buurten ---
-BUURTEN.forEach(b => { const el = document.getElementById(b.plek); if (el) el.classList.add('actief-buurt'); });
+// --- kleur van de buurten uit _buurten (alleen met een fase; zonder fase lopen er alleen trajecten) ---
+BUURTEN.forEach(b => { const el = document.getElementById(b.plek); if (el && letter(b.fase)) el.classList.add('actief-buurt'); });
 
 // --- doosjes slim neerzetten: binnen hun plek, niet over elkaar ---
 (function plaats() {
@@ -90,9 +91,10 @@ function zetFase(f) {
 // één stippelkader met alle thema's erin, gescheiden door hun stip
 const themaTags = ths => { const ok = [...new Set(ths)].filter(th => THEMAS[th]); return ok.length ? `<span class="tags">${ok.map(th => `<span class="thema" style="--tk:${esc(THEMAS[th].kleur)}">${esc(THEMAS[th].naam)}</span>`).join('')}</span>` : ''; };
 const sindsRegel = s => s ? `<span class="sinds">sinds ${esc(maand(s))}</span>` : '';
-const lijstTrajecten = ts => ts.length ? `<ul class="lijst">${ts.map(t => `<li><button type="button" data-traject="${esc(t.id)}" style="--k:var(--fase-${letter(t.fase)})"><span class="f">${letter(t.fase)}</span><span><strong>${esc(t.titel)}</strong><br><small>${esc(naamVan(t))}${themaNaam(t.thema) ? ' · ' + esc(themaNaam(t.thema)) : ''}</small></span></button></li>`).join('')}</ul>` : '';
-const lijstBuurten = bs => bs.length ? `<ul class="lijst">${bs.map(b => `<li><button type="button" data-buurt="${esc(b.plek)}" style="--k:var(--fase-${letter(b.fase)})"><span class="f">${letter(b.fase)}</span><span><strong>${esc(b.naam)}</strong><br><small>${esc(faseNaam(b.fase))}${trajectenBij(b.plek).length ? ' · ' + trajectenBij(b.plek).length + (trajectenBij(b.plek).length === 1 ? ' traject' : ' trajecten') : ''}</small></span></button></li>`).join('')}</ul>` : '';
-const lijstActiviteiten = (as, f) => as && as.length ? `<ul class="activiteiten" style="--k:var(--fase-${letter(f)})">${as.map(a => `<li>${esc(a.wat)}${a.wanneer || a.waar ? `<span class="wanneer">${esc([a.wanneer, a.waar].filter(Boolean).join(' · '))}</span>` : ''}</li>`).join('')}</ul>` : '';
+const lijstTrajecten = ts => ts.length ? `<ul class="lijst">${ts.map(t => `<li><button type="button" data-traject="${esc(t.id)}" style="--k:${faseKleur(t.fase)}"><span class="f">${letter(t.fase)}</span><span><strong>${esc(t.titel)}</strong><br><small>${esc(naamVan(t))}${themaNaam(t.thema) ? ' · ' + esc(themaNaam(t.thema)) : ''}</small></span></button></li>`).join('')}</ul>` : '';
+const aantalTrajecten = n => n ? n + (n === 1 ? ' traject' : ' trajecten') : '';
+const lijstBuurten = bs => bs.length ? `<ul class="lijst">${bs.map(b => `<li><button type="button" data-buurt="${esc(b.plek)}" style="--k:${faseKleur(b.fase)}"><span class="f">${letter(b.fase)}</span><span><strong>${esc(b.naam)}</strong><br><small>${esc([faseNaam(b.fase), aantalTrajecten(trajectenBij(b.plek).length)].filter(Boolean).join(' · '))}</small></span></button></li>`).join('')}</ul>` : '';
+const lijstActiviteiten = (as, f) => as && as.length ? `<ul class="activiteiten" style="--k:${faseKleur(f)}">${as.map(a => `<li>${esc(a.wat)}${a.wanneer || a.waar ? `<span class="wanneer">${esc([a.wanneer, a.waar].filter(Boolean).join(' · '))}</span>` : ''}</li>`).join('')}</ul>` : '';
 
 let huidig = '';
 function vul(titel, meta, body) { $('c-titel').textContent = titel; card.classList.toggle('titel-dubbel', titel === $('plek').textContent); $('c-meta').innerHTML = meta; $('card-body').innerHTML = body; peek(); }
@@ -119,14 +121,15 @@ function toonBuurt(code) {
   zetFase(b ? b.fase : '');
   if (b) {
     vul(b.naam, themaTags(ts.map(t => t.thema)) + sindsRegel(b.sinds),
-      `<p>${esc(b.doel)}</p>
+      `${b.doel ? `<p>${esc(b.doel)}</p>` : ''}
        ${ts.length ? '<h3>Trajecten</h3>' + lijstTrajecten(ts) : ''}
        ${b.activiteiten.length ? '<h3>Activiteiten</h3>' + lijstActiviteiten(b.activiteiten, b.fase) : ''}`);
     adres(b.id);
   } else {
-    const wijk = cbs.type === 'wijk' ? code : wijkVan(code); const inWijk = buurtenInWijk(wijk);
-    vul(cbs.naam || '', '',
-      inWijk.length ? `<p>In ${esc((CBS[wijk] || {}).naam || 'deze wijk')} loopt BuurtKennis in ${inWijk.length === 1 ? 'één buurt' : inWijk.length + ' buurten'}.</p>${lijstBuurten(inWijk)}` : '<p>Hier loopt nu nog niets van BuurtKennis.</p>');
+    const wijk = wijkVan(code); const wijkNaam = (CBS[wijk] || {}).naam; const inWijk = buurtenInWijk(wijk);
+    vul(cbs.naam || '', wijkNaam ? `<span class="sinds">in ${esc(wijkNaam)}</span>` : '',
+      '<p>Hier loopt nu nog niets van BuurtKennis.</p>' +
+      (inWijk.length ? `<p>Wel in ${esc(wijkNaam || 'deze wijk')}, in ${inWijk.length === 1 ? 'één buurt' : inWijk.length + ' buurten'}:</p>${lijstBuurten(inWijk)}` : ''));
     adres('');
   }
   zetStand('dicht');
@@ -136,7 +139,7 @@ function toonTraject(id) {
   huidig = 'traject:' + id; markeer([...svg.querySelectorAll(`.traject[data-id="${CSS.escape(id)}"]`), ...buurtenVan(t).map(b => document.getElementById(b.plek))]);
   $('plek').textContent = naamVan(t); zetFase(t.fase);
   vul(t.titel, themaTags([t.thema]) + sindsRegel(t.sinds),
-    `<p>${esc(t.doel)}</p>
+    `${t.doel ? `<p>${esc(t.doel)}</p>` : ''}
      ${t.activiteiten.length ? '<h3>Activiteiten</h3>' + lijstActiviteiten(t.activiteiten, t.fase) : ''}
      <p><a class="uit" href="${esc(t.url)}" target="_blank" rel="noopener">Meer over dit traject</a></p>`);
   zetStand('dicht'); adres(t.id);
@@ -162,7 +165,7 @@ document.addEventListener('click', e => {
   const d = e.target.closest('.traject'); if (d) return toonTraject(d.dataset.id);
   const lt = e.target.closest('[data-traject]'); if (lt) return toonTraject(lt.dataset.traject);
   const lb = e.target.closest('[data-buurt]'); if (lb) return toonBuurt(lb.dataset.buurt);
-  const b = e.target.closest('.buurt'); if (b) { const doel = buurtMetPlek(b.id) ? b.id : (wijkVan(b.id) || b.id); return huidig === 'buurt:' + doel ? toonLeiden() : toonBuurt(doel); }
+  const b = e.target.closest('.buurt'); if (b) return huidig === 'buurt:' + b.id ? toonLeiden() : toonBuurt(b.id);
   if (e.target.closest('.card, a, button, .kompas-rij, .bk-kop')) return;
   toonLeiden();
 });

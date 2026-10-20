@@ -5,6 +5,6 @@ thema: luchtkwaliteit
 buurten:
   - _buurten/lage-mors.md
   - _buurten/hoge-mors.md
-  - _buurten/groenoord-zuid.md
+  - _buurten/groenoord.md
 sinds: 2026-10
 ---
