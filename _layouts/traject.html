@@ -1,0 +1,30 @@
+---
+layout: bk
+---
+{%- assign f = page.fase | slice: 0 | upcase -%}
+{%- assign fn = "" -%}{%- for fs in site.data.methode.fases -%}{%- if fs.code == f -%}{%- assign fn = fs.naam -%}{%- endif -%}{%- endfor -%}
+{%- assign pl = site.data.plekken[page.plek] -%}
+<p><a href="{{ '/' | relative_url }}#{{ page.slug }}">← Kaart</a> · <a href="{{ '/trajecten/' | relative_url }}">Alle trajecten</a></p>
+<div class="tra-kop">
+  <p class="plek">{{ page.pleknaam | default: pl.naam }}</p>
+  <h1>{{ page.titel }}</h1>
+  <p class="intro">{{ page.doel }}</p>
+  <div class="meta">
+    <a class="tag fase" style="--k:var(--fase-{{ f }})" href="{{ '/fases/' | relative_url }}#{{ f }}">{{ page.fase }} {{ fn }}</a>
+    <span class="tag thema" style="--tk:{{ site.data.themas[page.thema].kleur | default: '#888' }}">{{ site.data.themas[page.thema].naam | default: page.thema }}</span>
+    {% if page.sinds %}<span class="tag">sinds {{ page.sinds | append: '-01' | date: '%B %Y' | replace: 'January','januari' | replace: 'February','februari' | replace: 'March','maart' | replace: 'April','april' | replace: 'May','mei' | replace: 'June','juni' | replace: 'July','juli' | replace: 'August','augustus' | replace: 'September','september' | replace: 'October','oktober' | replace: 'November','november' | replace: 'December','december' }}</span>{% endif %}
+  </div>
+</div>
+{{ content }}
+{%- if page.activiteiten %}
+<h2>Activiteiten</h2>
+<ul class="activiteiten">
+{%- for a in page.activiteiten %}
+  <li><strong>{{ a.wat }}</strong>{% if a.wanneer %} <span class="wanneer">{{ a.wanneer }}</span>{% endif %}{% if a.waar or a.wie %}<br><small>{{ a.waar }}{% if a.waar and a.wie %} · {% endif %}{% if a.wie %}voor/met {{ a.wie }}{% endif %}</small>{% endif %}</li>
+{%- endfor %}
+</ul>
+{%- endif %}
+{%- if page.links %}
+<h2>Verder</h2>
+<ul>{% for l in page.links %}<li><a class="uit" href="{{ l.url }}" target="_blank" rel="noopener">{{ l.tekst }}</a></li>{% endfor %}</ul>
+{%- endif %}

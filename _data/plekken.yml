@@ -1,0 +1,69 @@
+# Plekken waar een traject aan hangt: CBS-wijken en -buurten van Leiden (codes van PDOK).
+# naam mag je aanpassen aan hoe jullie de plek noemen; code en midden niet.
+# Leiden-breed: plek: leiden
+
+leiden: { naam: "Leiden", type: stad, midden: [500, 520] }
+WK054600: { naam: "Binnenstad-Zuid", type: wijk, midden: [607.6, 538.0] }
+WK054601: { naam: "Binnenstad-Noord", type: wijk, midden: [705.6, 466.9] }
+WK054602: { naam: "Stationsdistrict", type: wijk, midden: [553.5, 338.7] }
+WK054603: { naam: "Leiden-Noord", type: wijk, midden: [756.2, 328.9] }
+WK054604: { naam: "Roodenburgerdistrict", type: wijk, midden: [751.3, 733.5] }
+WK054605: { naam: "Bos- en Gasthuisdistrict", type: wijk, midden: [455.4, 854.3] }
+WK054606: { naam: "De Mors", type: wijk, midden: [287.9, 474.2] }
+WK054607: { naam: "Boerhaavedistrict", type: wijk, midden: [410.3, 269.7] }
+WK054608: { naam: "Merenwijkdistrict", type: wijk, midden: [794.4, 133.3] }
+WK054609: { naam: "Stevenshofdistrict", type: wijk, midden: [121.3, 643.9] }
+BU05460000: { naam: "Pieterswijk", type: buurt, wijk: WK054600, midden: [584.7, 508.2] }
+BU05460001: { naam: "Academiewijk", type: buurt, wijk: WK054600, midden: [532.0, 517.3] }
+BU05460002: { naam: "Levendaal-West", type: buurt, wijk: WK054600, midden: [610.2, 572.4] }
+BU05460003: { naam: "Levendaal-Oost", type: buurt, wijk: WK054600, midden: [698.1, 570.8] }
+BU05460100: { naam: "De Camp", type: buurt, wijk: WK054601, midden: [578.9, 444.4] }
+BU05460101: { naam: "Marewijk", type: buurt, wijk: WK054601, midden: [652.9, 451.1] }
+BU05460102: { naam: "Pancras-West", type: buurt, wijk: WK054601, midden: [648.2, 498.9] }
+BU05460103: { naam: "Pancras-Oost", type: buurt, wijk: WK054601, midden: [692.8, 504.8] }
+BU05460104: { naam: "d'Oude Morsch", type: buurt, wijk: WK054601, midden: [526.6, 421.6] }
+BU05460105: { naam: "Noordvest", type: buurt, wijk: WK054601, midden: [660.1, 409.4] }
+BU05460106: { naam: "Havenwijk-Noord", type: buurt, wijk: WK054601, midden: [748.6, 428.9] }
+BU05460107: { naam: "Havenwijk-Zuid", type: buurt, wijk: WK054601, midden: [743.5, 497.4] }
+BU05460108: { naam: "Molenbuurt", type: buurt, wijk: WK054601, midden: [573.7, 400.0] }
+BU05460109: { naam: "De Waard", type: buurt, wijk: WK054601, midden: [828.3, 499.0] }
+BU05460200: { naam: "Stationskwartier", type: buurt, wijk: WK054602, midden: [553.7, 338.4] }
+BU05460300: { naam: "Groenoord", type: buurt, wijk: WK054603, midden: [638.2, 295.3] }
+BU05460301: { naam: "Noorderkwartier", type: buurt, wijk: WK054603, midden: [734.1, 324.1] }
+BU05460302: { naam: "De Kooi", type: buurt, wijk: WK054603, midden: [845.4, 352.2] }
+BU05460400: { naam: "Meerburg", type: buurt, wijk: WK054604, midden: [911.7, 610.4] }
+BU05460401: { naam: "Rijndijkbuurt", type: buurt, wijk: WK054604, midden: [822.1, 581.8] }
+BU05460402: { naam: "Professorenwijk-Oost", type: buurt, wijk: WK054604, midden: [791.7, 673.6] }
+BU05460403: { naam: "Burgemeesterswijk", type: buurt, wijk: WK054604, midden: [723.5, 632.7] }
+BU05460404: { naam: "Professorenwijk-West", type: buurt, wijk: WK054604, midden: [683.4, 707.1] }
+BU05460405: { naam: "Tuinstadwijk", type: buurt, wijk: WK054604, midden: [597.8, 649.8] }
+BU05460406: { naam: "Cronestein", type: buurt, wijk: WK054604, midden: [594.0, 762.8] }
+BU05460407: { naam: "Klein Cronestein", type: buurt, wijk: WK054604, midden: [708.2, 877.3] }
+BU05460408: { naam: "Roomburg", type: buurt, wijk: WK054604, midden: [868.6, 729.5] }
+BU05460409: { naam: "Waardeiland", type: buurt, wijk: WK054604, midden: [921.2, 527.1] }
+BU05460500: { naam: "Vreewijk", type: buurt, wijk: WK054605, midden: [505.5, 563.2] }
+BU05460501: { naam: "Haagweg-Noord", type: buurt, wijk: WK054605, midden: [427.5, 531.4] }
+BU05460502: { naam: "Gasthuiswijk", type: buurt, wijk: WK054605, midden: [488.8, 797.8] }
+BU05460503: { naam: "Fortuinwijk-Noord", type: buurt, wijk: WK054605, midden: [380.2, 776.6] }
+BU05460504: { naam: "Boshuizen", type: buurt, wijk: WK054605, midden: [352.7, 654.9] }
+BU05460505: { naam: "Oostvliet", type: buurt, wijk: WK054605, midden: [491.0, 1033.3] }
+BU05460506: { naam: "Haagweg-Zuid", type: buurt, wijk: WK054605, midden: [457.7, 641.3] }
+BU05460507: { naam: "Fortuinwijk-Zuid", type: buurt, wijk: WK054605, midden: [391.2, 888.2] }
+BU05460600: { naam: "Transvaal", type: buurt, wijk: WK054606, midden: [436.3, 463.2] }
+BU05460601: { naam: "Lage Mors", type: buurt, wijk: WK054606, midden: [339.9, 441.0] }
+BU05460602: { naam: "Hoge Mors", type: buurt, wijk: WK054606, midden: [231.1, 495.3] }
+BU05460700: { naam: "Pesthuiswijk", type: buurt, wijk: WK054607, midden: [434.4, 334.5] }
+BU05460701: { naam: "Houtkwartier", type: buurt, wijk: WK054607, midden: [547.4, 220.1] }
+BU05460702: { naam: "Raadsherenbuurt", type: buurt, wijk: WK054607, midden: [464.1, 172.4] }
+BU05460703: { naam: "Vogelwijk", type: buurt, wijk: WK054607, midden: [391.5, 249.8] }
+BU05460704: { naam: "Leeuwenhoek", type: buurt, wijk: WK054607, midden: [264.6, 329.8] }
+BU05460800: { naam: "Slaaghwijk", type: buurt, wijk: WK054608, midden: [736.9, 200.0] }
+BU05460801: { naam: "Zijlwijk-Zuid", type: buurt, wijk: WK054608, midden: [885.3, 182.4] }
+BU05460802: { naam: "Zijlwijk-Noord", type: buurt, wijk: WK054608, midden: [864.6, 70.3] }
+BU05460803: { naam: "Merenwijk-Centrum", type: buurt, wijk: WK054608, midden: [800.1, 132.0] }
+BU05460804: { naam: "Leedewijk-Zuid", type: buurt, wijk: WK054608, midden: [737.0, 138.8] }
+BU05460805: { naam: "Leedewijk-Noord", type: buurt, wijk: WK054608, midden: [736.5, 62.8] }
+BU05460900: { naam: "Schenkwijk", type: buurt, wijk: WK054609, midden: [76.8, 561.9] }
+BU05460901: { naam: "Kloosterhof", type: buurt, wijk: WK054609, midden: [186.4, 583.0] }
+BU05460902: { naam: "Dobbewijk-Noord", type: buurt, wijk: WK054609, midden: [174.3, 669.6] }
+BU05460903: { naam: "Dobbewijk-Zuid", type: buurt, wijk: WK054609, midden: [104.8, 725.2] }
