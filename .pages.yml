@@ -129,7 +129,7 @@ content:
   - name: instellingen
     label: Instellingen (kaart aan/uit)
     type: file
-    path: _config.yml
+    path: _data/instellingen.yml
     format: yaml
     fields:
       - name: buurtkaart

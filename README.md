@@ -15,7 +15,7 @@ Een map zonder `_` ervoor is een pagina. Een map of bestand dat met `_` begint i
 - `_includes/kaart-leiden.svg`: de getekende kaart; `_includes/kaart-blok.html`: kaart, kompas en card; `_includes/doos-symbolen.svg`: de doos
 - [`overzicht/`](overzicht/): de eerdere kaart (versie 1), met `_overzicht/` als bron
 - [`hittemaatregelen/`](hittemaatregelen/): ideeën uit de workshop over hittestress van 27 augustus 2026
-- `_config.yml`: instellingen voor de bouw (GitHub Pages bouwt deze repo met Jekyll)
+- `_config.yml`: instellingen voor de bouw (GitHub Pages bouwt deze repo met Jekyll); `_data/instellingen.yml`: kaarten aan of uit
 
 Een nieuwe losse pagina: maak een eigen map met een `index.html`, link `../assets/site.css`, en zet hem in de lijst op de startpagina.
 
@@ -72,13 +72,13 @@ De bestanden in `_overzicht/` voeden `overzicht/`. Velden: `naam`, `zichtbaar` (
 
 ## Aan en uit, en de werkversie
 
-**Nieuwe kaart (startpagina):** `buurtkaart: aan` of `uit` in `_config.yml`. Bij uit toont de startpagina een melding; `werkversie` laat de kaart altijd zien.
+**Nieuwe kaart (startpagina):** `buurtkaart: aan` of `uit` in `_data/instellingen.yml` (of in het beheerscherm onder Instellingen). Bij uit toont de startpagina een melding; `werkversie` laat de kaart altijd zien.
 
 **Oude kaart (/overzicht):**
 
 Werken jullie aan de kaart en mag niemand het tussenresultaat zien:
 
-1. Zet in `_config.yml` de regel `buurtenkaart: aan` op `uit`. Bezoekers van `overzicht/` zien dan alleen een korte melding.
+1. Zet in `_data/instellingen.yml` (of in het beheerscherm onder Instellingen) de regel `buurtenkaart: aan` op `uit`. Bezoekers van `overzicht/` zien dan alleen een korte melding.
 2. Bekijk je werk op de werkversie: `overzicht/werkversie`. Die laat altijd zien wat er nu in de bestanden staat, met bovenaan een kader dat zegt dat het de werkversie is. Hij is nergens gelinkt en zoekmachines slaan hem over.
 3. Klaar? Zet `buurtenkaart` terug op `aan`.
 

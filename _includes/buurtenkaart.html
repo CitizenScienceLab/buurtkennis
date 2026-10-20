@@ -1,10 +1,10 @@
 {%- comment -%}
   De buurtenkaart. Wordt gebruikt door buurten/index.html (de openbare kaart)
   en overzicht/werkversie.html (de werkversie, met werkversie="ja").
-  De openbare kaart volgt de schakelaar buurtenkaart in _config.yml;
+  De openbare kaart volgt de schakelaar buurtenkaart in _data/instellingen.yml;
   de werkversie laat altijd zien wat er nu in de bestanden staat.
 {%- endcomment -%}
-{%- assign stand = site.overzichtkaart | append: "" | downcase | strip -%}
+{%- assign stand = site.data.instellingen.buurtenkaart | append: "" | downcase | strip -%}
 {%- assign openbaar_aan = true -%}
 {%- if stand == "uit" or stand == "false" or stand == "nee" or stand == "off" -%}{%- assign openbaar_aan = false -%}{%- endif -%}
 {%- assign werkversie = false -%}

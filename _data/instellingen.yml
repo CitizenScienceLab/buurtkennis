@@ -1,0 +1,5 @@
+# Kaarten aan of uit. Ook te wijzigen in het beheerscherm (app.pagescms.org, Instellingen).
+# buurtkaart: de kaart op de startpagina. Bij uit toont de startpagina een korte melding; /werkversie laat altijd de actuele stand zien.
+# buurtenkaart: de oude kaart op /overzicht.
+buurtkaart: aan
+buurtenkaart: uit
