@@ -1,6 +1,6 @@
 {%- comment -%}
   De kaart met kompas en veegkaart. Data:
-  _buurten/   waar BuurtKennis actief is (fase, doel, activiteiten)
+  _buurten/   elke buurt van Leiden; telt mee zodra er een fase, doel, activiteit of traject is
   _trajecten/ thematische trajecten in één of meer buurten — elk een doosje in die buurt
   De kleur van een buurt is zijn eigen fase; zonder eigen fase de verste fase van de trajecten die er lopen.
   _data/cbs.yml  codes, namen en middens van wijken en buurten
@@ -28,8 +28,12 @@
 const FASES = {{ site.data.methode.fases | jsonify }};
 const THEMAS = {{ site.data.themas | jsonify }};
 const CBS = {{ site.data.cbs | jsonify }};
-const BUURTEN = [{% for b in site.buurten %}{"id":{{ b.slug | jsonify }},"pad":{{ b.path | jsonify }},"naam":{{ b.naam | jsonify }},"plek":{{ b.plek | jsonify }},"fase":{{ b.fase | jsonify }},"sinds":{{ b.sinds | jsonify }},"doel":{{ b.doel | jsonify }},"activiteiten":{{ b.activiteiten | default: empty | jsonify }},"links":{{ b.links | default: empty | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
+const ALLE_BUURTEN = [{% for b in site.buurten %}{"id":{{ b.slug | jsonify }},"pad":{{ b.path | jsonify }},"naam":{{ b.naam | jsonify }},"plek":{{ b.plek | jsonify }},"fase":{{ b.fase | jsonify }},"sinds":{{ b.sinds | jsonify }},"doel":{{ b.doel | jsonify }},"activiteiten":{{ b.activiteiten | default: empty | jsonify }},"links":{{ b.links | default: empty | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
 const TRAJECTEN = [{% for t in site.trajecten %}{"id":{{ t.slug | jsonify }},"titel":{{ t.titel | jsonify }},"fase":{{ t.fase | jsonify }},"thema":{{ t.thema | jsonify }},"buurten":{{ t.buurten | default: empty | jsonify }},"sinds":{{ t.sinds | jsonify }},"doel":{{ t.doel | jsonify }},"activiteiten":{{ t.activiteiten | default: empty | jsonify }},"url":{{ t.url | relative_url | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
+// elke CBS-buurt heeft een bestand; op de kaart telt een buurt pas mee als er iets loopt:
+// een fase, doel of activiteit, of een traject dat er loopt
+const inTraject = b => TRAJECTEN.some(t => (t.buurten || []).some(id => id === b.id || id === b.pad));
+const BUURTEN = ALLE_BUURTEN.filter(b => b.fase || b.doel || (b.activiteiten || []).length || inTraject(b));
 const FASEN_URL = {{ '/fases/' | relative_url | jsonify }};
 
 const $ = id => document.getElementById(id);
@@ -54,14 +58,15 @@ const themaNaam = th => (THEMAS[th] || {}).naam || '';
 
 // --- kleur van de buurten: de eigen fase; zonder eigen fase de verste fase van de trajecten die er lopen ---
 const versteTraject = b => trajectenBij(b.plek).map(t => t.fase).filter(f => letter(f)).sort((x, y) => letter(y).localeCompare(letter(x)))[0] || '';
-const omtrek = document.createElementNS('http://www.w3.org/2000/svg', 'g'); omtrek.setAttribute('class', 'omtrek');
-svg.querySelector('.wijken').before(omtrek);
+const laag = naam => { const g = document.createElementNS('http://www.w3.org/2000/svg', 'g'); g.setAttribute('class', naam); svg.querySelector('.trajecten').before(g); return g; };
+const kopie = el => { const o = document.createElementNS('http://www.w3.org/2000/svg', 'path'); o.setAttribute('d', el.getAttribute('d')); return o; };
+const omtrek = laag('omtrek'), keuze = laag('keuze');
 BUURTEN.forEach(b => {
   b.verste = letter(b.fase) ? b.fase : versteTraject(b);
   const el = document.getElementById(b.plek);
   if (el && b.verste) {
     el.classList.add('actief-buurt'); el.style.setProperty('--t', faseKleur(b.verste));
-    const o = document.createElementNS('http://www.w3.org/2000/svg', 'path'); o.setAttribute('d', el.getAttribute('d')); omtrek.append(o);
+    omtrek.append(kopie(el));
   }
 });
 
@@ -107,6 +112,7 @@ function vul(titel, meta, body) { $('c-titel').textContent = titel; card.classLi
 function markeer(sel) {
   document.querySelectorAll('.gekozen').forEach(e => e.classList.remove('gekozen'));
   if (sel) sel.forEach(e => e && e.classList.add('gekozen'));
+  keuze.replaceChildren(...(sel || []).filter(e => e && e.classList.contains('buurt')).map(kopie));
   $('kaart').classList.toggle('iets-gekozen', !!(sel && sel.some(e => e && e.classList.contains('traject'))));
 }
 function adres(h) { try { history.replaceState(null, '', h ? '#' + h : location.pathname + location.search); } catch (e) {} }

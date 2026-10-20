@@ -7,7 +7,7 @@ Openbare pagina's van BuurtKennis, een project van het Citizen Science Lab.
 Een map zonder `_` ervoor is een pagina. Een map of bestand dat met `_` begint is een bron: het verschijnt niet als pagina, maar pagina's lezen eruit. Ook bronnen zijn openbaar, want deze repo is openbaar.
 
 - `index.html`: startpagina, de kaart van Leiden met buurten en trajecten
-- `_buurten/`: één bestand per buurt waar BuurtKennis loopt, met de fase van die buurt en het algemene werk daar (kennismaken, kwesties ophalen)
+- `_buurten/`: één bestand per buurt van Leiden (alle 54 staan er al). Een buurt telt op de kaart mee zodra er een fase, doel of activiteit in staat, of zodra een traject er loopt
 - `_trajecten/`: één bestand per thematisch traject; elk traject is een doosje op de kaart
 - `_data/cbs.yml`: wijken en buurten van Leiden met hun CBS-code; `_data/themas.yml`: thema's met kleur; `_data/methode.yml`: fases en stappen (GitBook is de bron, hier staan alleen volgorde, kleur en links)
 - `trajecten/`: lijst van buurten en trajecten; `fases/`: het fasekompas; `werkversie.html`: de kaart, ook als hij uit staat
@@ -34,7 +34,7 @@ Bovenin het bestand, tussen de twee regels met `---`, staan de gegevens. Zet tek
 
 ## Een buurt bijwerken of toevoegen
 
-Een bestand in `_buurten/`, bijvoorbeeld `lage-mors.md` (adres: `/#lage-mors`). Een klik op de buurt op de kaart toont dit, met de trajecten die er lopen.
+Een bestand in `_buurten/`, bijvoorbeeld `lage-mors.md` (adres: `/#lage-mors`). Een klik op de buurt op de kaart toont dit, met de trajecten die er lopen. Elke buurt van Leiden heeft al een bestand: een nieuwe buurt aanmaken hoeft niet, vul het bestaande bestand aan.
 
 | Veld | Wat |
 |---|---|

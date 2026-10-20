@@ -14,10 +14,69 @@ content:
     view:
       primary: naam
       fields: [naam, fase, sinds]
-      sort: [fase, naam]
+      sort: [naam]
     fields:
       - { name: naam, label: Naam, type: string, required: true }
-      - { name: plek, label: "CBS-code (BU…) uit _data/cbs.yml", type: string, required: true }
+      - name: plek
+        label: "Buurt op de kaart (CBS)"
+        type: select
+        required: true
+        options:
+          values:
+            - { name: BU05460000, label: "Pieterswijk (Binnenstad-Zuid)" }
+            - { name: BU05460001, label: "Academiewijk (Binnenstad-Zuid)" }
+            - { name: BU05460002, label: "Levendaal-West (Binnenstad-Zuid)" }
+            - { name: BU05460003, label: "Levendaal-Oost (Binnenstad-Zuid)" }
+            - { name: BU05460100, label: "De Camp (Binnenstad-Noord)" }
+            - { name: BU05460101, label: "Marewijk (Binnenstad-Noord)" }
+            - { name: BU05460102, label: "Pancras-West (Binnenstad-Noord)" }
+            - { name: BU05460103, label: "Pancras-Oost (Binnenstad-Noord)" }
+            - { name: BU05460104, label: "d'Oude Morsch (Binnenstad-Noord)" }
+            - { name: BU05460105, label: "Noordvest (Binnenstad-Noord)" }
+            - { name: BU05460106, label: "Havenwijk-Noord (Binnenstad-Noord)" }
+            - { name: BU05460107, label: "Havenwijk-Zuid (Binnenstad-Noord)" }
+            - { name: BU05460108, label: "Molenbuurt (Binnenstad-Noord)" }
+            - { name: BU05460109, label: "De Waard (Binnenstad-Noord)" }
+            - { name: BU05460200, label: "Stationskwartier (Stationsdistrict)" }
+            - { name: BU05460300, label: "Groenoord (Leiden-Noord)" }
+            - { name: BU05460301, label: "Noorderkwartier (Leiden-Noord)" }
+            - { name: BU05460302, label: "De Kooi (Leiden-Noord)" }
+            - { name: BU05460400, label: "Meerburg (Roodenburgerdistrict)" }
+            - { name: BU05460401, label: "Rijndijkbuurt (Roodenburgerdistrict)" }
+            - { name: BU05460402, label: "Professorenwijk-Oost (Roodenburgerdistrict)" }
+            - { name: BU05460403, label: "Burgemeesterswijk (Roodenburgerdistrict)" }
+            - { name: BU05460404, label: "Professorenwijk-West (Roodenburgerdistrict)" }
+            - { name: BU05460405, label: "Tuinstadwijk (Roodenburgerdistrict)" }
+            - { name: BU05460406, label: "Cronestein (Roodenburgerdistrict)" }
+            - { name: BU05460407, label: "Klein Cronestein (Roodenburgerdistrict)" }
+            - { name: BU05460408, label: "Roomburg (Roodenburgerdistrict)" }
+            - { name: BU05460409, label: "Waardeiland (Roodenburgerdistrict)" }
+            - { name: BU05460500, label: "Vreewijk (Bos- en Gasthuisdistrict)" }
+            - { name: BU05460501, label: "Haagweg-Noord (Bos- en Gasthuisdistrict)" }
+            - { name: BU05460502, label: "Gasthuiswijk (Bos- en Gasthuisdistrict)" }
+            - { name: BU05460503, label: "Fortuinwijk-Noord (Bos- en Gasthuisdistrict)" }
+            - { name: BU05460504, label: "Boshuizen (Bos- en Gasthuisdistrict)" }
+            - { name: BU05460505, label: "Oostvliet (Bos- en Gasthuisdistrict)" }
+            - { name: BU05460506, label: "Haagweg-Zuid (Bos- en Gasthuisdistrict)" }
+            - { name: BU05460507, label: "Fortuinwijk-Zuid (Bos- en Gasthuisdistrict)" }
+            - { name: BU05460600, label: "Transvaal (De Mors)" }
+            - { name: BU05460601, label: "Lage Mors (De Mors)" }
+            - { name: BU05460602, label: "Hoge Mors (De Mors)" }
+            - { name: BU05460700, label: "Pesthuiswijk (Boerhaavedistrict)" }
+            - { name: BU05460701, label: "Houtkwartier (Boerhaavedistrict)" }
+            - { name: BU05460702, label: "Raadsherenbuurt (Boerhaavedistrict)" }
+            - { name: BU05460703, label: "Vogelwijk (Boerhaavedistrict)" }
+            - { name: BU05460704, label: "Leeuwenhoek (Boerhaavedistrict)" }
+            - { name: BU05460800, label: "Slaaghwijk (Merenwijkdistrict)" }
+            - { name: BU05460801, label: "Zijlwijk-Zuid (Merenwijkdistrict)" }
+            - { name: BU05460802, label: "Zijlwijk-Noord (Merenwijkdistrict)" }
+            - { name: BU05460803, label: "Merenwijk-Centrum (Merenwijkdistrict)" }
+            - { name: BU05460804, label: "Leedewijk-Zuid (Merenwijkdistrict)" }
+            - { name: BU05460805, label: "Leedewijk-Noord (Merenwijkdistrict)" }
+            - { name: BU05460900, label: "Schenkwijk (Stevenshofdistrict)" }
+            - { name: BU05460901, label: "Kloosterhof (Stevenshofdistrict)" }
+            - { name: BU05460902, label: "Dobbewijk-Noord (Stevenshofdistrict)" }
+            - { name: BU05460903, label: "Dobbewijk-Zuid (Stevenshofdistrict)" }
       - name: fase
         label: "Fase (leeg laten als er alleen trajecten lopen)"
         type: select
