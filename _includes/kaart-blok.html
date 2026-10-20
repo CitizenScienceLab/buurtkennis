@@ -32,7 +32,7 @@
 const FASES = {{ site.data.methode.fases | jsonify }};
 const THEMAS = {{ site.data.themas | jsonify }};
 const CBS = {{ site.data.cbs | jsonify }};
-const BUURTEN = [{% for b in site.buurten %}{"id":{{ b.slug | jsonify }},"naam":{{ b.naam | jsonify }},"plek":{{ b.plek | jsonify }},"fase":{{ b.fase | jsonify }},"sinds":{{ b.sinds | jsonify }},"doel":{{ b.doel | jsonify }},"activiteiten":{{ b.activiteiten | default: empty | jsonify }},"links":{{ b.links | default: empty | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
+const BUURTEN = [{% for b in site.buurten %}{"id":{{ b.slug | jsonify }},"pad":{{ b.path | jsonify }},"naam":{{ b.naam | jsonify }},"plek":{{ b.plek | jsonify }},"fase":{{ b.fase | jsonify }},"sinds":{{ b.sinds | jsonify }},"doel":{{ b.doel | jsonify }},"activiteiten":{{ b.activiteiten | default: empty | jsonify }},"links":{{ b.links | default: empty | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
 const TRAJECTEN = [{% for t in site.trajecten %}{"id":{{ t.slug | jsonify }},"titel":{{ t.titel | jsonify }},"fase":{{ t.fase | jsonify }},"thema":{{ t.thema | jsonify }},"buurten":{{ t.buurten | default: empty | jsonify }},"sinds":{{ t.sinds | jsonify }},"doel":{{ t.doel | jsonify }},"activiteiten":{{ t.activiteiten | default: empty | jsonify }},"url":{{ t.url | relative_url | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
 const FASEN_URL = {{ '/fases/' | relative_url | jsonify }};
 
@@ -49,7 +49,7 @@ const card = $('card');
 // --- trajecten horen bij buurten; een wijk toont de buurten erin ---
 const wijkVan = code => (CBS[code] || {}).wijk;
 const buurtMetPlek = code => BUURTEN.find(b => b.plek === code);
-const buurtenVan = t => t.buurten.map(id => BUURTEN.find(b => b.id === id)).filter(Boolean);
+const buurtenVan = t => (t.buurten || []).map(id => BUURTEN.find(b => b.id === id || b.pad === id)).filter(Boolean);
 const trajectenBij = code => TRAJECTEN.filter(t => buurtenVan(t).some(b => b.plek === code));
 const buurtenInWijk = code => BUURTEN.filter(b => wijkVan(b.plek) === code);
 const naamVan = t => buurtenVan(t).map(b => b.naam).join(', ');

@@ -1,0 +1,143 @@
+# Beheerscherm voor Pages CMS (app.pagescms.org): log in met GitHub en kies deze repo.
+# Alles wat je hier bewerkt wordt een gewone commit op main; de site bouwt vanzelf.
+media:
+  input: assets
+  output: /buurtkennis/assets
+
+content:
+  - name: buurten
+    label: Buurten
+    type: collection
+    path: _buurten
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: naam
+      fields: [naam, fase, sinds]
+      sort: [fase, naam]
+    fields:
+      - { name: naam, label: Naam, type: string, required: true }
+      - { name: plek, label: "CBS-code (BU…) uit _data/cbs.yml", type: string, required: true }
+      - name: fase
+        label: Fase
+        type: select
+        required: true
+        options:
+          values:
+            - { name: A, label: "A Project opstarten" }
+            - { name: B, label: "B Kwesties verzamelen" }
+            - { name: C, label: "C Vraagstuk vormen" }
+            - { name: D, label: "D Samen plannen" }
+            - { name: E, label: "E Onderzoek starten" }
+            - { name: F, label: "F BuurtKennis delen" }
+      - { name: sinds, label: "Sinds (jaar-maand, bv. 2026-09)", type: string, options: { pattern: "^[0-9]{4}-[0-9]{2}$" } }
+      - { name: doel, label: Doel, type: text }
+      - name: activiteiten
+        label: Activiteiten
+        type: object
+        list: true
+        fields:
+          - { name: wat, label: Wat, type: string, required: true }
+          - { name: wanneer, label: Wanneer, type: string }
+          - { name: waar, label: Waar, type: string }
+          - { name: wie, label: "Met wie (geen namen van personen)", type: string }
+      - name: links
+        label: Links
+        type: object
+        list: true
+        fields:
+          - { name: tekst, label: Tekst, type: string }
+          - { name: url, label: URL, type: string }
+      - { name: body, label: "Toelichting (optioneel)", type: rich-text }
+
+  - name: trajecten
+    label: Trajecten
+    type: collection
+    path: _trajecten
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: titel
+      fields: [titel, fase, thema, sinds]
+      sort: [fase, titel]
+    fields:
+      - { name: titel, label: Titel, type: string, required: true }
+      - name: fase
+        label: Fase
+        type: select
+        required: true
+        options:
+          values:
+            - { name: B, label: "B Kwesties verzamelen" }
+            - { name: C, label: "C Vraagstuk vormen" }
+            - { name: D, label: "D Samen plannen" }
+            - { name: E, label: "E Onderzoek starten" }
+      - name: thema
+        label: Thema
+        type: select
+        required: true
+        options:
+          values:
+            - { name: luchtkwaliteit, label: "Luchtkwaliteit" }
+            - { name: geluid, label: "Geluid" }
+            - { name: licht, label: "Lichtvervuiling" }
+            - { name: groen, label: "Groenvoorziening" }
+            - { name: biodiversiteit, label: "Biodiversiteit" }
+            - { name: water, label: "Water" }
+            - { name: zwerfafval, label: "Zwerfafval" }
+            - { name: hittestress, label: "Hittestress" }
+            - { name: veiligheid, label: "Veiligheid" }
+            - { name: mobiliteit, label: "Mobiliteit" }
+            - { name: sociaal, label: "Sociaal" }
+            - { name: gezondheid, label: "Gezondheidsbevordering" }
+            - { name: gezonde-leefomgeving, label: "Gezonde leefomgeving" }
+      - name: buurten
+        label: Buurten
+        type: reference
+        required: true
+        options:
+          collection: buurten
+          multiple: true
+          min: 1
+          value: "{path}"
+          label: "{naam}"
+      - { name: sinds, label: "Sinds (jaar-maand, bv. 2026-08)", type: string, options: { pattern: "^[0-9]{4}-[0-9]{2}$" } }
+      - { name: doel, label: Doel, type: text }
+      - name: activiteiten
+        label: Activiteiten
+        type: object
+        list: true
+        fields:
+          - { name: wat, label: Wat, type: string, required: true }
+          - { name: wanneer, label: Wanneer, type: string }
+          - { name: waar, label: Waar, type: string }
+          - { name: wie, label: "Met wie (geen namen van personen)", type: string }
+      - name: links
+        label: Links
+        type: object
+        list: true
+        fields:
+          - { name: tekst, label: Tekst, type: string }
+          - { name: url, label: URL, type: string }
+      - { name: body, label: "Toelichting (optioneel)", type: rich-text }
+
+  - name: themas
+    label: Thema's
+    type: file
+    path: _data/themas.yml
+    format: yaml
+
+  - name: instellingen
+    label: Instellingen (kaart aan/uit)
+    type: file
+    path: _config.yml
+    format: yaml
+    fields:
+      - name: buurtkaart
+        label: Nieuwe kaart op de startpagina
+        type: select
+        options: { values: [aan, uit] }
+      - name: buurtenkaart
+        label: Oude kaart op /overzicht
+        type: select
+        options: { values: [aan, uit] }
