@@ -43,16 +43,15 @@ De thema-tags van een buurt volgen vanzelf uit de trajecten die er lopen.
 
 ## Een traject bijwerken of toevoegen
 
-Een bestand in `_trajecten/`, bijvoorbeeld `noord-geluid.md` (adres: `trajecten/noord-geluid/`). Elk traject is een doosje op de kaart, met een klep in de kleur van zijn fase.
+Een bestand in `_trajecten/`, bijvoorbeeld `noord-geluid.md` (adres: `trajecten/noord-geluid/`). Elk traject is een doosje op de kaart, in de buurt(en) waar het loopt. Een traject hoort altijd bij buurten, niet bij een wijk.
 
 | Veld | Wat |
 |---|---|
 | `titel` | naam van het traject |
 | `fase` | `B`, `C`, `D` of `E`; een substap mag ook (`D1`) |
 | `thema` | sleutel uit `_data/themas.yml` |
-| `plek` | code uit `_data/cbs.yml`: een buurt (`BU…`), een wijk (`WK…`) of `leiden` |
-| `pleknaam` | alleen als de naam afwijkt van de CBS-naam, zoals `Groenoord-Zuid` |
-| `midden` | `[x, y]` om het doosje zelf te plaatsen (optioneel; anders zoekt de kaart een vrije plek in de buurt of wijk) |
+| `buurten` | bestandsnamen uit `_buurten/`, één of meer: `[groenoord-zuid]` of `[hoge-mors, lage-mors]`. In elke genoemde buurt komt een doosje |
+| `midden` | `[x, y]` om het eerste doosje zelf te plaatsen (optioneel; anders zoekt de kaart een vrije plek in de buurt) |
 | `sinds` | `2026-08` |
 | `doel` | één of twee zinnen |
 | `activiteiten` | lijst met `wat`, `wanneer`, `waar`, `wie` |
