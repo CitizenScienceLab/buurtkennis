@@ -2,7 +2,7 @@
 hier staan ze voorlopig op het midden van de buurt. Met midden: [x, y] in het trajectbestand zet je het eerste vast. {%- endcomment -%}
 {%- for t in site.trajecten -%}
   {%- for bs in t.buurten -%}
-    {%- assign b = site.buurten | where: "slug", bs | first -%}
+    {%- assign b = site.buurten | where: "slug", bs | first -%}{%- unless b -%}{%- assign b = site.buurten | where: "path", bs | first -%}{%- endunless -%}
     {%- if b -%}
       {%- assign p = site.data.cbs[b.plek] -%}
       {%- assign x = p.midden[0] | default: 500 -%}{%- assign y = p.midden[1] | default: 500 -%}

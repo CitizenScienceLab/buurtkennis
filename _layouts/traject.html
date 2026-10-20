@@ -4,7 +4,7 @@ layout: bk
 {%- assign f = page.fase | slice: 0 | upcase -%}
 {%- assign fn = "" -%}{%- for fs in site.data.methode.fases -%}{%- if fs.code == f -%}{%- assign fn = fs.naam -%}{%- endif -%}{%- endfor -%}
 {%- assign MAANDEN = "januari,februari,maart,april,mei,juni,juli,augustus,september,oktober,november,december" | split: "," -%}
-{%- assign namen = "" | split: "" -%}{%- for bs in page.buurten -%}{%- assign b = site.buurten | where: "slug", bs | first -%}{%- if b -%}{%- assign namen = namen | push: b.naam -%}{%- endif -%}{%- endfor -%}
+{%- assign namen = "" | split: "" -%}{%- for bs in page.buurten -%}{%- assign b = site.buurten | where: "slug", bs | first -%}{%- unless b -%}{%- assign b = site.buurten | where: "path", bs | first -%}{%- endunless -%}{%- if b -%}{%- assign namen = namen | push: b.naam -%}{%- endif -%}{%- endfor -%}
 <p><a href="{{ '/' | relative_url }}#{{ page.slug }}">Op de kaart</a> · <a href="{{ '/trajecten/' | relative_url }}">Alle trajecten</a></p>
 <div class="tra-kop">
   <p class="boven">{{ namen | join: ", " }}</p>

@@ -134,6 +134,7 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 
 .melding { background: var(--vlak); padding: 14px 18px; max-width: 40rem; border: 2px dashed var(--inkt) }
 .werk { border: 2px dashed var(--bruin); padding: 8px 14px; font-size: .9rem; margin-bottom: 8px }
+.werk-knoppen { display: inline-flex; flex-wrap: wrap; gap: 6px; margin-left: 6px } .werk-knoppen a { font-family: var(--kop); font-weight: 800; font-size: .8rem; text-decoration: none; padding: 2px 8px; background: var(--vlak); border: 2px solid var(--bruin) }
 .noot { font-size: .78rem; color: var(--zacht); margin-top: 28px }
 .fase-uitleg { background: var(--vlak); padding: 14px 18px; margin-top: 12px; border-top: 10px solid var(--band, var(--bruin)) }
 .fasen { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 6px }
