@@ -2,18 +2,20 @@
 # Mappen die met _ beginnen zijn bronnen: ze verschijnen niet als pagina,
 # maar pagina's lezen eruit. Ze zijn wel openbaar in deze repo.
 
-# De kaart op de startpagina en /trajecten: aan of uit.
-# Bij uit tonen die pagina's een korte melding; /werkversie laat de actuele stand zien.
+# De kaart op de startpagina: aan of uit.
+# Bij uit toont de startpagina een korte melding; /werkversie laat de actuele stand zien.
 buurtkaart: aan
 
 # De oude kaart op /overzicht: aan of uit.
 buurtenkaart: aan
 
 collections:
-  trajecten:
+  buurten:            # waar BuurtKennis actief is: één bestand per buurt, met fase
+    output: false
+  trajecten:          # thematische trajecten: één bestand per traject
     output: true
     permalink: /trajecten/:name/
-  buurten:
+  overzicht:          # bron van de oude kaart op /overzicht
     output: false
 
 defaults:

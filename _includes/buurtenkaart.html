@@ -4,7 +4,7 @@
   De openbare kaart volgt de schakelaar buurtenkaart in _config.yml;
   de werkversie laat altijd zien wat er nu in de bestanden staat.
 {%- endcomment -%}
-{%- assign stand = site.buurtenkaart | append: "" | downcase | strip -%}
+{%- assign stand = site.overzichtkaart | append: "" | downcase | strip -%}
 {%- assign openbaar_aan = true -%}
 {%- if stand == "uit" or stand == "false" or stand == "nee" or stand == "off" -%}{%- assign openbaar_aan = false -%}{%- endif -%}
 {%- assign werkversie = false -%}
@@ -12,7 +12,7 @@
 {%- assign kaart_aan = openbaar_aan -%}
 {%- if werkversie -%}{%- assign kaart_aan = true -%}{%- endif -%}
 {%- assign methode = site.data.methode -%}
-{%- assign buurten = site.buurten | where_exp: "b", "b.zichtbaar != false" | sort: "naam" -%}
+{%- assign buurten = site.overzicht | where_exp: "b", "b.zichtbaar != false" | sort: "naam" -%}
 {%- assign maanden = "januari,februari,maart,april,mei,juni,juli,augustus,september,oktober,november,december" | split: "," -%}
 <!doctype html>
 <html lang="nl">

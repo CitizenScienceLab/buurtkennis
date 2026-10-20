@@ -1,86 +1,132 @@
 /* BuurtKennis-stijl voor de buurtkaart en de pagina's eromheen.
-   Letters: Caramel voor plaatsnamen (zoals in het logo), Poppins voor koppen, Open Sans voor tekst.
-   Kleuren: zand en bruin als basis; de vier logokleuren zijn de fasekleuren B–E. Thema's alleen als tag. */
+   Naar leidenbuurtkennis.org: crèmegrond, zware schreefloze titels, een lichte schreef voor plaatsnamen,
+   gestippelde zwarte kaders zoals in het logo. De vier logokleuren zijn de fasekleuren B–E.
+   Letters: Public Sans Black staat in voor Basic Sans Black, Gilda Display voor Caramel
+   (vervang door de echte bestanden in assets/fonts als jullie die voor web mogen gebruiken). */
 :root {
-  --zand: #F4EEE3; --vlak: #FFFFFF; --inkt: #1E1407; --bruin: #382000; --lijn: #1E1407;
-  --fase-A: #BFB4A3; --fase-B: #388860; --fase-C: #F84800; --fase-D: #F8C808; --fase-E: #3088A0; --fase-F: #382000;
-  --water: #CFE3EC; --karton: #D9B98A; --karton-donker: #B8945F; --beige: #F6EBD6;
-  --naam: "Caramel", cursive; --kop: "Poppins", "Helvetica Neue", Arial, sans-serif; --tekst: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  --creme: #FDFBF6; --vlak: #FFFFFF; --inkt: #1E1407; --bruin: #382202; --lijn: #1E1407; --zacht: #6B5A45;
+  --fase-A: #A99A86; --fase-B: #388E62; --fase-C: #F84800; --fase-D: #FACD15; --fase-E: #328BA0; --fase-F: #382202;
+  --water: #CFE6EC; --doos: #DBCB94; --doos-zij: #C9B67A; --doos-binnen: #85704D; --doos-lijn: #382202;
+  --naam: "Gilda Display", Georgia, serif; --kop: "Public Sans", "Helvetica Neue", Arial, sans-serif; --tekst: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  --peek: 108px;
   color-scheme: light;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --zand: #231C12; --vlak: #2A2318; --inkt: #F2EADB; --bruin: #E8D7B8; --lijn: #F2EADB; --water: #2E4652; --karton: #8A6B3F; --karton-donker: #6B5030; --beige: #3A3022; --fase-F: #E8D7B8; color-scheme: dark } }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --creme: #1C1813; --vlak: #27211A; --inkt: #F3ECDF; --bruin: #EFE3CC; --lijn: #F3ECDF; --zacht: #BFAF97;
+  --water: #29434D; --doos-lijn: #F3ECDF; --fase-F: #EFE3CC; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --creme: #1C1813; --vlak: #27211A; --inkt: #F3ECDF; --bruin: #EFE3CC; --lijn: #F3ECDF; --zacht: #BFAF97;
+  --water: #29434D; --doos-lijn: #F3ECDF; --fase-F: #EFE3CC; color-scheme: dark }
+
 * { box-sizing: border-box }
 html, body { margin: 0 }
-body { background: var(--zand); color: var(--inkt); font-family: var(--tekst); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased }
-a { color: var(--bruin) }
-a.uit::after { content: " ↗"; font-size: .85em }
-:focus-visible { outline: 2px solid var(--fase-E); outline-offset: 2px }
-.wrap { max-width: 68rem; margin: 0 auto; padding-inline: 16px; padding-block: 16px 48px }
+body { background: var(--creme); color: var(--inkt); font-family: var(--tekst); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased }
+a { color: var(--bruin); text-underline-offset: 2px }
+a.uit::after { content: "\00a0↗"; font-size: .85em }
+:focus-visible { outline: 2px dashed var(--inkt); outline-offset: 3px }
+.wrap { max-width: 72rem; margin: 0 auto; padding-inline: 16px; padding-block: 12px 40px }
 
-/* kop */
-.bk-kop { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px }
-.bk-kop .logo img { height: 52px; width: auto; display: block }
-.bk-nav { display: flex; gap: 6px; flex-wrap: wrap }
-.bk-nav a { font-family: var(--kop); font-weight: 500; font-size: .9rem; text-decoration: none; color: var(--inkt); padding: 6px 12px; border-radius: 999px; border: 1.5px solid transparent }
-.bk-nav a[aria-current="page"] { border-color: var(--inkt) }
-.bk-nav a:hover { border-color: var(--inkt) }
-h1 { font-family: var(--kop); font-weight: 600; font-size: clamp(1.5rem, 4vw, 2rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--bruin); margin: 0 0 6px; text-wrap: balance }
-h2 { font-family: var(--kop); font-weight: 600; font-size: 1.15rem; color: var(--bruin); margin: 0 0 6px }
+/* kop: logo, titel, menu */
+.bk-kop { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px }
+.bk-kop .logo img { height: 46px; width: auto; display: block }
+.bk-titel { font-family: var(--kop); font-weight: 900; font-size: clamp(1.15rem, 4.6vw, 1.6rem); line-height: 1.05; letter-spacing: -0.015em; color: var(--bruin); margin: 0; flex: 1 1 auto; text-decoration: none }
+.bk-nav { display: flex; gap: 6px; flex-wrap: wrap; width: 100% }
+@media (min-width: 700px) { .bk-nav { width: auto } }
+.bk-nav a { font-family: var(--kop); font-weight: 800; font-size: .85rem; text-decoration: none; color: var(--inkt); padding: 4px 10px; border: 2px dashed transparent }
+.bk-nav a[aria-current="page"], .bk-nav a:hover { border-color: var(--inkt) }
+
+h1 { font-family: var(--kop); font-weight: 900; font-size: clamp(1.6rem, 5vw, 2.4rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--bruin); margin: 6px 0 8px; text-wrap: balance }
+h2 { font-family: var(--kop); font-weight: 900; font-size: 1.2rem; line-height: 1.15; color: var(--bruin); margin: 0 0 4px; letter-spacing: -0.01em }
+h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--bruin); margin: 16px 0 6px }
 .intro { margin: 0 0 16px; max-width: 60ch }
-.plek { font-family: var(--naam); font-weight: 400; color: var(--bruin); font-size: 2.1rem; line-height: 1.1; min-height: 1.1em; margin: 4px 0 8px }
+.plek { font-family: var(--naam); font-weight: 400; font-style: normal; color: var(--bruin); font-size: clamp(2.2rem, 9vw, 3rem); line-height: 1; margin: 2px 0 0; min-height: 1em }
 
-/* kaart + card */
-.hub { display: grid; gap: 14px }
-@media (min-width: 900px) { .hub { grid-template-columns: minmax(0, 1fr) minmax(0, 24rem); gap: 28px; align-items: start } .hub .kaartkolom { position: sticky; top: 16px } }
-.kaartkolom { min-width: 0; display: grid; gap: 10px }
-.kaart { position: relative; aspect-ratio: 1000 / 1010; width: 100%; max-height: 70vh; max-width: calc(70vh * 1000 / 1010); margin: 0 auto; border-radius: 18px; overflow: hidden }
-.kaart svg { position: absolute; inset: 0; width: 100%; height: 100% }
-.buurt { fill: var(--vlak); stroke: var(--lijn); stroke-width: .6; stroke-opacity: .25; cursor: pointer; transition: fill .15s }
-.buurt { fill: color-mix(in srgb, var(--t, var(--vlak)) 28%, var(--vlak)) }
-.buurt:hover, .buurt.actief { stroke-opacity: 1; stroke-width: 1.6 }
-.wijk { fill: none; stroke: var(--lijn); stroke-width: 3; stroke-dasharray: 8 6; stroke-linecap: round; pointer-events: none }
+/* indeling: mobiel naam, kompas, kaart, veegkaart; desktop kaart links, rest rechts */
+.hub { display: grid; gap: 4px; grid-template-areas: "naam" "kompas" "kaart" }
+.hub .naam { grid-area: naam } .hub .kompas-rij { grid-area: kompas } .hub .kaart { grid-area: kaart }
+@media (min-width: 900px) {
+  .hub { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); grid-template-areas: "kaart naam" "kaart kompas" "kaart card"; grid-template-rows: auto auto 1fr; column-gap: 32px; align-items: start }
+  .hub .kaart { position: sticky; top: 12px }
+  .hub .card { grid-area: card }
+}
+
+/* kompas */
+.kompas-rij { display: flex; align-items: center; gap: 10px; min-height: 64px }
+.kompas-rij .kompas { width: 128px; flex: none }
+.fase-label { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--inkt); text-decoration: none; line-height: 1.2 }
+.fase-label small { display: block; font-family: var(--tekst); font-weight: 400; font-size: .8rem; color: var(--zacht) }
+.kompas { display: block; overflow: visible }
+.kompas .boog, .kompas .stroom { fill: none; stroke: color-mix(in srgb, var(--k) 35%, var(--creme)); stroke-width: 6; stroke-linecap: round; transition: stroke-width .2s, stroke .2s }
+.kompas .pijlpunt { fill: none; stroke: color-mix(in srgb, var(--k) 35%, var(--creme)); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round }
+.kompas .letter { font-family: var(--kop); font-weight: 900; font-size: 15px; fill: var(--zacht); text-anchor: middle; dominant-baseline: middle }
+.kompas .tik { fill: none; stroke: transparent; stroke-width: 34; cursor: pointer; pointer-events: stroke }
+.kompas .open { display: none } .kompas .dicht { display: inline }
+.kompas:not([data-fase=""]) .open { display: inline } .kompas:not([data-fase=""]) .dicht { display: none }
+.kompas[data-fase="A"] [data-fase="A"].stroom, .kompas[data-fase="A"] [data-fase="A"].pijlpunt,
+.kompas[data-fase="B"] .boog[data-fase="B"], .kompas[data-fase="C"] .boog[data-fase="C"],
+.kompas[data-fase="D"] .boog[data-fase="D"], .kompas[data-fase="E"] .boog[data-fase="E"],
+.kompas[data-fase="F"] [data-fase="F"].stroom, .kompas[data-fase="F"] [data-fase="F"].pijlpunt { stroke: var(--k); stroke-width: 13 }
+.kompas[data-fase="A"] .letter[data-fase="A"], .kompas[data-fase="B"] .letter[data-fase="B"], .kompas[data-fase="C"] .letter[data-fase="C"],
+.kompas[data-fase="D"] .letter[data-fase="D"], .kompas[data-fase="E"] .letter[data-fase="E"], .kompas[data-fase="F"] .letter[data-fase="F"] { fill: var(--inkt) }
+.kompas.groot { width: min(100%, 420px); margin: 8px auto }
+
+/* kaart */
+.kaart { position: relative; aspect-ratio: 1028 / 1024; width: 100%; max-height: 72vh; max-width: calc(72vh * 1028 / 1024); margin: 0 auto }
+.kaart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden }
+.achtergrond { fill: transparent }
+.buurt { fill: var(--vlak); stroke: var(--lijn); stroke-width: .8; stroke-opacity: .22; cursor: pointer; transition: fill .15s }
+.buurt.actief-buurt { fill: color-mix(in srgb, var(--t) 30%, var(--vlak)) }
+.buurt:hover { stroke-opacity: .7 }
+.buurt.gekozen { stroke: var(--inkt); stroke-opacity: 1; stroke-width: 4 }
+.wijk { fill: none; stroke: var(--lijn); stroke-width: 3; stroke-dasharray: 9 7; stroke-linecap: round; pointer-events: none }
 .water path { fill: var(--water); stroke: none; pointer-events: none }
 .waterlijn path { fill: none; stroke: var(--water); stroke-linecap: round; pointer-events: none } .waterlijn .river { stroke-width: 9 } .waterlijn .canal { stroke-width: 3 }
-.traject { cursor: pointer; --zij: var(--karton); --voor: var(--karton-donker) }
-.traject[data-fase="A"] { --k: var(--fase-A) } .traject[data-fase="B"] { --k: var(--fase-B) } .traject[data-fase="C"] { --k: var(--fase-C) } .traject[data-fase="D"] { --k: var(--fase-D) } .traject[data-fase="E"] { --k: var(--fase-E) } .traject[data-fase="F"] { --k: var(--fase-F) }
-.traject text { font-family: var(--kop); font-weight: 600; font-size: 12px; fill: var(--inkt); text-anchor: middle; dominant-baseline: middle; paint-order: stroke; stroke: var(--zand); stroke-width: 3px }
-.traject.actief { --zij: var(--beige); --voor: var(--karton) } .traject.actief text { font-size: 14px }
-.legenda { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: .85rem; margin: 0 }
-.legenda span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--k) }
-.card { background: var(--vlak); border-radius: 18px 18px 0 0; padding: 12px 18px 18px; box-shadow: 0 -2px 12px rgba(0,0,0,.08); position: sticky; bottom: 0; min-width: 0 }
-@media (min-width: 900px) { .card { position: static; border-radius: 18px; box-shadow: 0 2px 10px rgba(0,0,0,.06) } }
-.card .greep { width: 40px; height: 4px; border-radius: 2px; background: var(--inkt); opacity: .3; margin: 0 auto 10px }
-@media (min-width: 900px) { .card .greep { display: none } }
-.card p { margin: 0 0 6px }
-.card ul { margin: 6px 0 0; padding-left: 1.1em }
-.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 }
-.tag { font-size: .8rem; padding: 2px 10px; border-radius: 999px; border: 1.5px solid var(--inkt); text-decoration: none; color: var(--inkt); display: inline-flex; align-items: center; gap: 6px }
-.tag.fase { border-color: var(--k); background: color-mix(in srgb, var(--k) 18%, transparent) }
-.tag.thema::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--tk) }
-.lijst { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px }
-.lijst a { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; padding: 10px 12px; background: var(--vlak); border-radius: 14px; text-decoration: none; color: var(--inkt) }
-.lijst .f { font-family: var(--kop); font-weight: 600; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--k) 25%, var(--vlak)); border: 2px solid var(--k) }
-.lijst small { color: var(--inkt); opacity: .7 }
-.melding { background: var(--vlak); border-radius: 14px; padding: 14px 18px; max-width: 40rem }
-.werk { border: 1.5px dashed var(--bruin); border-radius: 12px; padding: 8px 14px; font-size: .9rem; margin-bottom: 12px }
-.noot { font-size: .8rem; opacity: .7 }
+.traject { cursor: pointer }
+.traject use { transition: transform .15s; transform-box: fill-box; transform-origin: center }
+.traject:hover use, .traject.gekozen use { transform: scale(1.3) }
+.traject.gekozen use { filter: drop-shadow(0 4px 4px rgba(30, 20, 7, .3)) }
+.kaart.iets-gekozen .traject:not(.gekozen) { opacity: .55 }
 
-/* fasekompas */
-.kompas { width: min(100%, 360px); margin: 0 auto; display: block }
-.kompas .seg { cursor: pointer; stroke: var(--inkt); stroke-width: 2.5; fill: color-mix(in srgb, var(--k) 35%, var(--vlak)); transition: fill .15s }
-.kompas .seg:hover, .kompas .seg.actief { fill: var(--k) }
-.kompas text { font-family: var(--kop); font-weight: 600; fill: var(--inkt); text-anchor: middle; dominant-baseline: middle; pointer-events: none }
-.kompas .pijl { fill: var(--beige); stroke: var(--inkt); stroke-width: 2.5; cursor: pointer }
-.kompas .pijl:hover, .kompas .pijl.actief { fill: var(--k) }
-.fase-uitleg { background: var(--vlak); border-radius: 14px; padding: 14px 18px; margin-top: 14px; min-height: 6em }
-.fase-uitleg h2 { margin-top: 0 }
-.fasen { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 6px }
+/* veegkaart (mobiel), vaste kolom (desktop) */
+.card { background: var(--vlak); color: var(--inkt); min-width: 0; border-top: 10px solid var(--band, var(--bruin)) }
+.card-kop { padding: 8px 18px 10px; touch-action: none; cursor: grab; user-select: none }
+.greep { width: 44px; height: 5px; border-radius: 3px; background: var(--inkt); opacity: .25; margin: 2px auto 10px }
+.card-kop .meta { margin: 6px 0 0 }
+.card-body { padding: 0 18px 24px; overflow-y: auto; overscroll-behavior: contain }
+.card-body p { margin: 0 0 8px }
+@media (max-width: 899px) {
+  .card { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; max-height: 86vh; display: flex; flex-direction: column;
+    box-shadow: 0 -4px 18px rgba(30, 20, 7, .14); transform: translateY(calc(100% - var(--peek))); transition: transform .28s cubic-bezier(.2, 0, .2, 1) }
+  .card[data-stand="open"] { transform: translateY(0) }
+  .card.slepen { transition: none }
+  .card-body { flex: 1 1 auto }
+  body.met-card { padding-bottom: calc(var(--peek) + 12px) }
+}
+@media (min-width: 900px) { .greep { display: none } .card-kop { cursor: default; touch-action: auto; user-select: auto } }
+@media (prefers-reduced-motion: reduce) { .card, .traject use, .kompas .boog { transition: none } }
+
+/* labels: gestippeld zoals in het logo */
+.meta { display: flex; flex-wrap: wrap; gap: 6px }
+.tag { font-family: var(--kop); font-weight: 800; font-size: .78rem; line-height: 1.2; padding: 4px 9px; border: 2px dashed var(--inkt); color: var(--inkt); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; background: var(--vlak) }
+.tag.fase { border-style: solid; border-color: var(--k); background: color-mix(in srgb, var(--k) 22%, var(--vlak)) }
+.tag.thema::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--tk); flex: none }
+.tag.zacht { border-color: color-mix(in srgb, var(--inkt) 30%, transparent); font-weight: 600 }
+
+/* lijsten in de kaart en op /trajecten */
+.lijst { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px }
+.lijst a, .lijst button { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: center; width: 100%; text-align: left; padding: 8px 10px; background: var(--creme); border: 0; font: inherit; color: var(--inkt); text-decoration: none; cursor: pointer }
+.lijst a:hover, .lijst button:hover { outline: 2px dashed var(--inkt); outline-offset: -2px }
+.lijst .f { font-family: var(--kop); font-weight: 900; width: 28px; height: 28px; display: grid; place-items: center; background: var(--k); color: #fff }
+.lijst [style*="fase-D"] .f { color: var(--bruin) }
+.lijst small { color: var(--zacht) }
+.activiteiten { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px }
+.activiteiten li { padding: 8px 12px; background: var(--creme); border-left: 4px solid var(--k, var(--bruin)) }
+.activiteiten .wanneer { display: block; font-size: .82rem; color: var(--zacht) }
+
+.melding { background: var(--vlak); padding: 14px 18px; max-width: 40rem; border: 2px dashed var(--inkt) }
+.werk { border: 2px dashed var(--bruin); padding: 8px 14px; font-size: .9rem; margin-bottom: 8px }
+.noot { font-size: .78rem; color: var(--zacht); margin-top: 28px }
+.fase-uitleg { background: var(--vlak); padding: 14px 18px; margin-top: 12px; border-top: 10px solid var(--band, var(--bruin)) }
+.fasen { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 6px }
 .fasen li { display: grid; grid-template-columns: 2em 1fr; gap: 10px; align-items: baseline }
-.fasen .f { font-family: var(--kop); font-weight: 600; color: var(--k) }
-.tra-kop .meta { margin-top: 10px }
-.activiteiten { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px }
-.activiteiten li { background: var(--vlak); border-radius: 12px; padding: 10px 14px }
-.activiteiten .wanneer { font-size: .85rem; opacity: .75 }
-
-h2 + .activiteiten { margin-top: 8px }
-.activiteiten + h2, .tra-kop + h2 { margin-top: 18px }
+.fasen .f { font-family: var(--kop); font-weight: 900; color: var(--k) }

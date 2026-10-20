@@ -1,14 +1,11 @@
 ---
 layout: bk
-title: BuurtKennis in Leiden
+title: Leiden BuurtKennis in kaart
 description: Waar BuurtKennis loopt in Leiden, in welke buurt, en hoe ver het daar is.
 ---
 {%- assign stand = site.buurtkaart | append: "" | downcase | strip -%}
 {%- if stand == "uit" or stand == "false" or stand == "nee" or stand == "off" -%}
-<h1>BuurtKennis in Leiden</h1>
-<div class="melding"><p>De kaart is op dit moment niet beschikbaar. Kijk op de <a class="uit" href="https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/readme" target="_blank" rel="noopener">methodiekpagina's</a> voor hoe BuurtKennis werkt.</p></div>
+<div class="melding"><p>De kaart is op dit moment niet beschikbaar. Op de <a class="uit" href="https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/readme" target="_blank" rel="noopener">methodiekpagina's</a> lees je hoe BuurtKennis werkt.</p></div>
 {%- else -%}
-<h1>Waar BuurtKennis loopt</h1>
-<p class="intro">Met bewoners van Leidse buurten halen we kwesties op over een gezonde leefomgeving en onderzoeken die samen met onderzoekers en de gemeente. Elk doosje is een lopend traject; de kleur zegt hoe ver het is.</p>
 {% include kaart-blok.html %}
 {%- endif %}

@@ -1,8 +1,7 @@
 ---
-titel: "Leren kennen van de Lage Mors"
-fase: B
-thema: algemeen
+naam: "Lage Mors"
 plek: BU05460601
+fase: B
 sinds: 2026-09
 doel: "Een beeld van de wijk en aanknopingspunten voor het verzamelen van kwesties. Hoe bereiken we de bewoners hier het beste?"
 activiteiten:

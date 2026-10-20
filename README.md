@@ -6,32 +6,53 @@ Openbare pagina's van BuurtKennis, een project van het Citizen Science Lab.
 
 Een map zonder `_` ervoor is een pagina. Een map of bestand dat met `_` begint is een bron: het verschijnt niet als pagina, maar pagina's lezen eruit. Ook bronnen zijn openbaar, want deze repo is openbaar.
 
-- `index.html`: startpagina: de buurtkaart met de lopende trajecten
-- `assets/`: gedeelde stijl (`site.css`) en logo's
-- `_trajecten/`: één bestand per traject, de inhoud van de kaart (zie hieronder)
-- `_data/plekken.yml`: wijken en buurten van Leiden met hun code; `_data/themas.yml`: thema's als tag
-- `trajecten/`, `fases/`: lijst van trajecten en het fasekompas; `werkversie.html`: de kaart ook als hij uit staat
-- `_includes/kaart-leiden.svg`: de getekende kaart (wijken, buurten, water); `_includes/kaart-blok.html`: kaart plus card
-- [`overzicht/`](overzicht/): de eerdere kaart per buurt (versie 1), met `_buurten/` als bron
+- `index.html`: startpagina, de kaart van Leiden met buurten en trajecten
+- `_buurten/`: één bestand per buurt waar BuurtKennis loopt, met de fase van die buurt en het algemene werk daar (kennismaken, kwesties ophalen)
+- `_trajecten/`: één bestand per thematisch traject; elk traject is een doosje op de kaart
+- `_data/cbs.yml`: wijken en buurten van Leiden met hun CBS-code; `_data/themas.yml`: thema's met kleur; `_data/methode.yml`: fases en stappen (GitBook is de bron, hier staan alleen volgorde, kleur en links)
+- `trajecten/`: lijst van buurten en trajecten; `fases/`: het fasekompas; `werkversie.html`: de kaart, ook als hij uit staat
+- `assets/bk.css`: stijl van de kaart; `assets/site.css`: stijl van de losse pagina's
+- `_includes/kaart-leiden.svg`: de getekende kaart; `_includes/kaart-blok.html`: kaart, kompas en card; `_includes/doos-symbolen.svg`: de doos
+- [`overzicht/`](overzicht/): de eerdere kaart (versie 1), met `_overzicht/` als bron
 - [`hittemaatregelen/`](hittemaatregelen/): ideeën uit de workshop over hittestress van 27 augustus 2026
-- `_buurten/`: één bestand per buurt, de inhoud van de kaart
-- `_data/methode.yml`: de fases en stappen van de methode. GitBook is de bron; hier staan alleen volgorde, kleur en symbool, en de links naar GitBook
 - `_config.yml`: instellingen voor de bouw (GitHub Pages bouwt deze repo met Jekyll)
 
 Een nieuwe losse pagina: maak een eigen map met een `index.html`, link `../assets/site.css`, en zet hem in de lijst op de startpagina.
 
+## Bewerken in de browser
+
+Alles kan op github.com: open een bestand, klik op het potlood, pas aan, en klik op *Commit changes*. Na ongeveer een minuut staat het online. Zit er een fout in, dan blijft de vorige versie staan en krijg je een melding van GitHub. Voor iets nieuws kopieer je een bestaand bestand; de bestandsnaam wordt het adres.
+
+Bovenin het bestand, tussen de twee regels met `---`, staan de gegevens. Zet tekst tussen aanhalingstekens en let op het inspringen.
+
+## Een buurt bijwerken of toevoegen
+
+Een bestand in `_buurten/`, bijvoorbeeld `lage-mors.md` (adres: `/#lage-mors`). Een klik op de buurt op de kaart toont dit, met de trajecten die er lopen.
+
+| Veld | Wat |
+|---|---|
+| `naam` | naam van de buurt |
+| `plek` | CBS-code uit `_data/cbs.yml`, meestal een buurt (`BU…`) |
+| `fase` | `A` t/m `F`; een substap mag ook (`B2`). Dit kleurt de buurt op de kaart |
+| `sinds` | `2026-09` |
+| `doel` | één of twee zinnen |
+| `activiteiten` | lijst met `wat`, `wanneer`, `waar`, `wie` |
+| `links` | lijst met `tekst` en `url` (optioneel) |
+
+De thema-tags van een buurt volgen vanzelf uit de trajecten die er lopen.
+
 ## Een traject bijwerken of toevoegen
 
-Kopieer een bestand in `_trajecten/` en pas de gegevens aan. De bestandsnaam wordt het adres: `noord-geluid.md` wordt `trajecten/noord-geluid/`.
+Een bestand in `_trajecten/`, bijvoorbeeld `noord-geluid.md` (adres: `trajecten/noord-geluid/`). Elk traject is een doosje op de kaart, met een klep in de kleur van zijn fase.
 
 | Veld | Wat |
 |---|---|
 | `titel` | naam van het traject |
 | `fase` | `B`, `C`, `D` of `E`; een substap mag ook (`D1`) |
-| `thema` | sleutel uit `_data/themas.yml` (`algemeen` als er geen thema is) |
-| `plek` | code uit `_data/plekken.yml`: een buurt (`BU…`), een wijk (`WK…`) of `leiden` |
+| `thema` | sleutel uit `_data/themas.yml` |
+| `plek` | code uit `_data/cbs.yml`: een buurt (`BU…`), een wijk (`WK…`) of `leiden` |
 | `pleknaam` | alleen als de naam afwijkt van de CBS-naam, zoals `Groenoord-Zuid` |
-| `midden` | `[x, y]` om het doosje op een andere plek op de kaart te zetten (optioneel) |
+| `midden` | `[x, y]` om het doosje zelf te plaatsen (optioneel; anders zoekt de kaart een vrije plek in de buurt of wijk) |
 | `sinds` | `2026-08` |
 | `doel` | één of twee zinnen |
 | `activiteiten` | lijst met `wat`, `wanneer`, `waar`, `wie` |
@@ -39,29 +60,9 @@ Kopieer een bestand in `_trajecten/` en pas de gegevens aan. De bestandsnaam wor
 
 Onder de tweede `---` mag gewone tekst; die komt op de trajectpagina.
 
-## Een buurt bijwerken op de oude kaart (overzicht)
+## De oude kaart (overzicht)
 
-Dat kan gewoon in de browser, op github.com:
-
-1. Open het bestand in `_buurten/` en klik op het potlood. Voor een nieuwe buurt kopieer je een bestaand bestand. De bestandsnaam wordt het adres: `noord.md` wordt `overzicht/#noord`.
-2. Bovenin, tussen de twee regels met `---`, staan de gegevens. Zet tekst tussen aanhalingstekens en let op het inspringen.
-3. Onder de tweede `---` staat je uitleg, als gewone tekst. Kopjes (`##`), links en opsommingen werken.
-4. Klik op *Commit changes*. Na ongeveer een minuut staat het online. Zit er een fout in het bestand, dan blijft de vorige versie gewoon staan en krijg je een melding van GitHub.
-
-De gegevens bovenin:
-
-| Veld | Wat |
-|---|---|
-| `naam` | naam van de buurt |
-| `zichtbaar` | `true`, of `false` om de buurt van de kaart te halen |
-| `plek` | `[breedtegraad, lengtegraad]` van ongeveer het midden. Op openstreetmap.org zie je die door met de rechtermuisknop op de plek te klikken en het adres te laten tonen. |
-| `straal` | grootte van de zone in meter (zonder straal: 350) |
-| `bijgewerkt` | datum, zoals `2026-10-02` |
-| `stap` | de stap van de buurt zelf, zolang er nog geen thema's zijn (bijvoorbeeld `B1`) |
-| `themas` | per thema: `naam`, `stap`, `kwesties` (een lijst) en eventueel `uitkomst` met `tekst` en `link` |
-| `handleiding` | link naar een GitBook-pagina over deze buurt (mag leeg) |
-
-De kleur op de kaart volgt vanzelf uit het thema dat het verst is. Een thema dat de methode verlaat, krijgt `stap: geen-vervolg` of `stap: doorverwezen`.
+De bestanden in `_overzicht/` voeden `overzicht/`. Velden: `naam`, `zichtbaar` (`false` haalt de buurt weg), `plek` (`[breedtegraad, lengtegraad]`), `straal` (meter, standaard 350), `bijgewerkt`, `stap`, `themas` (per thema `naam`, `stap`, `kwesties`, eventueel `uitkomst`) en `handleiding`.
 
 ## Aan en uit, en de werkversie
 
@@ -75,7 +76,7 @@ Werken jullie aan de kaart en mag niemand het tussenresultaat zien:
 2. Bekijk je werk op de werkversie: `overzicht/werkversie`. Die laat altijd zien wat er nu in de bestanden staat, met bovenaan een kader dat zegt dat het de werkversie is. Hij is nergens gelinkt en zoekmachines slaan hem over.
 3. Klaar? Zet `buurtenkaart` terug op `aan`.
 
-Eén buurt van de kaart halen kan ook: zet in het bestand van die buurt `zichtbaar: false`.
+Eén buurt van de oude kaart halen kan ook: zet in het bestand in `_overzicht/` `zichtbaar: false`.
 
 Uit is niet weg: de werkversie en de bestanden in deze repo blijven voor iedereen te vinden die zoekt. Wat niet openbaar mag, hoort niet in deze repo.
 

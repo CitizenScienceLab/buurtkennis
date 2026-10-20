@@ -1,6 +1,5 @@
 # Thema's: alleen als tag bij een traject. Kleuren uit Jordy's themalijst (gebaseerd op de
 # Basisset Indicatoren Gezonde Leefomgeving). Nieuw thema: regel toevoegen.
-algemeen:          { naam: "Algemeen",            kleur: "#8C8C8C" }
 luchtkwaliteit:    { naam: "Luchtkwaliteit",      kleur: "#111111" }
 geluid:            { naam: "Geluid",              kleur: "#444444" }
 licht:             { naam: "Lichtvervuiling",     kleur: "#C9C9C9" }

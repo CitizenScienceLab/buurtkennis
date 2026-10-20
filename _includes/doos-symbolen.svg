@@ -1,0 +1,12 @@
+<svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute"><symbol id="doos" viewBox="104 176 320 214"><g stroke-width="7" stroke-linejoin="round" style="stroke:var(--doos-lijn)">
+<polygon points="280,222 305,184 417,221 378,258" style="fill:var(--klep, var(--doos))"/>
+<polygon points="180,258 280,222 378,258 280,295" style="fill:var(--doos-binnen)"/>
+<polygon points="180,258 280,295 280,383 180,345" style="fill:var(--doos)"/>
+<polygon points="280,295 378,258 378,345 280,383" style="fill:var(--doos-zij)"/>
+<polygon points="180,258 280,295 205,296 118,246" style="fill:var(--klep, var(--doos))"/>
+</g></symbol><symbol id="doos-dicht" viewBox="104 176 320 214"><g stroke-width="7" stroke-linejoin="round" style="stroke:var(--doos-lijn)">
+<polygon points="180,258 280,222 378,258 280,295" style="fill:var(--doos)"/>
+<line x1="230" y1="240" x2="329" y2="276"/>
+<polygon points="180,258 280,295 280,383 180,345" style="fill:var(--doos)"/>
+<polygon points="280,295 378,258 378,345 280,383" style="fill:var(--doos-zij)"/>
+</g></symbol></svg>
