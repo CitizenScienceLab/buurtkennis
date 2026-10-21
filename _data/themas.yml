@@ -13,3 +13,4 @@ mobiliteit:        { naam: "Mobiliteit",          kleur: "#6A3D9A" }
 sociaal:           { naam: "Sociaal",             kleur: "#F2E200" }
 gezondheid:        { naam: "Gezondheidsbevordering", kleur: "#D81B74" }
 gezonde-leefomgeving: { naam: "Gezonde leefomgeving", kleur: "#5B8C5A" }
+bodem:        { naam: "bodemkwaliteit", kleur: "#D81B74" }
