@@ -1,14 +1,15 @@
 ---
-naam: "Groenvoorziening"
-sleutel: groen
+naam: Groenvoorziening
 kleur: "#3C7A2E"
+eigen_kleur: "#22781e"
+sleutel: groen
 volgorde: 2
-vraag: "Hoeveel groen heeft jouw wijk?"
+vraag: Hoeveel groen heeft jouw wijk?
 onderzoeksvragen:
-  - "Hoeveel bomen zie je vanuit jouw voordeur?"
-  - "Welk deel van jouw straat ligt onder boomkronen?"
-  - "Hoe ver is de dichtstbijzijnde groene ruimte?"
-  - "Welke plekken in de wijk missen het meeste groen?"
+  - Hoeveel bomen zie je vanuit jouw voordeur?
+  - Welk deel van jouw straat ligt onder boomkronen?
+  - Hoe ver is de dichtstbijzijnde groene ruimte?
+  - Welke plekken in de wijk missen het meeste groen?
 ---
 Groen in de stad is veel meer dan mooi om te zien. Bomen, struiken, parken en geveltuintjes zorgen voor verkoeling, zuiveren de lucht, dempen geluid en geven ruimte aan dieren en planten. Toch is het groen in Leidse wijken lang niet gelijk verdeeld.
 
