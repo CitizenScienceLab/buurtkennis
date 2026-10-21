@@ -5,13 +5,13 @@ layout: bk
 {%- assign fn = "" -%}{%- for fs in site.data.methode.fases -%}{%- if fs.code == f -%}{%- assign fn = fs.naam -%}{%- endif -%}{%- endfor -%}
 {%- assign MAANDEN = "januari,februari,maart,april,mei,juni,juli,augustus,september,oktober,november,december" | split: "," -%}
 {%- assign namen = "" | split: "" -%}{%- for bs in page.buurten -%}{%- assign b = site.buurten | where: "slug", bs | first -%}{%- unless b -%}{%- assign b = site.buurten | where: "path", bs | first -%}{%- endunless -%}{%- if b -%}{%- assign namen = namen | push: b.naam -%}{%- endif -%}{%- endfor -%}
-<p><a href="{{ '/' | relative_url }}#{{ page.slug }}">Op de kaart</a> · <a href="{{ '/trajecten/' | relative_url }}">Alle trajecten</a></p>
+<p><a href="{{ '/kaart/' | relative_url }}#{{ page.slug }}">Op de kaart</a> · <a href="{{ '/trajecten/' | relative_url }}">Alle trajecten</a></p>
 <div class="tra-kop">
   <p class="boven">{{ namen | join: ", " }}</p>
   <h1>{{ page.titel }}</h1>
   <p class="intro">{{ page.doel }}</p>
   <div class="meta">
-    <a class="fase-pil" style="--k:var(--fase-{{ f }})" href="{{ '/fases/' | relative_url }}#{{ f }}"><span class="f">{{ f }}</span>{{ fn }}</a>
+    <a class="fase-pil" style="--k:var(--fase-{{ f }})" href="{{ '/methode/' | relative_url }}#{{ f }}"><span class="f">{{ f }}</span>{{ fn }}</a>
     <span class="tags"><span class="thema" style="--tk:{{ site.data.themas[page.thema].kleur | default: '#888' }}">{{ site.data.themas[page.thema].naam | default: page.thema }}</span></span>
     {% if page.sinds %}{% assign m = page.sinds | split: "-" %}{% assign mi = m[1] | minus: 1 %}<span class="sinds">sinds {{ MAANDEN[mi] }} {{ m[0] }}</span>{% endif %}
   </div>

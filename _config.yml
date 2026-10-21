@@ -11,12 +11,16 @@ collections:
   trajecten:          # thematische trajecten: één bestand per traject
     output: true
     permalink: /trajecten/:name/
+  themas:             # onderzoeksthema's op /themas: één bestand per thema
+    output: false
   overzicht:          # bron van de oude kaart op /overzicht
     output: false
 
 defaults:
   - scope: { type: trajecten }
     values: { layout: traject }
+
+title: Leiden BuurtKennis
 
 # Adres van de site op GitHub Pages (nodig voor links tussen pagina's)
 baseurl: /buurtkennis

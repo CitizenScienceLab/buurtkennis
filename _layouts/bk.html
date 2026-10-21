@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ page.title | default: page.titel }}</title>
-<meta name="description" content="{{ page.description | default: page.doel | default: 'BuurtKennis in Leiden: waar het loopt en hoe ver het is.' | escape }}">
+<title>{% if page.titel %}{{ page.titel }} · Leiden BuurtKennis{% else %}{{ page.title | default: 'Leiden BuurtKennis' }}{% endif %}</title>
+<meta name="description" content="{{ page.description | default: page.doel | default: 'Bewoners en experts verzamelen en onderzoeken samen buurtkennis voor een gezonde leefomgeving in Leiden.' | escape }}">
 <meta property="og:title" content="{{ page.title | default: page.titel | escape }}">
-<meta property="og:description" content="{{ page.description | default: page.doel | default: 'BuurtKennis in Leiden: waar het loopt en hoe ver het is.' | escape }}">
+<meta property="og:description" content="{{ page.description | default: page.doel | default: 'Bewoners en experts verzamelen en onderzoeken samen buurtkennis voor een gezonde leefomgeving in Leiden.' | escape }}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="nl_NL">
 {%- if page.noindex %}<meta name="robots" content="noindex, nofollow">{% endif %}
@@ -17,11 +17,14 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&family=Figtree:wght@800;900&family=Open+Sans:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="{{ '/assets/bk.css' | relative_url }}">
 </head>
-<body>
+<body{% if page.thuis %} class="thuis"{% endif %}>
 <div class="wrap">
 {% include bk-kop.html %}
 {{ content }}
-<p class="noot">BuurtKennis is een project van het <a href="https://www.universiteitleiden.nl/citizensciencelab" class="uit" target="_blank" rel="noopener">Citizen Science Lab</a>, Universiteit Leiden. Kaart: CBS Wijk- en Buurtkaart via PDOK; water: © OpenStreetMap-bijdragers.</p>
+<footer class="voet">
+  <p>Leiden BuurtKennis is een project van het <a href="https://www.universiteitleiden.nl/citizensciencelab" class="uit" target="_blank" rel="noopener">Citizen Science Lab</a>, Universiteit Leiden. Vragen? Mail naar <a href="mailto:{{ site.data.home.contact_mail }}">{{ site.data.home.contact_mail }}</a>.</p>
+  {%- if page.bron_kaart %}<p>Kaart: CBS Wijk- en Buurtkaart via PDOK; water: © OpenStreetMap-bijdragers.</p>{% endif %}
+</footer>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
    gestippelde zwarte kaders zoals in het logo. De vier logokleuren zijn de fasekleuren B–E.
    Letters: Figtree Black staat in voor Basic Sans Black (Adobe Fonts); vervang via de fonts-regel in _layouts/bk.html. */
 :root {
-  --creme: #FAF5E4; --vlak: #FFFFFF; --inkt: #1E1407; --bruin: #382202; --lijn: #1E1407; --zacht: #6B5A45;
+  --creme: #FDFBF6; --vlak: #FFFFFF; --inkt: #1E1407; --bruin: #382202; --lijn: #1E1407; --zacht: #6B5A45;
   --fase-A: #A99A86; --fase-B: #388E62; --fase-C: #F84800; --fase-D: #FACD15; --fase-E: #328BA0; --fase-F: #382202;
   --water: #CFE6EC; --doos: #DBCB94; --doos-binnen: #85704D; --doos-lijn: #382202;
   --kop: "Figtree", "Helvetica Neue", Arial, sans-serif; --titel: "Bitter", Georgia, serif; --tekst: "Open Sans", "Helvetica Neue", Arial, sans-serif;
@@ -141,8 +141,74 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .melding { background: var(--vlak); padding: 14px 18px; max-width: 40rem; border: 2px dashed var(--inkt) }
 .werk { border: 2px dashed var(--bruin); padding: 8px 14px; font-size: .9rem; margin-bottom: 8px }
 .werk-knoppen { display: inline-flex; flex-wrap: wrap; gap: 6px; margin-left: 6px } .werk-knoppen a { font-family: var(--kop); font-weight: 800; font-size: .8rem; text-decoration: none; padding: 2px 8px; background: var(--vlak); border: 2px solid var(--bruin) }
-.noot { font-size: .78rem; color: var(--zacht); margin-top: 28px }
+.voet { font-size: .8rem; color: var(--zacht); margin-top: 36px; padding-top: 14px; border-top: 2px dashed color-mix(in srgb, var(--inkt) 25%, transparent) }
+.voet p { margin: 0 0 4px }
+.onder-kaart { font-size: .9rem; margin: 14px 0 0; text-align: center }
 .fase-uitleg { background: var(--vlak); padding: 14px 18px; margin-top: 12px; border-top: 10px solid var(--band, var(--bruin)) }
 .fasen { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 6px }
 .fasen li { display: grid; grid-template-columns: 2em 1fr; gap: 10px; align-items: baseline }
 .fasen .f { font-family: var(--kop); font-weight: 900; color: var(--k) }
+
+/* ---------- homepagina: blokken in de kleuren van het logo, zoals de eerste site ---------- */
+.knop { display: inline-block; font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--inkt); background: var(--vlak); text-decoration: none; padding: 10px 16px; border: 2.5px dashed var(--inkt) }
+.knop:hover { background: var(--inkt); color: var(--vlak) }
+.knop.licht { background: transparent }
+.held-knoppen { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0 }
+/* een blok loopt over de volle breedte van het scherm, de tekst blijft in de kolom */
+.vol { border-image: conic-gradient(var(--bg) 0 0) fill 0 / / 0 100vmax }
+.held { padding: clamp(40px, 10vw, 110px) 0 clamp(36px, 7vw, 70px) }
+.held h1 { font-family: var(--kop); font-weight: 900; font-size: clamp(2.3rem, 8vw, 4.2rem); line-height: 1; letter-spacing: -0.025em; margin: 0 }
+.held h1 span { display: block; font-family: var(--titel); font-weight: 500; letter-spacing: -0.01em; margin-top: .08em }
+.band { --bg: var(--fase-B); color: #fff; padding: 34px 0; text-align: center }
+.band p { font-family: var(--kop); font-weight: 900; font-size: clamp(1.4rem, 4.5vw, 2.3rem); line-height: 1.15; margin: 0; text-wrap: balance }
+.blok { padding: clamp(36px, 6vw, 64px) 0 }
+.blok .intro { font-size: 1.02rem }
+.blok-kop { font-family: var(--titel); font-weight: 500; font-size: clamp(1.7rem, 4.6vw, 2.4rem); line-height: 1.1; letter-spacing: -0.01em; margin: 0 0 12px }
+.blok.wit { --bg: var(--vlak) }
+.stappen { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); counter-reset: stap }
+.stappen li { border-top: 8px solid var(--k); padding-top: 10px; counter-increment: stap }
+.stappen h3 { font-size: 1.05rem; margin: 0 0 4px; color: var(--inkt) }
+.stappen h3::before { content: counter(stap) ". "; color: var(--zacht) }
+.stappen p { margin: 0; font-size: .95rem }
+.twee { display: grid; gap: 24px; align-items: center }
+@media (min-width: 760px) { .twee { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) } }
+.twee p { max-width: 55ch; margin: 0 0 16px }
+.klein-kompas { display: block; max-width: 320px; margin: 0 auto }
+.klein-kompas .kompas { width: 100% }
+.blok.blauw { --bg: var(--fase-E); color: #fff }
+.blok.blauw .blok-kop, .blok.blauw a { color: #fff }
+.blok.blauw .knop { color: var(--inkt) } .blok.blauw .knop.licht { color: #fff; border-color: #fff } .blok.blauw .knop:hover { background: #fff; color: var(--inkt) }
+.tegels { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(170px, 42vw), 1fr)) }
+.tegels a { display: flex; align-items: center; gap: 10px; min-width: 0; hyphens: manual; background: var(--vlak); color: var(--inkt) !important; text-decoration: none; font-family: var(--kop); font-weight: 800; padding: 16px 14px }
+.tegels a:hover { outline: 2.5px dashed var(--inkt); outline-offset: -2.5px }
+.stip { width: 12px; height: 12px; border-radius: 50%; background: var(--tk); flex: none; display: inline-block; box-shadow: 0 0 0 1px rgba(0,0,0,.12) }
+.kaart-teaser { display: grid; gap: 20px; align-items: center }
+@media (min-width: 760px) { .kaart-teaser { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) } }
+.kaart-teaser p { max-width: 50ch; margin: 0 0 16px }
+.mini-kaart { display: block; aspect-ratio: 1028 / 1024; max-width: 360px; width: 100%; margin: 0 auto; position: relative }
+.mini-kaart svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none }
+.blok.geel { --bg: var(--fase-D); color: var(--inkt) }
+.rollen { list-style: none; margin: 18px 0 22px; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) }
+.rollen li { background: var(--vlak); padding: 16px 18px }
+.rollen h3 { margin: 0 0 4px; font-size: 1.05rem; color: var(--inkt) }
+.rollen p { margin: 0; font-size: .95rem }
+.partners { font-size: .92rem }
+.partners ul { margin: 6px 0 14px; padding-left: 1.1em }
+.partners li { margin: 2px 0 }
+.thuis .voet { display: none }
+
+/* ---------- thema's ---------- */
+.thema-index { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 22px 0 8px; font-family: var(--kop); font-weight: 800; font-size: .9rem }
+.thema-index a { display: inline-flex; align-items: center; gap: 7px; color: var(--inkt); text-decoration: none; padding: 4px 0 }
+.thema-index a:hover { text-decoration: underline }
+.thema-blok { padding: 30px 0 8px; border-top: 2px dashed color-mix(in srgb, var(--inkt) 25%, transparent); margin-top: 26px; scroll-margin-top: 12px }
+.thema-blok .boven { display: flex; align-items: center; gap: 8px; color: var(--inkt) }
+.thema-blok h2 { font-family: var(--titel); font-weight: 500; font-size: clamp(1.5rem, 4vw, 2rem); line-height: 1.12; margin: 6px 0 14px; text-wrap: balance }
+.thema-in { display: grid; gap: 18px }
+@media (min-width: 820px) { .thema-in { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 32px } }
+.thema-tekst p { margin: 0 0 12px; max-width: 62ch }
+.onderzoek { background: var(--vlak); padding: 14px 18px; border-top: 8px solid var(--tk); align-self: start }
+.onderzoek h3 { margin: 0 0 8px; color: var(--inkt) }
+.onderzoek ul { margin: 0; padding-left: 1.1em } .onderzoek li { margin: 4px 0 }
+.lopend { font-size: .9rem; margin: 14px 0 0 }
+.methode-meer { margin-top: 30px; max-width: 62ch }

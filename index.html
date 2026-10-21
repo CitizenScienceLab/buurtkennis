@@ -1,11 +1,101 @@
 ---
 layout: bk
-title: Leiden BuurtKennis in kaart
-description: Waar BuurtKennis loopt in Leiden, in welke buurt, en hoe ver het daar is.
+title: Leiden BuurtKennis
+description: Bewoners en experts verzamelen en onderzoeken samen buurtkennis voor een gezonde leefomgeving in Leiden.
+thuis: true
 ---
-{%- assign stand = site.data.instellingen.buurtkaart | append: "" | downcase | strip -%}
-{%- if stand == "uit" or stand == "false" or stand == "nee" or stand == "off" -%}
-<div class="melding"><p>De kaart is op dit moment niet beschikbaar. Op de <a class="uit" href="https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/readme" target="_blank" rel="noopener">methodiekpagina's</a> lees je hoe BuurtKennis werkt.</p></div>
-{%- else -%}
-{% include kaart-blok.html %}
-{%- endif %}
+{%- assign H = site.data.home -%}
+{%- assign themas = site.themas | sort: "volgorde" -%}
+{% include doos-symbolen.svg %}
+<section class="held vol" style="--bg: var(--creme)">
+  <h1>{{ H.kop }}<span>{{ H.kop_onder }}</span></h1>
+  <div class="held-knoppen">
+    <a class="knop" href="#doe-mee">Doe mee</a>
+    <a class="knop licht" href="#hoe">Hoe het werkt</a>
+  </div>
+</section>
+
+<section class="band vol"><p>{{ H.band }}</p></section>
+
+<section class="blok wit vol" id="hoe">
+  <h2 class="blok-kop">{{ H.hoe_kop }}</h2>
+  <ol class="stappen">
+  {%- for s in H.stappen %}
+    <li style="--k:var(--fase-{{ s.fase }})"><h3>{{ s.kop }}</h3><p>{{ s.tekst }}</p></li>
+  {%- endfor %}
+  </ol>
+</section>
+
+<section class="blok wit vol twee">
+  <div>
+    <h2 class="blok-kop">{{ H.beleid_kop }}</h2>
+    <p>{{ H.beleid_tekst }}</p>
+    <a class="knop" href="{{ '/methode/' | relative_url }}">De methode</a>
+  </div>
+  <a class="klein-kompas" href="{{ '/methode/' | relative_url }}" aria-label="Naar de methode">{% include kompas.svg %}</a>
+</section>
+
+<section class="blok blauw vol" id="themas">
+  <h2 class="blok-kop">{{ H.themas_kop }}</h2>
+  <p class="intro">{{ H.themas_tekst }}</p>
+  <ul class="tegels">
+  {%- for slug in H.themas_uitgelicht %}{% assign t = themas | where: "slug", slug | first %}{% if t %}
+    <li><a href="{{ '/themas/' | relative_url }}#{{ t.slug }}" style="--tk:{{ site.data.themas[t.sleutel].kleur | default: '#888' }}"><span class="stip"></span><span>{{ t.naam | replace: "veiligheid", "&shy;veiligheid" | replace: "vervuiling", "&shy;vervuiling" | replace: "diversiteit", "&shy;diversiteit" }}</span></a></li>
+  {%- endif %}{% endfor %}
+  </ul>
+  <div class="held-knoppen">
+    <a class="knop" href="{{ '/themas/' | relative_url }}">Alle onderzoeksthema's</a>
+    <a class="knop licht uit" href="{{ H.kwestiekaart }}" target="_blank" rel="noopener">Kaart jouw kwestie aan</a>
+  </div>
+</section>
+
+<section class="blok kaart-teaser">
+  <div>
+    <h2 class="blok-kop">{{ H.kaart_kop }}</h2>
+    <p>{{ H.kaart_tekst }}</p>
+    <a class="knop" href="{{ '/kaart/' | relative_url }}">Bekijk de kaart</a>
+  </div>
+  <a class="mini-kaart" href="{{ '/kaart/' | relative_url }}" aria-label="Naar de kaart">{% include kaart-leiden.svg %}</a>
+  <style>
+  {%- for b in site.buurten %}
+    {%- assign f = b.fase | append: "" | slice: 0 | upcase -%}
+    {%- if f == "" -%}
+      {%- for t in site.trajecten -%}
+        {%- if t.buurten contains b.slug or t.buurten contains b.path -%}
+          {%- assign tf = t.fase | append: "" | slice: 0 | upcase -%}
+          {%- if tf > f %}{% assign f = tf %}{% endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+    {%- if f != "" %}
+  .mini-kaart #{{ b.plek }} { fill: var(--fase-{{ f }}) }
+    {%- endif -%}
+  {%- endfor %}
+  </style>
+</section>
+
+<section class="blok geel vol" id="doe-mee">
+  <h2 class="blok-kop">{{ H.doe_mee_kop }}</h2>
+  <p class="intro">{{ H.doe_mee_tekst }}</p>
+  <ul class="rollen">
+  {%- for r in H.rollen %}
+    <li><h3>{{ r.kop }}</h3><p>{{ r.tekst }}</p></li>
+  {%- endfor %}
+  </ul>
+  <a class="knop uit" href="{{ H.kwestiekaart }}" target="_blank" rel="noopener">Naar de kwestiekaart</a>
+</section>
+
+<section class="blok partners">
+  <p>{{ H.partners_tekst }}</p>
+  <ul>{% for p in H.partners %}<li><strong>{{ p.wie }}</strong>: {{ p.wat }}</li>{% endfor %}</ul>
+  <p>{{ H.contact_tekst | replace: H.contact_mail, '<a href="mailto:CONTACTMAIL">CONTACTMAIL</a>' | replace: 'CONTACTMAIL', H.contact_mail | replace: 'online kwestiekaart', '<a class="uit" href="KWESTIEKAART" target="_blank" rel="noopener">online kwestiekaart</a>' | replace: 'KWESTIEKAART', H.kwestiekaart }}</p>
+</section>
+
+<script>
+// oude links naar de kaart (/#buurt of /#traject) doorsturen naar /kaart/
+(function () {
+  const ids = [{% for b in site.buurten %}{{ b.slug | jsonify }},{% endfor %}{% for t in site.trajecten %}{{ t.slug | jsonify }},{% endfor %}""];
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (h && ids.includes(h)) location.replace({{ '/kaart/' | relative_url | jsonify }} + '#' + encodeURIComponent(h));
+})();
+</script>

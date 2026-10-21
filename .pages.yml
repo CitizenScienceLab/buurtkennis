@@ -179,8 +179,72 @@ content:
           - { name: url, label: URL, type: string }
       - { name: body, label: "Toelichting (optioneel)", type: rich-text }
 
+  - name: themapagina
+    label: "Thema's (pagina)"
+    type: collection
+    path: _themas
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: naam
+      fields: [naam, volgorde]
+      sort: [volgorde]
+    fields:
+      - { name: naam, label: Naam, type: string, required: true }
+      - { name: sleutel, label: "Tag op de kaart (sleutel uit Thema-tags, voor kleur en lopende trajecten)", type: string }
+      - { name: volgorde, label: Volgorde, type: number }
+      - { name: vraag, label: "Vraag als kop", type: string }
+      - { name: onderzoeksvragen, label: "Wat kun jij onderzoeken?", type: string, list: true }
+      - { name: body, label: Tekst, type: rich-text }
+
+  - name: home
+    label: Homepagina
+    type: file
+    path: _data/home.yml
+    format: yaml
+    fields:
+      - { name: kop, label: "Kop", type: string }
+      - { name: kop_onder, label: "Kop, tweede regel", type: string }
+      - { name: band, label: "Groene band", type: string }
+      - { name: kwestiekaart, label: "Link naar de online kwestiekaart", type: string }
+      - { name: contact_mail, label: "Contactadres", type: string }
+      - { name: hoe_kop, label: "Hoe het werkt: kop", type: string }
+      - name: stappen
+        label: "Hoe het werkt: stappen"
+        type: object
+        list: true
+        fields:
+          - { name: fase, label: "Fase (kleur)", type: select, options: { values: [A, B, C, D, E, F] } }
+          - { name: kop, label: Kop, type: string }
+          - { name: tekst, label: Tekst, type: text }
+      - { name: beleid_kop, label: "Van buurtgesprek naar beleid: kop", type: string }
+      - { name: beleid_tekst, label: "Van buurtgesprek naar beleid: tekst", type: text }
+      - { name: themas_kop, label: "Thema's: kop", type: string }
+      - { name: themas_tekst, label: "Thema's: tekst", type: text }
+      - { name: themas_uitgelicht, label: "Thema's: uitgelicht (bestandsnamen uit _themas)", type: string, list: true }
+      - { name: kaart_kop, label: "Kaart: kop", type: string }
+      - { name: kaart_tekst, label: "Kaart: tekst", type: text }
+      - { name: doe_mee_kop, label: "Doe mee: kop", type: string }
+      - { name: doe_mee_tekst, label: "Doe mee: tekst", type: text }
+      - name: rollen
+        label: "Doe mee: rollen"
+        type: object
+        list: true
+        fields:
+          - { name: kop, label: Kop, type: string }
+          - { name: tekst, label: Tekst, type: text }
+      - { name: partners_tekst, label: "Partners: inleiding", type: text }
+      - name: partners
+        label: Partners
+        type: object
+        list: true
+        fields:
+          - { name: wie, label: Wie, type: string }
+          - { name: wat, label: Wat, type: string }
+      - { name: contact_tekst, label: "Contact", type: text }
+
   - name: themas
-    label: Thema's
+    label: Thema-tags (kaart)
     type: file
     path: _data/themas.yml
     format: yaml

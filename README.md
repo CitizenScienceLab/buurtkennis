@@ -6,11 +6,14 @@ Openbare pagina's van BuurtKennis, een project van het Citizen Science Lab.
 
 Een map zonder `_` ervoor is een pagina. Een map of bestand dat met `_` begint is een bron: het verschijnt niet als pagina, maar pagina's lezen eruit. Ook bronnen zijn openbaar, want deze repo is openbaar.
 
-- `index.html`: startpagina, de kaart van Leiden met buurten en trajecten
+- `index.html`: homepagina, teksten in `_data/home.yml`
+- `themas/`: de onderzoeksthema's, één bestand per thema in `_themas/`
+- `kaart/`: de kaart van Leiden met buurten en trajecten
+- `methode/`: het fasekompas met uitleg (`fases/` stuurt hierheen door)
 - `_buurten/`: één bestand per buurt van Leiden (alle 54 staan er al). Een buurt telt op de kaart mee zodra er een fase, doel of activiteit in staat, of zodra een traject er loopt
 - `_trajecten/`: één bestand per thematisch traject; elk traject is een doosje op de kaart
 - `_data/cbs.yml`: wijken en buurten van Leiden met hun CBS-code; `_data/themas.yml`: thema's met kleur; `_data/methode.yml`: fases en stappen (GitBook is de bron, hier staan alleen volgorde, kleur en links)
-- `trajecten/`: lijst van buurten en trajecten; `fases/`: het fasekompas; `werkversie.html`: de kaart, ook als hij uit staat
+- `trajecten/`: lijst van buurten en trajecten; `werkversie.html`: de kaart, ook als hij uit staat
 - `assets/bk.css`: stijl van de kaart; `assets/site.css`: stijl van de losse pagina's
 - `_includes/kaart-leiden.svg`: de getekende kaart; `_includes/kaart-blok.html`: kaart, kompas en card; `_includes/doos-symbolen.svg`: de doos
 - [`overzicht/`](overzicht/): de eerdere kaart (versie 1), met `_overzicht/` als bron

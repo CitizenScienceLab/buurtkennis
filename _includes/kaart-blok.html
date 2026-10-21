@@ -10,7 +10,7 @@
   <p class="plek naam" id="plek">Leiden</p>
   <div class="kompas-rij">
     {% include kompas.svg %}
-    <a class="fase-label" id="fase-label" href="{{ '/fases/' | relative_url }}" target="_blank" rel="noopener">BuurtKennis fase<small>van kwestie tot onderzoek ↗</small></a>
+    <a class="fase-label" id="fase-label" href="{{ '/methode/' | relative_url }}" target="_blank" rel="noopener">BuurtKennis fase<small>van kwestie tot onderzoek ↗</small></a>
   </div>
   <div class="kaart" id="kaart">{% include kaart-leiden.svg %}</div>
   <section class="card" id="card" data-stand="dicht" aria-live="polite">
@@ -34,7 +34,7 @@ const TRAJECTEN = [{% for t in site.trajecten %}{"id":{{ t.slug | jsonify }},"ti
 // een fase, doel of activiteit, of een traject dat er loopt
 const inTraject = b => TRAJECTEN.some(t => (t.buurten || []).some(id => id === b.id || id === b.pad));
 const BUURTEN = ALLE_BUURTEN.filter(b => b.fase || b.doel || (b.activiteiten || []).length || inTraject(b));
-const FASEN_URL = {{ '/fases/' | relative_url | jsonify }};
+const FASEN_URL = {{ '/methode/' | relative_url | jsonify }};
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));

@@ -1,0 +1,36 @@
+---
+layout: bk
+title: Thema's · Leiden BuurtKennis
+description: Onderzoeksthema's voor een gezonde buurt, en wat je er zelf aan kunt onderzoeken.
+---
+{%- assign themas = site.themas | sort: "volgorde" -%}
+<h1>Thema's voor een gezonde buurt</h1>
+<p class="intro">Een aantal thema's komt steeds terug als het over een gezonde leefomgeving gaat. Andere onderwerpen kwamen naar boven in eerder onderzoek. Het Citizen Science Lab verzamelt methodes om al die onderwerpen in je eigen buurt te onderzoeken.</p>
+<div class="held-knoppen">
+  <a class="knop uit" href="{{ site.data.home.kwestiekaart }}" target="_blank" rel="noopener">Meld een kwestie aan</a>
+</div>
+<nav class="thema-index" aria-label="Thema's">
+{%- for t in themas %}
+  <a href="#{{ t.slug }}" style="--tk:{{ site.data.themas[t.sleutel].kleur | default: '#888' }}"><span class="stip"></span>{{ t.naam }}</a>
+{%- endfor %}
+</nav>
+{%- for t in themas %}
+{%- assign kleur = site.data.themas[t.sleutel].kleur | default: '#888' -%}
+{%- assign lopend = site.trajecten | where: "thema", t.sleutel -%}
+<section class="thema-blok" id="{{ t.slug }}" style="--tk:{{ kleur }}">
+  <p class="boven"><span class="stip"></span>{{ t.naam }}</p>
+  <h2>{{ t.vraag }}</h2>
+  <div class="thema-in">
+    <div class="thema-tekst">{{ t.content }}</div>
+    {%- if t.onderzoeksvragen %}
+    <aside class="onderzoek">
+      <h3>Wat kun jij onderzoeken?</h3>
+      <ul>{% for v in t.onderzoeksvragen %}<li>{{ v }}</li>{% endfor %}</ul>
+    </aside>
+    {%- endif %}
+  </div>
+  {%- if lopend.size > 0 %}
+  <p class="lopend">Loopt nu: {% for l in lopend %}<a href="{{ '/kaart/' | relative_url }}#{{ l.slug }}">{{ l.titel }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p>
+  {%- endif %}
+</section>
+{%- endfor %}

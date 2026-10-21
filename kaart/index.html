@@ -1,0 +1,14 @@
+---
+layout: bk
+title: In kaart · Leiden BuurtKennis
+description: Waar BuurtKennis loopt in Leiden, in welke buurt, en hoe ver het daar is.
+bron_kaart: true
+---
+{%- assign stand = site.data.instellingen.buurtkaart | append: "" | downcase | strip -%}
+{%- if stand == "uit" or stand == "false" or stand == "nee" or stand == "off" -%}
+<div class="melding"><p>De kaart is op dit moment niet beschikbaar. Bij <a href="{{ '/methode/' | relative_url }}">de methode</a> lees je hoe BuurtKennis werkt.</p></div>
+{%- else -%}
+{% include kaart-blok.html %}
+{%- endif %}
+
+<p class="onder-kaart"><a href="{{ '/trajecten/' | relative_url }}">Alle buurten en trajecten als lijst</a></p>
