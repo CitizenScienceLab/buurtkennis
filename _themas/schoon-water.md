@@ -1,6 +1,7 @@
 ---
 naam: "Schoon water"
 sleutel: water
+kleur: "#9EC9E8"
 volgorde: 4
 vraag: "Hoe gezond zijn onze grachten en sloten?"
 onderzoeksvragen:

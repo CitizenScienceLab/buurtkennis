@@ -1,6 +1,7 @@
 ---
 naam: "Biodiversiteit"
 sleutel: biodiversiteit
+kleur: "#9BBF4A"
 volgorde: 9
 vraag: "Welke natuur leeft er in jouw wijk?"
 onderzoeksvragen:

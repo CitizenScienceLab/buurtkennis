@@ -12,7 +12,7 @@ layout: bk
   <p class="intro">{{ page.doel }}</p>
   <div class="meta">
     <a class="fase-pil" style="--k:var(--fase-{{ f }})" href="{{ '/methode/' | relative_url }}#{{ f }}"><span class="f">{{ f }}</span>{{ fn }}</a>
-    <span class="tags"><span class="thema" style="--tk:{{ site.data.themas[page.thema].kleur | default: '#888' }}">{{ site.data.themas[page.thema].naam | default: page.thema }}</span></span>
+    {%- assign th = nil -%}{%- for x in site.themas -%}{%- if x.sleutel == page.thema or x.slug == page.thema or x.path == page.thema -%}{%- assign th = x -%}{%- endif -%}{%- endfor -%}<span class="tags"><span class="thema" style="--tk:{{ th.eigen_kleur | default: th.kleur | default: '#888' }}">{{ th.naam | default: page.thema }}</span></span>
     {% if page.sinds %}{% assign m = page.sinds | split: "-" %}{% assign mi = m[1] | minus: 1 %}<span class="sinds">sinds {{ MAANDEN[mi] }} {{ m[0] }}</span>{% endif %}
   </div>
 </div>

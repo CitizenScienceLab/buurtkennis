@@ -1,6 +1,7 @@
 ---
 naam: "Zwerfafval"
 sleutel: zwerfafval
+kleur: "#1F3A66"
 volgorde: 7
 vraag: "Waar en waarom slingert afval in jouw wijk?"
 onderzoeksvragen:

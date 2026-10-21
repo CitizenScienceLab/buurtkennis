@@ -26,7 +26,9 @@
 (function () {
 'use strict';
 const FASES = {{ site.data.methode.fases | jsonify }};
-const THEMAS = {{ site.data.themas | jsonify }};
+// thema's uit _themas, op bestandsnaam; een traject mag de sleutel, de bestandsnaam of het pad noemen
+const THEMAS = { {% for t in site.themas %}{{ t.slug | jsonify }}: { "naam": {{ t.naam | jsonify }}, "kleur": {{ t.eigen_kleur | default: t.kleur | default: '#888888' | jsonify }} },{% endfor %} };
+const THEMA_ALIAS = { {% for t in site.themas %}{% if t.sleutel %}{{ t.sleutel | jsonify }}: {{ t.slug | jsonify }}, {% endif %}{{ t.path | jsonify }}: {{ t.slug | jsonify }},{% endfor %} };
 const CBS = {{ site.data.cbs | jsonify }};
 const ALLE_BUURTEN = [{% for b in site.buurten %}{"id":{{ b.slug | jsonify }},"pad":{{ b.path | jsonify }},"naam":{{ b.naam | jsonify }},"plek":{{ b.plek | jsonify }},"fase":{{ b.fase | jsonify }},"sinds":{{ b.sinds | jsonify }},"doel":{{ b.doel | jsonify }},"activiteiten":{{ b.activiteiten | default: empty | jsonify }},"links":{{ b.links | default: empty | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
 const TRAJECTEN = [{% for t in site.trajecten %}{"id":{{ t.slug | jsonify }},"titel":{{ t.titel | jsonify }},"fase":{{ t.fase | jsonify }},"thema":{{ t.thema | jsonify }},"buurten":{{ t.buurten | default: empty | jsonify }},"sinds":{{ t.sinds | jsonify }},"doel":{{ t.doel | jsonify }},"activiteiten":{{ t.activiteiten | default: empty | jsonify }},"url":{{ t.url | relative_url | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
@@ -34,6 +36,7 @@ const TRAJECTEN = [{% for t in site.trajecten %}{"id":{{ t.slug | jsonify }},"ti
 // een fase, doel of activiteit, of een traject dat er loopt
 const inTraject = b => TRAJECTEN.some(t => (t.buurten || []).some(id => id === b.id || id === b.pad));
 const BUURTEN = ALLE_BUURTEN.filter(b => b.fase || b.doel || (b.activiteiten || []).length || inTraject(b));
+TRAJECTEN.forEach(t => { t.thema = THEMA_ALIAS[t.thema] || t.thema; });
 const FASEN_URL = {{ '/methode/' | relative_url | jsonify }};
 
 const $ = id => document.getElementById(id);

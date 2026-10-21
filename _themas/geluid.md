@@ -1,6 +1,7 @@
 ---
 naam: "Geluidsoverlast"
 sleutel: geluid
+kleur: "#444444"
 volgorde: 6
 vraag: "Hoe luid is jouw wijk?"
 onderzoeksvragen:

@@ -3,7 +3,7 @@ layout: bk
 title: Thema's · Leiden BuurtKennis
 description: Onderzoeksthema's voor een gezonde buurt, en wat je er zelf aan kunt onderzoeken.
 ---
-{%- assign themas = site.themas | sort: "volgorde" -%}
+{%- assign themas = site.themas | where_exp: "t", "t.vraag" | sort: "volgorde" -%}{%- comment -%} alleen thema's met een vraag krijgen een blok; de rest is alleen een tag {%- endcomment -%}
 <h1 class="tweeregel">Thema's voor een<span>gezonde buurt</span></h1>
 <p class="intro">Een aantal thema's komt steeds terug als het over een gezonde leefomgeving gaat. Andere onderwerpen kwamen naar boven in eerder onderzoek. Het Citizen Science Lab verzamelt methodes om al die onderwerpen in je eigen buurt te onderzoeken.</p>
 <div class="held-knoppen">
@@ -11,12 +11,12 @@ description: Onderzoeksthema's voor een gezonde buurt, en wat je er zelf aan kun
 </div>
 <nav class="thema-index" aria-label="Thema's">
 {%- for t in themas %}
-  <a href="#{{ t.slug }}" style="--tk:{{ site.data.themas[t.sleutel].kleur | default: '#888' }}"><span class="stip"></span>{{ t.naam }}</a>
+  <a href="#{{ t.slug }}" style="--tk:{{ t.eigen_kleur | default: t.kleur | default: '#888' }}"><span class="stip"></span>{{ t.naam }}</a>
 {%- endfor %}
 </nav>
 {%- for t in themas %}
-{%- assign kleur = site.data.themas[t.sleutel].kleur | default: '#888' -%}
-{%- assign lopend = site.trajecten | where: "thema", t.sleutel -%}
+{%- assign kleur = t.eigen_kleur | default: t.kleur | default: '#888' -%}
+{%- assign lopend = "" | split: "" -%}{%- for l in site.trajecten -%}{%- if l.thema == t.sleutel or l.thema == t.slug or l.thema == t.path -%}{%- assign lopend = lopend | push: l -%}{%- endif -%}{%- endfor -%}
 <section class="thema-blok" id="{{ t.slug }}" style="--tk:{{ kleur }}">
   <p class="thema-naam"><span class="stip"></span>{{ t.naam }}</p>
   <h2>{{ t.vraag }}</h2>

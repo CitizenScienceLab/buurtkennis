@@ -1,6 +1,7 @@
 ---
 naam: "Luchtkwaliteit"
 sleutel: luchtkwaliteit
+kleur: "#111111"
 volgorde: 1
 vraag: "Maak zichtbaar wat je ademt"
 onderzoeksvragen:

@@ -12,7 +12,8 @@ Een map zonder `_` ervoor is een pagina. Een map of bestand dat met `_` begint i
 - `methode/`: het fasekompas met uitleg (`fases/` stuurt hierheen door)
 - `_buurten/`: één bestand per buurt van Leiden (alle 54 staan er al). Een buurt telt op de kaart mee zodra er een fase, doel of activiteit in staat, of zodra een traject er loopt
 - `_trajecten/`: één bestand per thematisch traject; elk traject is een doosje op de kaart
-- `_data/cbs.yml`: wijken en buurten van Leiden met hun CBS-code; `_data/themas.yml`: thema's met kleur; `_data/methode.yml`: fases en stappen (GitBook is de bron, hier staan alleen volgorde, kleur en links)
+- `_themas/`: één bestand per thema, met naam, kleur en (optioneel) de tekst voor /themas. Zonder `vraag` is een thema alleen een tag bij trajecten. Kleur kies je in het beheerscherm uit een lijst; `eigen_kleur` (#rrggbb) gaat daarvoor. Hernoem een themabestand liever niet: de bestandsnaam is het adres op /themas (`/themas/#bestandsnaam`) en wordt gebruikt in de uitgelichte thema's op de home
+- `_data/cbs.yml`: wijken en buurten van Leiden met hun CBS-code; `_data/methode.yml`: fases en stappen (GitBook is de bron, hier staan alleen volgorde, kleur en links)
 - `trajecten/`: lijst van buurten en trajecten; `werkversie.html`: de kaart, ook als hij uit staat
 - `assets/bk.css`: stijl van de kaart; `assets/site.css`: stijl van de losse pagina's
 - `_includes/kaart-leiden.svg`: de getekende kaart; `_includes/kaart-blok.html`: kaart, kompas en card; `_includes/doos-symbolen.svg`: de doos
@@ -26,7 +27,7 @@ Een nieuwe losse pagina: maak een eigen map met een `index.html`, link `../asset
 
 Snelste weg: twee knoppen die een nieuw bestand openen met het sjabloon al ingevuld. Vervang de voorbeeldwaarden, geef het bestand een naam (kleine letters en streepjes) en klik op *Commit changes*.
 
-- [**Nieuw traject**](https://github.com/CitizenScienceLab/buurtkennis/new/main/_trajecten?filename=nieuw-traject.md&value=---%0Atitel%3A%20%22Naam%20van%20het%20traject%22%0Afase%3A%20B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20B%2C%20C%2C%20D%20of%20E%0Athema%3A%20hittestress%20%20%20%20%20%20%20%20%20%20%20%23%20sleutel%20uit%20_data%2Fthemas.yml%0Abuurten%3A%20%5Bgroenoord%5D%20%20%20%20%23%20bestandsnamen%20uit%20_buurten%2F%2C%20%C3%A9%C3%A9n%20of%20meer%0Asinds%3A%202026-10%0Adoel%3A%20%22E%C3%A9n%20of%20twee%20zinnen.%22%0Aactiviteiten%3A%0A%20%20-%20%7B%20wat%3A%20%22Wat%20gebeurde%20er%22%2C%20wanneer%3A%20%22oktober%202026%22%2C%20waar%3A%20%22Buurt%22%2C%20wie%3A%20%22met%20wie%20%28geen%20namen%29%22%20%7D%0Alinks%3A%20%5B%5D%0A---%0A)
+- [**Nieuw traject**](https://github.com/CitizenScienceLab/buurtkennis/new/main/_trajecten?filename=nieuw-traject.md&value=---%0Atitel%3A%20%22Naam%20van%20het%20traject%22%0Afase%3A%20B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20B%2C%20C%2C%20D%20of%20E%0Athema%3A%20hittestress%20%20%20%20%20%20%20%20%20%20%20%23%20bestandsnaam%20uit%20_themas%2F%0Abuurten%3A%20%5Bgroenoord%5D%20%20%20%20%23%20bestandsnamen%20uit%20_buurten%2F%2C%20%C3%A9%C3%A9n%20of%20meer%0Asinds%3A%202026-10%0Adoel%3A%20%22E%C3%A9n%20of%20twee%20zinnen.%22%0Aactiviteiten%3A%0A%20%20-%20%7B%20wat%3A%20%22Wat%20gebeurde%20er%22%2C%20wanneer%3A%20%22oktober%202026%22%2C%20waar%3A%20%22Buurt%22%2C%20wie%3A%20%22met%20wie%20%28geen%20namen%29%22%20%7D%0Alinks%3A%20%5B%5D%0A---%0A)
 - [**Nieuwe buurt**](https://github.com/CitizenScienceLab/buurtkennis/new/main/_buurten?filename=nieuwe-buurt.md&value=---%0Anaam%3A%20%22Naam%20van%20de%20buurt%22%0Aplek%3A%20BU05460300%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20CBS-code%20uit%20_data%2Fcbs.yml%0Afase%3A%20B%0Asinds%3A%202026-10%0Adoel%3A%20%22E%C3%A9n%20of%20twee%20zinnen.%22%0Aactiviteiten%3A%0A%20%20-%20%7B%20wat%3A%20%22Wat%20gebeurde%20er%22%2C%20wanneer%3A%20%22oktober%202026%22%2C%20waar%3A%20%22Buurt%22%2C%20wie%3A%20%22met%20wie%20%28geen%20namen%29%22%20%7D%0A---%0A)
 
 Of met een beheerscherm: ga naar [app.pagescms.org](https://app.pagescms.org), log in met GitHub en kies deze repo. Je krijgt dan formulieren met keuzelijsten voor fase, thema en buurt, en een plusje voor een activiteit; het resultaat is dezelfde commit. De inrichting staat in `.pages.yml`.
@@ -59,7 +60,7 @@ Een bestand in `_trajecten/`, bijvoorbeeld `noord-geluid.md` (adres: `trajecten/
 |---|---|
 | `titel` | naam van het traject |
 | `fase` | `B`, `C`, `D` of `E`; een substap mag ook (`D1`) |
-| `thema` | sleutel uit `_data/themas.yml` |
+| `thema` | een thema uit `_themas/` (bestandsnaam, of de `sleutel` erin) |
 | `buurten` | bestandsnamen uit `_buurten/`, één of meer: `[groenoord]` of `[hoge-mors, lage-mors]`. In elke genoemde buurt komt een doosje |
 | `midden` | `[x, y]` om het eerste doosje zelf te plaatsen (optioneel; anders zoekt de kaart een vrije plek in de buurt) |
 | `sinds` | `2026-08` |

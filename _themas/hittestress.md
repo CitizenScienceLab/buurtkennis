@@ -1,6 +1,7 @@
 ---
 naam: "Hittestress"
 sleutel: hittestress
+kleur: "#F28C28"
 volgorde: 3
 vraag: "Waar wordt het ongezond heet?"
 onderzoeksvragen:

@@ -132,23 +132,12 @@ content:
             - { name: E, label: "E Onderzoek starten" }
       - name: thema
         label: Thema
-        type: select
+        type: reference
         required: true
         options:
-          values:
-            - { name: luchtkwaliteit, label: "Luchtkwaliteit" }
-            - { name: geluid, label: "Geluid" }
-            - { name: licht, label: "Lichtvervuiling" }
-            - { name: groen, label: "Groenvoorziening" }
-            - { name: biodiversiteit, label: "Biodiversiteit" }
-            - { name: water, label: "Water" }
-            - { name: zwerfafval, label: "Zwerfafval" }
-            - { name: hittestress, label: "Hittestress" }
-            - { name: veiligheid, label: "Veiligheid" }
-            - { name: mobiliteit, label: "Mobiliteit" }
-            - { name: sociaal, label: "Sociaal" }
-            - { name: gezondheid, label: "Gezondheidsbevordering" }
-            - { name: gezonde-leefomgeving, label: "Gezonde leefomgeving" }
+          collection: themapagina
+          value: "{path}"
+          label: "{naam}"
       - name: buurten
         label: Buurten
         type: reference
@@ -180,7 +169,7 @@ content:
       - { name: body, label: "Toelichting (optioneel)", type: rich-text }
 
   - name: themapagina
-    label: "Thema's (pagina)"
+    label: "Thema's"
     type: collection
     path: _themas
     format: yaml-frontmatter
@@ -191,9 +180,29 @@ content:
       sort: [volgorde]
     fields:
       - { name: naam, label: Naam, type: string, required: true }
-      - { name: sleutel, label: "Tag op de kaart (sleutel uit Thema-tags, voor kleur en lopende trajecten)", type: string }
+      - name: kleur
+        label: Kleur
+        type: select
+        options:
+          values:
+            - { name: "#F28C28", label: "🟧 Oranje (#F28C28)" }
+            - { name: "#D62728", label: "🟥 Rood (#D62728)" }
+            - { name: "#D81B74", label: "🟥 Roze (#D81B74)" }
+            - { name: "#F2E200", label: "🟨 Geel (#F2E200)" }
+            - { name: "#3C7A2E", label: "🟩 Groen (#3C7A2E)" }
+            - { name: "#9BBF4A", label: "🟩 Lichtgroen (#9BBF4A)" }
+            - { name: "#5B8C5A", label: "🟩 Grijsgroen (#5B8C5A)" }
+            - { name: "#9EC9E8", label: "🟦 Lichtblauw (#9EC9E8)" }
+            - { name: "#1F3A66", label: "🟦 Donkerblauw (#1F3A66)" }
+            - { name: "#6A3D9A", label: "🟪 Paars (#6A3D9A)" }
+            - { name: "#8B5A2B", label: "🟫 Bruin (#8B5A2B)" }
+            - { name: "#111111", label: "⬛ Zwart (#111111)" }
+            - { name: "#444444", label: "⬛ Donkergrijs (#444444)" }
+            - { name: "#C9C9C9", label: "⬜ Lichtgrijs (#C9C9C9)" }
+      - { name: eigen_kleur, label: "Eigen kleur (optioneel, bv. #2A9D8F; gaat voor de lijst)", type: string, options: { pattern: "^(#[0-9A-Fa-f]{6})?$" } }
+      - { name: sleutel, label: "Sleutel (niet wijzigen: oude trajecten verwijzen hiernaar)", type: string }
       - { name: volgorde, label: Volgorde, type: number }
-      - { name: vraag, label: "Vraag als kop", type: string }
+      - { name: vraag, label: "Vraag als kop (leeg: alleen een tag, geen blok op de themapagina)", type: string }
       - { name: onderzoeksvragen, label: "Wat kun jij onderzoeken?", type: string, list: true }
       - { name: body, label: Tekst, type: rich-text }
 
@@ -243,11 +252,6 @@ content:
           - { name: wat, label: Wat, type: string }
       - { name: contact_tekst, label: "Contact", type: text }
 
-  - name: themas
-    label: Thema-tags (kaart)
-    type: file
-    path: _data/themas.yml
-    format: yaml
 
   - name: instellingen
     label: Instellingen (kaart aan/uit)

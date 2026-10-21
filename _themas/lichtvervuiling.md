@@ -1,6 +1,7 @@
 ---
 naam: "Lichtvervuiling"
 sleutel: licht
+kleur: "#C9C9C9"
 volgorde: 8
 vraag: "Is het ’s nachts nog donker in Leiden?"
 onderzoeksvragen:

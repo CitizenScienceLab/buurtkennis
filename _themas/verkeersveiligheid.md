@@ -1,6 +1,7 @@
 ---
 naam: "Verkeersveiligheid"
 sleutel: veiligheid
+kleur: "#D62728"
 volgorde: 5
 vraag: "Hoe veilig is jouw straat voor voetgangers en fietsers?"
 onderzoeksvragen:

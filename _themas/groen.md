@@ -1,6 +1,7 @@
 ---
 naam: "Groenvoorziening"
 sleutel: groen
+kleur: "#3C7A2E"
 volgorde: 2
 vraag: "Hoeveel groen heeft jouw wijk?"
 onderzoeksvragen:
