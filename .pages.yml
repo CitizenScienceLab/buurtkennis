@@ -2,7 +2,7 @@
 # Alles wat je hier bewerkt wordt een gewone commit op main; de site bouwt vanzelf.
 media:
   input: assets
-  output: /buurtkennis/assets
+  output: /assets
 
 content:
   - name: buurten

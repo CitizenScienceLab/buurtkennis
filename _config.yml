@@ -22,6 +22,6 @@ defaults:
 
 title: Leiden BuurtKennis
 
-# Adres van de site op GitHub Pages (nodig voor links tussen pagina's)
-baseurl: /buurtkennis
-url: https://citizensciencelab.github.io
+# Adres van de site (eigen domein; zie CNAME) (nodig voor links tussen pagina's)
+baseurl: ""
+url: https://leidenbuurtkennis.org
