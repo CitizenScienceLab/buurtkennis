@@ -6,7 +6,7 @@
   --creme: #FAF5E4; --vlak: #FFFFFF; --inkt: #1E1407; --bruin: #382202; --lijn: #1E1407; --zacht: #6B5A45;
   --fase-A: #A99A86; --fase-B: #388E62; --fase-C: #F84800; --fase-D: #FACD15; --fase-E: #328BA0; --fase-F: #382202;
   --water: #CFE6EC; --doos: #DBCB94; --doos-binnen: #85704D; --doos-lijn: #382202;
-  --kop: "Figtree", "Helvetica Neue", Arial, sans-serif; --tekst: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  --kop: "Figtree", "Helvetica Neue", Arial, sans-serif; --titel: "Bitter", Georgia, serif; --tekst: "Open Sans", "Helvetica Neue", Arial, sans-serif;
   --peek: 108px;
   color-scheme: light;
 }
@@ -34,23 +34,24 @@ a.uit::after { content: "\00a0↗"; font-size: .85em }
 .bk-nav a { font-family: var(--kop); font-weight: 800; font-size: .85rem; text-decoration: none; color: var(--inkt); padding: 4px 10px; border: 2px dashed transparent }
 .bk-nav a[aria-current="page"], .bk-nav a:hover { border-color: var(--inkt) }
 
-h1 { font-family: var(--kop); font-weight: 900; font-size: clamp(1.6rem, 5vw, 2.4rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--bruin); margin: 6px 0 8px; text-wrap: balance }
+h1 { font-family: var(--titel); font-weight: 500; font-size: clamp(1.8rem, 5.4vw, 2.6rem); line-height: 1.08; letter-spacing: -0.01em; color: var(--bruin); margin: 20px 0 10px; text-wrap: balance }
 h2 { font-family: var(--kop); font-weight: 900; font-size: 1.2rem; line-height: 1.15; color: var(--bruin); margin: 0 0 4px; letter-spacing: -0.01em }
 h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--bruin); margin: 16px 0 6px }
 .intro { margin: 0 0 16px; max-width: 60ch }
-.plek { font-family: var(--kop); font-weight: 900; color: var(--bruin); font-size: clamp(1.7rem, 7vw, 2.4rem); line-height: 1.05; letter-spacing: -0.02em; margin: 2px 0 0; min-height: 1em; text-wrap: balance }
+/* naam boven de kaart: Bitter, in de kleur van de fase (iets donkerder, zodat geel leesbaar blijft) */
+.plek { font-family: var(--titel); font-weight: 500; color: color-mix(in srgb, var(--k, var(--bruin)) 78%, var(--inkt)); font-size: clamp(1.9rem, 7.5vw, 2.7rem); line-height: 1.08; letter-spacing: -0.01em; margin: 18px 0 6px; min-height: 1.08em; text-wrap: balance }
 
 /* indeling: mobiel naam, kompas, kaart, veegkaart; desktop naam en kompas boven de kaart links, card rechts */
 .hub { display: grid; gap: 4px; grid-template-areas: "naam" "kompas" "kaart" }
 .hub .naam { grid-area: naam } .hub .kompas-rij { grid-area: kompas } .hub .kaart { grid-area: kaart }
 @media (min-width: 900px) {
   .hub { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); grid-template-areas: "naam card" "kompas card" "kaart card"; grid-template-rows: auto auto 1fr; column-gap: 32px; align-items: start }
-  .hub .card { position: sticky; top: 12px }
+  .hub .card { position: sticky; top: 12px; margin-top: 64px }
   .hub .card { grid-area: card }
 }
 
 /* kompas */
-.kompas-rij { display: flex; align-items: center; gap: 10px; min-height: 64px }
+.kompas-rij { display: flex; align-items: center; gap: 10px; min-height: 64px; margin-bottom: 10px }
 .kompas-rij .kompas { width: 128px; flex: none }
 .fase-label { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--inkt); text-decoration: none; line-height: 1.2 }
 .fase-label small { display: block; font-family: var(--tekst); font-weight: 400; font-size: .8rem; color: var(--zacht) }

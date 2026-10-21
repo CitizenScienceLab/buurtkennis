@@ -25,7 +25,7 @@ const UITLEG = { A: "Partners verzamelen, samenwerkingen organiseren en projectd
 const kompas = document.querySelector('.groot-kompas .kompas'); kompas.classList.add('groot');
 function kies(code) {
   const f = FASES.find(x => x.code === code); if (!f) return;
-  kompas.dataset.fase = code;
+  kompas.dataset.fase = code; gekozen = code;
   document.getElementById('uitleg').style.setProperty('--band', `var(--fase-${code})`);
   document.getElementById('u-kop').textContent = `${f.code} ${f.naam}`;
   document.getElementById('u-tekst').textContent = UITLEG[code] || '';
@@ -33,6 +33,10 @@ function kies(code) {
   document.getElementById('u-link').innerHTML = `<a class="uit" href="{{ site.data.methode.handleiding }}" target="_blank" rel="noopener">Lees meer in de methodiek</a>`;
   try { history.replaceState(null, '', '#' + code); } catch (e) {}
 }
+// hover: de lijn van die fase alvast dik; bij weggaan terug naar de gekozen fase
+let gekozen = '';
+kompas.addEventListener('pointerover', e => { const el = e.target.closest('.tik[data-fase]'); kompas.dataset.fase = el ? el.dataset.fase : gekozen; });
+kompas.addEventListener('pointerleave', () => { kompas.dataset.fase = gekozen; });
 kompas.addEventListener('click', e => { const el = e.target.closest('[data-fase]'); if (el && el.dataset.fase) kies(el.dataset.fase); });
 if (/^#[A-F]$/.test(location.hash)) kies(location.hash.slice(1));
 </script>

@@ -10,7 +10,7 @@
   <p class="plek naam" id="plek">Leiden</p>
   <div class="kompas-rij">
     {% include kompas.svg %}
-    <a class="fase-label" id="fase-label" href="{{ '/fases/' | relative_url }}" target="_blank" rel="noopener">Fases van BuurtKennis<small>van kwestie tot onderzoek ↗</small></a>
+    <a class="fase-label" id="fase-label" href="{{ '/fases/' | relative_url }}" target="_blank" rel="noopener">BuurtKennis fase<small>van kwestie tot onderzoek ↗</small></a>
   </div>
   <div class="kaart" id="kaart">{% include kaart-leiden.svg %}</div>
   <section class="card" id="card" data-stand="dicht" aria-live="polite">
@@ -97,8 +97,14 @@ function zetFase(f) {
   const l = letter(f); kompas.dataset.fase = l;
   const lab = $('fase-label');
   if (l) { lab.innerHTML = `${esc(faseNaam(f))}<small>fase ${esc(f)} · lees meer ↗</small>`; lab.href = FASEN_URL + '#' + l; }
-  else { lab.innerHTML = 'Fases van BuurtKennis<small>van kwestie tot onderzoek ↗</small>'; lab.href = FASEN_URL; }
+  else { lab.innerHTML = 'BuurtKennis fase<small>van kwestie tot onderzoek ↗</small>'; lab.href = FASEN_URL; }
+  $('plek').style.setProperty('--k', l ? `var(--fase-${l})` : 'var(--bruin)');
 }
+// --- kop: naam en kompas van wat gekozen is; hover toont alvast wat je zou kiezen ---
+let staat = { naam: 'Leiden', fase: '' };
+function kop(naam, f) { staat = { naam, fase: f }; $('plek').textContent = naam; zetFase(f); }
+function voorproef(naam, f) { $('plek').textContent = naam; zetFase(f); }
+function herstel() { voorproef(staat.naam, staat.fase); }
 // één stippelkader met alle thema's erin, gescheiden door hun stip
 const themaTags = ths => { const ok = [...new Set(ths)].filter(th => THEMAS[th]); return ok.length ? `<span class="tags">${ok.map(th => `<span class="thema" style="--tk:${esc(THEMAS[th].kleur)}">${esc(THEMAS[th].naam)}</span>`).join('')}</span>` : ''; };
 const sindsRegel = s => s ? `<span class="sinds">sinds ${esc(maand(s))}</span>` : '';
@@ -118,7 +124,7 @@ function markeer(sel) {
 function adres(h) { try { history.replaceState(null, '', h ? '#' + h : location.pathname + location.search); } catch (e) {} }
 
 function toonLeiden() {
-  huidig = ''; markeer(null); zetFase(''); $('plek').textContent = 'Leiden';
+  huidig = ''; markeer(null); kop('Leiden', '');
   const bs = BUURTEN.slice().sort((a, b) => letter(b.verste).localeCompare(letter(a.verste)));
   vul('Lopend in Leiden', `<span class="sinds">${bs.length} ${bs.length === 1 ? 'buurt' : 'buurten'}, ${TRAJECTEN.length} ${TRAJECTEN.length === 1 ? 'traject' : 'trajecten'}</span>`,
     `<h3>Buurten</h3>${lijstBuurten(bs)}
@@ -129,8 +135,7 @@ function toonBuurt(code) {
   const b = buurtMetPlek(code); const cbs = CBS[code] || {};
   const ts = trajectenBij(code);
   huidig = 'buurt:' + code; markeer([document.getElementById(code), ...ts.flatMap(t => [...svg.querySelectorAll(`.traject[data-id="${CSS.escape(t.id)}"][data-plek="${code}"]`)])]);
-  $('plek').textContent = b ? b.naam : (cbs.naam || '');
-  zetFase(b ? b.verste : '');
+  kop(b ? b.naam : (cbs.naam || ''), b ? b.verste : '');
   if (b) {
     vul(b.naam, themaTags(ts.map(t => t.thema)) + sindsRegel(b.sinds),
       `${b.doel ? `<p>${esc(b.doel)}</p>` : ''}
@@ -149,7 +154,7 @@ function toonBuurt(code) {
 function toonTraject(id) {
   const t = TRAJECTEN.find(x => x.id === id); if (!t) return toonLeiden();
   huidig = 'traject:' + id; markeer([...svg.querySelectorAll(`.traject[data-id="${CSS.escape(id)}"]`), ...buurtenVan(t).map(b => document.getElementById(b.plek))]);
-  $('plek').textContent = naamVan(t); zetFase(t.fase);
+  kop(naamVan(t), t.fase);
   vul(t.titel, themaTags([t.thema]) + sindsRegel(t.sinds),
     `${t.doel ? `<p>${esc(t.doel)}</p>` : ''}
      ${t.activiteiten.length ? '<h3>Activiteiten</h3>' + lijstActiviteiten(t.activiteiten, t.fase) : ''}
@@ -162,14 +167,24 @@ const mobiel = () => matchMedia('(max-width: 899px)').matches;
 function peek() { const h = $('card-kop').offsetHeight + 10; document.documentElement.style.setProperty('--peek', h + 'px'); }
 function zetStand(s) { card.dataset.stand = s; card.style.transform = ''; }
 (function vegen() {
-  const kop = $('card-kop'); let y0 = null, t0 = 0, basis = 0, bewogen = false;
-  kop.addEventListener('pointerdown', e => { if (!mobiel() || e.target.closest('a,button')) return; y0 = e.clientY; t0 = performance.now(); bewogen = false; basis = card.dataset.stand === 'open' ? 0 : card.offsetHeight - parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--peek')); card.classList.add('slepen'); kop.setPointerCapture(e.pointerId); });
-  kop.addEventListener('pointermove', e => { if (y0 === null) return; const dy = e.clientY - y0; if (Math.abs(dy) > 5) bewogen = true; const max = card.offsetHeight - parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--peek')); card.style.transform = `translateY(${Math.min(max, Math.max(0, basis + dy))}px)`; });
+  const greep = $('card-kop'); let y0 = null, t0 = 0, basis = 0, bewogen = false;
+  greep.addEventListener('pointerdown', e => { if (!mobiel() || e.target.closest('a,button')) return; y0 = e.clientY; t0 = performance.now(); bewogen = false; basis = card.dataset.stand === 'open' ? 0 : card.offsetHeight - parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--peek')); card.classList.add('slepen'); greep.setPointerCapture(e.pointerId); });
+  greep.addEventListener('pointermove', e => { if (y0 === null) return; const dy = e.clientY - y0; if (Math.abs(dy) > 5) bewogen = true; const max = card.offsetHeight - parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--peek')); card.style.transform = `translateY(${Math.min(max, Math.max(0, basis + dy))}px)`; });
   const klaar = e => { if (y0 === null) return; card.classList.remove('slepen'); const dy = e.clientY - y0, v = dy / Math.max(1, performance.now() - t0); y0 = null;
     if (!bewogen) return zetStand(card.dataset.stand === 'open' ? 'dicht' : 'open');
     zetStand(dy < -40 || v < -0.4 ? 'open' : dy > 40 || v > 0.4 ? 'dicht' : card.dataset.stand); };
-  kop.addEventListener('pointerup', klaar); kop.addEventListener('pointercancel', klaar);
+  greep.addEventListener('pointerup', klaar); greep.addEventListener('pointercancel', klaar);
   addEventListener('resize', peek);
+  // open card: helemaal bovenaan en dan verder naar beneden vegen sluit hem, pas na een stukje (DREMPEL)
+  const body = $('card-body'), DREMPEL = 28; let ty = null, tt = 0, vegen = false;
+  body.addEventListener('touchstart', e => { if (!mobiel() || card.dataset.stand !== 'open') return; ty = body.scrollTop <= 0 ? e.touches[0].clientY : null; tt = performance.now(); vegen = false; }, { passive: true });
+  body.addEventListener('touchmove', e => { if (ty === null) return; const dy = e.touches[0].clientY - ty;
+    if (!vegen && (dy < 0 || body.scrollTop > 0)) { ty = null; return; }
+    if (e.cancelable) e.preventDefault();   // bovenaan naar beneden: niet scrollen, wel (na de drempel) vegen
+    if (dy > DREMPEL) { vegen = true; card.classList.add('slepen'); card.style.transform = `translateY(${dy - DREMPEL}px)`; } }, { passive: false });
+  const los = e => { if (ty === null) return; const dy = (e.changedTouches[0] || {}).clientY - ty - DREMPEL, v = dy / Math.max(1, performance.now() - tt); ty = null; card.classList.remove('slepen');
+    if (vegen) zetStand(dy > 90 || v > 0.5 ? 'dicht' : 'open'); vegen = false; };
+  body.addEventListener('touchend', los); body.addEventListener('touchcancel', los);
 })();
 
 // --- klikken: doosje, buurt, lijst; ergens anders terug naar Leiden ---
@@ -181,6 +196,16 @@ document.addEventListener('click', e => {
   if (e.target.closest('.card, a, button, .kompas-rij, .bk-kop')) return;
   toonLeiden();
 });
+// --- hover (alleen met een muis): naam en kompas alvast tonen, bij weggaan terug ---
+svg.addEventListener('pointerover', e => {
+  if (e.pointerType !== 'mouse') return;
+  const d = e.target.closest('.traject'); const t = d && TRAJECTEN.find(x => x.id === d.dataset.id);
+  if (t) return voorproef(t.titel, t.fase);
+  const el = e.target.closest('.buurt');
+  if (el) { const b = buurtMetPlek(el.id); return voorproef(b ? b.naam : ((CBS[el.id] || {}).naam || el.dataset.naam || ''), b ? b.verste : ''); }
+  herstel();
+});
+svg.addEventListener('pointerleave', herstel);
 document.addEventListener('keydown', e => { const d = e.target.closest && e.target.closest('.traject'); if (d && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toonTraject(d.dataset.id); } if (e.key === 'Escape') toonLeiden(); });
 
 // --- begin: adres (#traject of #buurt) of Leiden ---
