@@ -4,7 +4,7 @@
    Letters: Figtree Black staat in voor Basic Sans Black (Adobe Fonts); vervang via de fonts-regel in _layouts/bk.html. */
 :root {
   --creme: #FAF5E4; --vlak: #FFFFFF; --inkt: #1E1407; --bruin: #382202; --lijn: #1E1407; --zacht: #6B5A45;
-  --fase-A: #A99A86; --fase-B: #388E62; --fase-C: #F84800; --fase-D: #FACD15; --fase-E: #328BA0; --fase-F: #382202;
+  --fase-A: #A99A86; --fase-B: #388E62; --fase-C: #F84800; --fase-D: #FACD15; --fase-E: #328BA0; --fase-F: #382202; --fase-D-tekst: #D9A600;
   --water: #CFE6EC; --doos: #DBCB94; --doos-binnen: #85704D; --doos-lijn: #382202;
   --kop: "Figtree", "Helvetica Neue", Arial, sans-serif; --titel: "Bitter", Georgia, serif; --tekst: "Open Sans", "Helvetica Neue", Arial, sans-serif;
   --peek: 108px;
@@ -38,15 +38,17 @@ h1 { font-family: var(--titel); font-weight: 500; font-size: clamp(1.8rem, 5.4vw
 h2 { font-family: var(--kop); font-weight: 900; font-size: 1.2rem; line-height: 1.15; color: var(--bruin); margin: 0 0 4px; letter-spacing: -0.01em }
 h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--bruin); margin: 16px 0 6px }
 .intro { margin: 0 0 16px; max-width: 60ch }
-/* naam boven de kaart: Bitter, in de kleur van de fase (iets donkerder, zodat geel leesbaar blijft) */
-.plek { font-family: var(--titel); font-weight: 500; color: color-mix(in srgb, var(--k, var(--bruin)) 78%, var(--inkt)); font-size: clamp(1.9rem, 7.5vw, 2.7rem); line-height: 1.08; letter-spacing: -0.01em; margin: 18px 0 6px; min-height: 1.08em; text-wrap: balance }
+/* naam boven de kaart: Bitter, in de kleur van de fase (geel iets donkerder, zodat het leesbaar blijft).
+   Altijd één regel met een vaste hoogte, zodat de kaart nooit verspringt. */
+.plek { font-family: var(--titel); font-weight: 500; color: var(--k, var(--bruin)); font-size: clamp(1.6rem, 6vw, 2.2rem); line-height: 1.2; height: 1.2em; letter-spacing: -0.01em; margin: 18px 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
 
 /* indeling: mobiel naam, kompas, kaart, veegkaart; desktop naam en kompas boven de kaart links, card rechts */
 .hub { display: grid; gap: 4px; grid-template-areas: "naam" "kompas" "kaart" }
 .hub .naam { grid-area: naam } .hub .kompas-rij { grid-area: kompas } .hub .kaart { grid-area: kaart }
 @media (min-width: 900px) {
   .hub { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); grid-template-areas: "naam card" "kompas card" "kaart card"; grid-template-rows: auto auto 1fr; column-gap: 32px; align-items: start }
-  .hub .card { position: sticky; top: 12px; margin-top: 64px }
+  .hub .card { position: sticky; top: 12px; margin-top: 64px; max-height: calc(100vh - 100px); display: flex; flex-direction: column }
+  .hub .card-body { flex: 1 1 auto; min-height: 0 }
   .hub .card { grid-area: card }
 }
 
@@ -124,8 +126,6 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .fase-pil { display: inline-flex; align-items: center; gap: 8px; font-family: var(--kop); font-weight: 800; font-size: .85rem; color: var(--inkt); text-decoration: none }
 .fase-pil .f { font-weight: 900; width: 26px; height: 26px; display: grid; place-items: center; background: var(--k); color: #fff }
 .fase-pil[style*="fase-D"] .f { color: var(--bruin) }
-.titel-dubbel #c-titel { display: none }
-@media (max-width: 899px) { .titel-dubbel #c-titel { display: block } }
 
 /* lijsten in de kaart en op /trajecten */
 .lijst { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px }
