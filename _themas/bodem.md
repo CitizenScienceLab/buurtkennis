@@ -1,6 +1,7 @@
 ---
 naam: Bodemkwaliteit
 kleur: "#8B5A2B"
+eigen_kleur: "#85543d"
 sleutel: bodem
 volgorde: 24
 vraag: Hoe gezond is onze bodem?
