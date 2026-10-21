@@ -98,7 +98,7 @@ function zetFase(f) {
   const lab = $('fase-label');
   if (l) { lab.innerHTML = `${esc(faseNaam(f))}<small>fase ${esc(f)} · lees meer ↗</small>`; lab.href = FASEN_URL + '#' + l; }
   else { lab.innerHTML = 'BuurtKennis fase<small>van kwestie tot onderzoek ↗</small>'; lab.href = FASEN_URL; }
-  $('plek').style.setProperty('--k', l ? `var(--fase-${l})` : 'var(--bruin)');
+  $('plek').style.setProperty('--k', l ? `var(--fase-${l}-tekst, var(--fase-${l}))` : 'var(--bruin)');
 }
 // --- kop: naam en kompas van wat gekozen is; hover toont alvast wat je zou kiezen ---
 let staat = { naam: 'Leiden', fase: '' };
@@ -114,7 +114,7 @@ const lijstBuurten = bs => bs.length ? `<ul class="lijst">${bs.map(b => `<li><bu
 const lijstActiviteiten = (as, f) => as && as.length ? `<ul class="activiteiten" style="--k:${faseKleur(f)}">${as.map(a => `<li>${esc(a.wat)}${a.wanneer || a.waar ? `<span class="wanneer">${esc([a.wanneer, a.waar].filter(Boolean).join(' · '))}</span>` : ''}</li>`).join('')}</ul>` : '';
 
 let huidig = '';
-function vul(titel, meta, body) { $('c-titel').textContent = titel; card.classList.toggle('titel-dubbel', titel === $('plek').textContent); $('c-meta').innerHTML = meta; $('card-body').innerHTML = body; peek(); }
+function vul(titel, meta, body) { $('c-titel').textContent = titel; $('c-meta').innerHTML = meta; $('card-body').innerHTML = body; peek(); }
 function markeer(sel) {
   document.querySelectorAll('.gekozen').forEach(e => e.classList.remove('gekozen'));
   if (sel) sel.forEach(e => e && e.classList.add('gekozen'));
@@ -137,7 +137,7 @@ function toonBuurt(code) {
   huidig = 'buurt:' + code; markeer([document.getElementById(code), ...ts.flatMap(t => [...svg.querySelectorAll(`.traject[data-id="${CSS.escape(t.id)}"][data-plek="${code}"]`)])]);
   kop(b ? b.naam : (cbs.naam || ''), b ? b.verste : '');
   if (b) {
-    vul(b.naam, themaTags(ts.map(t => t.thema)) + sindsRegel(b.sinds),
+    vul('Lopend in ' + b.naam, themaTags(ts.map(t => t.thema)) + sindsRegel(b.sinds),
       `${b.doel ? `<p>${esc(b.doel)}</p>` : ''}
        ${ts.length ? '<h3>Trajecten</h3>' + lijstTrajecten(ts) : ''}
        ${b.activiteiten.length ? '<h3>Activiteiten</h3>' + lijstActiviteiten(b.activiteiten, b.verste) : ''}`);
@@ -200,7 +200,7 @@ document.addEventListener('click', e => {
 svg.addEventListener('pointerover', e => {
   if (e.pointerType !== 'mouse') return;
   const d = e.target.closest('.traject'); const t = d && TRAJECTEN.find(x => x.id === d.dataset.id);
-  if (t) return voorproef(t.titel, t.fase);
+  if (t) return voorproef(naamVan(t), t.fase);   // boven de kaart altijd de plek; de titel staat in de card
   const el = e.target.closest('.buurt');
   if (el) { const b = buurtMetPlek(el.id); return voorproef(b ? b.naam : ((CBS[el.id] || {}).naam || el.dataset.naam || ''), b ? b.verste : ''); }
   herstel();
