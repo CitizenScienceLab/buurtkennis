@@ -1,7 +1,7 @@
 ---
 titel: De bodemkwaliteit van het Roomburgpark
 fase: E
-thema: gezonde-leefomgeving
+thema: _themas/bodem.md
 buurten:
   - _buurten/roomburg.md
 activiteiten:
