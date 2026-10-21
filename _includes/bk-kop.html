@@ -1,10 +1,10 @@
 {%- assign hier = page.url | remove: "index.html" -%}
 <header class="bk-kop">
-  <a class="logo" href="{{ '/' | relative_url }}" aria-label="Naar de kaart"><img src="{{ '/assets/buurtkennis-logo.png' | relative_url }}" alt="BuurtKennis"></a>
-  <a class="bk-titel" href="{{ '/' | relative_url }}">Leiden BuurtKennis in kaart</a>
+  <a class="logo" href="{{ '/' | relative_url }}" aria-label="Naar de homepagina"><img src="{{ '/assets/buurtkennis-logo.png' | relative_url }}" alt="BuurtKennis"></a>
+  <a class="bk-titel" href="{{ '/' | relative_url }}">Leiden BuurtKennis</a>
   <nav class="bk-nav" aria-label="Pagina's">
-    <a href="{{ '/trajecten/' | relative_url }}" {% if hier contains "/trajecten/" %}aria-current="page"{% endif %}>Trajecten</a>
-    <a href="{{ '/fases/' | relative_url }}" {% if hier contains "/fases/" %}aria-current="page"{% endif %}>Fases</a>
-    <a class="uit" href="https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/readme" target="_blank" rel="noopener">Methodiek</a>
+    <a href="{{ '/themas/' | relative_url }}" {% if hier contains "/themas/" %}aria-current="page"{% endif %}>Thema's</a>
+    <a href="{{ '/kaart/' | relative_url }}" {% if hier contains "/kaart/" or hier contains "/trajecten/" %}aria-current="page"{% endif %}>In kaart</a>
+    <a href="{{ '/methode/' | relative_url }}" {% if hier contains "/methode/" %}aria-current="page"{% endif %}>De methode</a>
   </nav>
 </header>

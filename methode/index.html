@@ -1,0 +1,46 @@
+---
+layout: bk
+title: De methode · Leiden BuurtKennis
+description: "Van kwesties verzamelen tot onderzoek starten: de stappen die een buurt of traject doorloopt."
+---
+{%- assign F = site.data.methode.fases -%}
+{% include doos-symbolen.svg %}
+<h1>Van kwestie tot onderzoek</h1>
+<p class="intro">Een buurt of traject doorloopt de vier fases in de ring. Het project begint bij A en eindigt bij F. Tik op een fase; de uitgebreide uitleg staat in de <a class="uit" href="{{ site.data.methode.handleiding }}" target="_blank" rel="noopener">methodiek</a>.</p>
+<div class="groot-kompas">{% include kompas.svg %}</div>
+<div class="fase-uitleg" id="uitleg">
+  <h2 id="u-kop">Kies een fase</h2>
+  <p id="u-tekst">Elke kwestie gaat van B naar E. Wat we leren, gaat terug de buurt in.</p>
+  <ul id="u-stappen"></ul>
+  <p id="u-link"></p>
+</div>
+<ol class="fasen">
+{%- for f in F %}
+  <li style="--k:var(--fase-{{ f.code }})"><span class="f">{{ f.code }}</span><span>{{ f.naam }}{% if f.stappen.size > 0 %} <small>({% for s in f.stappen %}{{ s.code }} {{ s.naam }}{% unless forloop.last %}, {% endunless %}{% endfor %})</small>{% endif %}</span></li>
+{%- endfor %}
+</ol>
+<section class="methode-meer">
+  <h2>Leer zelf buurtkennis maken</h2>
+  <p>In BuurtKennis leren we lessen die we niet willen vergeten. Daarom delen we ze in een online methode, die in de loop van 2027 verder groeit. Wat er al staat, lees je in de <a class="uit" href="{{ site.data.methode.handleiding }}" target="_blank" rel="noopener">methodiek</a>.</p>
+</section>
+<script>
+const FASES = {{ F | jsonify }};
+const UITLEG = { A: "Partners verzamelen, samenwerkingen organiseren en projectdoelen bepalen.", B: "We verkennen de buurt en brengen kwesties rond een gezonde leefomgeving in kaart, in gesprek met bewoners en betrokkenen.", C: "Samen met experts en betrokkenen in de buurt maken we onderzoeksvragen van de kwesties.", D: "Met bewoners, studenten en onderzoekers ontwerpen we een aanpak die past bij de buurt en het thema.", E: "Het buurtonderzoek gaat van start. Bewoners meten zelf, begeleid door studenten en onderzoekers.", F: "De kennis uit het project en de onderzoeken wordt gedeeld." };
+const kompas = document.querySelector('.groot-kompas .kompas'); kompas.classList.add('groot');
+function kies(code) {
+  const f = FASES.find(x => x.code === code); if (!f) return;
+  kompas.dataset.fase = code; gekozen = code;
+  document.getElementById('uitleg').style.setProperty('--band', `var(--fase-${code})`);
+  document.getElementById('u-kop').textContent = `${f.code} ${f.naam}`;
+  document.getElementById('u-tekst').textContent = UITLEG[code] || '';
+  document.getElementById('u-stappen').innerHTML = (f.stappen || []).map(s => `<li>${s.link ? `<a class="uit" href="${s.link}" target="_blank" rel="noopener">${s.code} ${s.naam}</a>` : `${s.code} ${s.naam}`}</li>`).join('');
+  document.getElementById('u-link').innerHTML = `<a class="uit" href="{{ site.data.methode.handleiding }}" target="_blank" rel="noopener">Lees meer in de methodiek</a>`;
+  try { history.replaceState(null, '', '#' + code); } catch (e) {}
+}
+// hover: de lijn van die fase alvast dik; bij weggaan terug naar de gekozen fase
+let gekozen = '';
+kompas.addEventListener('pointerover', e => { const el = e.target.closest('.tik[data-fase]'); kompas.dataset.fase = el ? el.dataset.fase : gekozen; });
+kompas.addEventListener('pointerleave', () => { kompas.dataset.fase = gekozen; });
+kompas.addEventListener('click', e => { const el = e.target.closest('[data-fase]'); if (el && el.dataset.fase) kies(el.dataset.fase); });
+if (/^#[A-F]$/.test(location.hash)) kies(location.hash.slice(1));
+</script>
