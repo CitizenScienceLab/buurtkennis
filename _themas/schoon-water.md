@@ -1,15 +1,16 @@
 ---
-naam: "Schoon water"
-sleutel: water
+naam: Schoon water
 kleur: "#9EC9E8"
+eigen_kleur: "#0d77e0"
+sleutel: water
 volgorde: 4
-vraag: "Hoe gezond zijn onze grachten en sloten?"
+vraag: Hoe gezond zijn onze grachten en sloten?
 onderzoeksvragen:
-  - "Hoe helder is het water in jouw buurt?"
-  - "Zie je planten of vissen?"
-  - "Waar blijven na regen plassen staan?"
-  - "Zijn er tekenen van vervuiling of blauwalg?"
-  - "Welke waterdieren leven er, en zijn dat er meer of minder dan vroeger?"
+  - Hoe helder is het water in jouw buurt?
+  - Zie je planten of vissen?
+  - Waar blijven na regen plassen staan?
+  - Zijn er tekenen van vervuiling of blauwalg?
+  - Welke waterdieren leven er, en zijn dat er meer of minder dan vroeger?
 ---
 Grachten, singels en sloten zijn overal in Leiden en bepalen mede het karakter van de wijken. Maar hoe schoon is dat water eigenlijk? En wat betekent dat voor zwemmen, vissen en de natuur?
 
