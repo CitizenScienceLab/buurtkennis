@@ -4,7 +4,8 @@
  * Daarom is er geen kaartbibliotheek nodig; dit script legt zelf de tegels neer.
  * Tegels: BRT-achtergrondkaart (grijs) van het Kadaster, via PDOK.
  *
- * De buurten komen uit de knoppen onder de kaart (data-lat, data-lon, data-straal, data-fase).
+ * De buurten komen uit de knoppen onder de kaart (data-lat, data-lon, data-straal, data-fase),
+ * met de ringen (de methodefiguur) van die buurt erin; het label op de kaart krijgt een kopie.
  * Die knoppen maakt Jekyll uit _buurten/. Hier hoef je dus niets aan te passen voor een nieuwe buurt.
  */
 (function () {
@@ -32,7 +33,7 @@
       lon: parseFloat(k.getAttribute('data-lon')),
       straal: parseFloat(k.getAttribute('data-straal')) || 350,
       fase: k.getAttribute('data-fase') || '',
-      vulling: k.getAttribute('data-vulling') || '0'
+      ringen: k.querySelector('svg.ringen')
     };
   }).filter(function (b) { return isFinite(b.lat) && isFinite(b.lon); });
 
@@ -146,8 +147,14 @@
       label.style.left = p[0].toFixed(1) + 'px';
       label.style.top = (p[1] + r + 6).toFixed(1) + 'px';
       label.style.setProperty('--k', kleur);
-      label.innerHTML = '<svg class="symbool" aria-hidden="true"><use href="#v' + b.vulling + '"/></svg><span></span>';
-      label.lastChild.textContent = b.naam;
+      if (b.ringen) {
+        var ringen = b.ringen.cloneNode(true);
+        ringen.setAttribute('aria-hidden', 'true');
+        label.appendChild(ringen);
+      }
+      var naam = document.createElement('span');
+      naam.textContent = b.naam;
+      label.appendChild(naam);
       labels.appendChild(label);
     });
 

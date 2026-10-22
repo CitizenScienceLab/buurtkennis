@@ -1,14 +1,20 @@
-# De BuurtKennis-methode: fases en stappen, voor de kaart op /buurten/.
+# De BuurtKennis-methode: fases en stappen, voor de methodefiguur (de ringen) en de kaart.
 #
 # GitBook is de bron: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/
-# Namen en links volgen GitBook; de uitleg staat daar, niet hier.
-# Hier staat alleen wat GitBook niet heeft: volgorde, kleur en symbool.
+# Namen en links volgen GitBook; de uitgebreide uitleg staat daar.
+# Hier staat wat GitBook niet heeft: volgorde, kleur, de korte naam op de figuur en het korte verhaal per stap.
 #
-#   zichtbaar: false     de fase staat niet op de kaart. A en F gaan over het project
-#                        als geheel, niet over waar een buurt staat.
+# De figuur: elke zichtbare fase is een kwart (in deze volgorde linksboven, rechtsboven,
+# rechtsonder, linksonder), met een boog per stap, van binnen (wij en onze partners)
+# naar buiten (de hele buurt). Meer of minder stappen in een fase kan gewoon: de bogen
+# worden dan vanzelf smaller of breder.
+#
+#   zichtbaar: false     de fase staat niet in de figuur. A en F gaan over het project
+#                        als geheel, niet over waar een kwestie staat.
 #   link: ""             de stap staat er zonder link, tot de pagina in GitBook staat
-#   vulling              hoe vol het rondje is: 0 is leeg, 1 is vol
-#   kleur, kleur_donker  voor een licht en voor een donker scherm
+#   kort                 de naam op de boog in de figuur (kort houden)
+#   verhaal              kop en tekst voor de uitleg op /methode/
+#   kleur, kleur_donker  voor de oude kaart op /overzicht (de rest van de site gebruikt assets/bk.css)
 
 # Link naar het overzicht van de methode in GitBook
 handleiding: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/readme"
@@ -17,58 +23,108 @@ fases:
   - code: A
     naam: "Project opstarten"
     zichtbaar: false
-    vulling: 0
     kleur: "#D3DDEE"
     kleur_donker: "#33496F"
     stappen: []
 
   - code: B
     naam: "Kwesties verzamelen"
-    vulling: 0.25
     kleur: "#9DB6E2"
     kleur_donker: "#46669F"
     stappen:
-      - { code: B1, naam: "Oriënteren", link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b1-orienteren" }
-      - { code: B2, naam: "Ophalen kwesties", link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b2-kwesties-verzamelen" }
-      - { code: B3, naam: "Kwesties sorteren", link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b3-kwesties-sorteren" }
+      - code: B1
+        naam: "Oriënteren"
+        kort: "Oriënteren"
+        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b1-orienteren"
+        verhaal:
+          kop: "Een eerste indruk"
+          tekst: "We bezoeken de buurt, interviewen buurtcoaches en vormen een beeld van hoe de BuurtKennis-methode daar het beste ingezet kan worden."
+      - code: B2
+        naam: "Ophalen kwesties"
+        kort: "Kwesties ophalen"
+        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b2-kwesties-verzamelen"
+        verhaal:
+          kop: "Wat speelt er?"
+          tekst: "We organiseren onderwerpen die al bekend zijn vanuit buurtspreekuren of stadsenquêtes en nodigen buurtbewoners uit."
+      - code: B3
+        naam: "Kwesties sorteren"
+        kort: "Kwesties sorteren"
+        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b3-kwesties-sorteren"
+        verhaal:
+          kop: "De bomen door het bos"
+          tekst: "We sorteren de kwesties op passendheid binnen het project en kijken wat we er anders mee kunnen doen."
 
   - code: C
     naam: "Vraagstuk vormen"
-    vulling: 0.5
     kleur: "#5F86CC"
     kleur_donker: "#6B91D9"
     stappen:
-      - { code: C1, naam: "Werving betrokkenen", link: "" }
-      - { code: C2, naam: "Vraagstuk vormen", link: "" }
+      - code: C1
+        naam: "Werving betrokkenen"
+        kort: "Werving"
+        link: ""
+        verhaal:
+          kop: "De betrokkenen"
+          tekst: "We gaan op zoek naar betrokken buurtbewoners die van hun buurt een gezonde leefomgeving willen maken. We spreken ze wat langer over de kwestie en kijken wie er geïnteresseerd is in onderzoek doen."
+      - code: C2
+        naam: "Vraagstuk vormen"
+        kort: "Vraagstuk vormen"
+        link: ""
+        verhaal:
+          kop: "Concretiserende stap"
+          tekst: "We zetten de verzamelde kwesties om in heldere, concrete vraagstukken voor de volgende stap. Daarvoor zoeken we experts op het gebied en beginnen we met de selectie van passende opleidingen."
 
   - code: D
     naam: "Samen plannen"
-    vulling: 0.75
     kleur: "#2C54A3"
     kleur_donker: "#9DBBF0"
     stappen:
-      - { code: D1, naam: "Onderzoeken levensvatbaarheid", link: "" }
-      - { code: D2, naam: "Co-creatie initiatief", link: "" }
+      - code: D1
+        naam: "Onderzoeken levensvatbaarheid"
+        kort: "Levensvatbaarheid"
+        link: ""
+        verhaal:
+          kop: "Groen licht?"
+          tekst: "In overleg met beleidsmedewerkers en experts kijken we of we hier een BuurtKennis-onderzoek van kunnen maken. Als er potentie in een onderzoek zit, zoeken we studenten die dit willen begeleiden."
+      - code: D2
+        naam: "Co-creatie initiatief"
+        kort: "Co-creatie initiatief"
+        link: ""
+        verhaal:
+          kop: "Samen plannen"
+          tekst: "We gaan samen nadenken over de vorm van het project. Daarbij houden we rekening met de context van de buurt en het thema. Uit dit co-creatieproces ontstaat een actieve groep kartrekkers van het project."
 
   - code: E
     naam: "Onderzoek starten"
-    vulling: 1
     kleur: "#23244C"
     kleur_donker: "#D6E2F8"
     stappen:
-      - { code: E1, naam: "Opstarten samenwerking", link: "" }
-      - { code: E2, naam: "Start onderzoek", link: "" }
+      - code: E1
+        naam: "Opstarten samenwerking"
+        kort: "Samenwerking"
+        link: ""
+        verhaal:
+          kop: "Samen denken"
+          tekst: "De kersverse werkgroep maakt een onderzoeksplan en wij faciliteren de vorming van een eerste structuur in de samenwerking tussen buurtbewoners en gemeente of onderzoekers."
+      - code: E2
+        naam: "Start onderzoek"
+        kort: "Start onderzoek"
+        link: ""
+        verhaal:
+          kop: "Samen onderzoeken"
+          tekst: "Het project gaat van start en we kijken wie er nog meer mee wil doen uit de buurt. Het project gaat hier zijn eigen weg, en wij zoeken indien nodig naar een goede landingsplek voor het project."
 
   - code: F
     naam: "BuurtKennis delen"
     zichtbaar: false
-    vulling: 1
     kleur: "#23244C"
     kleur_donker: "#D6E2F8"
     stappen: []
 
-# Een thema kan de methode ook verlaten. Zet dan bij dat thema
-# stap: geen-vervolg  of  stap: doorverwezen
+# Een traject of buurt kan de methode ook verlaten. Zet dan
+#   stap: geen-vervolg   of   stap: doorverwezen
+# met eventueel reden: "waarom" (en bij doorverwezen naar: "bij wie").
+# De stappen die wel gezet zijn, blijven in de figuur staan; de rest valt weg.
 afslagen:
-  - { code: geen-vervolg, naam: "Geen vervolg" }
-  - { code: doorverwezen, naam: "Doorverwezen naar de juiste persoon" }
+  - { code: geen-vervolg, naam: "Geen vervolg", kort: "Geen vervolg" }
+  - { code: doorverwezen, naam: "Doorverwezen naar de juiste persoon", kort: "Doorverwezen" }

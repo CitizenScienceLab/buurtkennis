@@ -42,35 +42,42 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
    Altijd één regel met een vaste hoogte, zodat de kaart nooit verspringt. */
 .plek { font-family: var(--titel); font-weight: 400; color: var(--k, var(--bruin)); font-size: clamp(1.6rem, 6vw, 2.2rem); line-height: 1.2; height: 1.2em; letter-spacing: -0.01em; margin: 18px 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
 
-/* indeling: mobiel naam, kompas, kaart, veegkaart; desktop naam en kompas boven de kaart links, card rechts */
-.hub { display: grid; gap: 4px; grid-template-areas: "naam" "kompas" "kaart" }
-.hub .naam { grid-area: naam } .hub .kompas-rij { grid-area: kompas } .hub .kaart { grid-area: kaart }
+/* indeling: mobiel naam, figuur, kaart, veegkaart; desktop naam en figuur boven de kaart links, card rechts */
+.hub { display: grid; gap: 4px; grid-template-areas: "naam" "figuur" "kaart" }
+.hub .naam { grid-area: naam } .hub .ringen-rij { grid-area: figuur } .hub .kaart { grid-area: kaart }
 @media (min-width: 900px) {
-  .hub { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); grid-template-areas: "naam card" "kompas card" "kaart card"; grid-template-rows: auto auto 1fr; column-gap: 32px; align-items: start }
+  .hub { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); grid-template-areas: "naam card" "figuur card" "kaart card"; grid-template-rows: auto auto 1fr; column-gap: 32px; align-items: start }
   .hub .card { position: sticky; top: 12px; margin-top: 64px; max-height: calc(100vh - 100px); display: flex; flex-direction: column }
   .hub .card-body { flex: 1 1 auto; min-height: 0 }
   .hub .card { grid-area: card }
 }
 
-/* kompas */
-.kompas-rij { display: flex; align-items: center; gap: 10px; min-height: 64px; margin-bottom: 10px }
-.kompas-rij .kompas { width: 128px; flex: none }
+/* methodefiguur: de ringen (_includes/ringen.svg). Een gezette stap is vol in de fasekleur, de rest licht.
+   Bij een afslag vallen de niet-gezette bogen weg en staat er een stippelcirkel om de figuur. */
+.ringen-rij { display: flex; align-items: center; gap: 12px; min-height: 64px; margin-bottom: 10px }
+.ringen-rij .ringen { width: 64px; flex: none }
 .fase-label { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--inkt); text-decoration: none; line-height: 1.2 }
 .fase-label small { display: block; font-family: var(--tekst); font-weight: 400; font-size: .8rem; color: var(--zacht) }
-.kompas { display: block; overflow: visible }
-.kompas .boog { fill: none; stroke: color-mix(in srgb, var(--k) 35%, var(--creme)); stroke-width: 6; stroke-linecap: round; transition: stroke-width .2s, stroke .2s }
-.kompas .stroom, .kompas .pijlpunt { fill: none; stroke: color-mix(in srgb, var(--fase-A) 55%, var(--creme)); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; transition: stroke-width .2s, stroke .2s }
-.kompas .letter { font-family: var(--kop); font-weight: 900; font-size: 15px; letter-spacing: 0; fill: var(--zacht); text-anchor: middle; dominant-baseline: middle }
-.kompas .tik { fill: none; stroke: transparent; stroke-width: 34; cursor: pointer; pointer-events: stroke }
-.kompas .open { display: none } .kompas .dicht { display: inline }
-.kompas:not([data-fase=""]) .open { display: inline } .kompas:not([data-fase=""]) .dicht { display: none }
-.kompas[data-fase="A"] [data-fase="A"].stroom, .kompas[data-fase="A"] [data-fase="A"].pijlpunt,
-.kompas[data-fase="B"] .boog[data-fase="B"], .kompas[data-fase="C"] .boog[data-fase="C"],
-.kompas[data-fase="D"] .boog[data-fase="D"], .kompas[data-fase="E"] .boog[data-fase="E"],
-.kompas[data-fase="F"] [data-fase="F"].stroom, .kompas[data-fase="F"] [data-fase="F"].pijlpunt { stroke: var(--k); stroke-width: 13 }
-.kompas[data-fase="A"] .letter[data-fase="A"], .kompas[data-fase="B"] .letter[data-fase="B"], .kompas[data-fase="C"] .letter[data-fase="C"],
-.kompas[data-fase="D"] .letter[data-fase="D"], .kompas[data-fase="E"] .letter[data-fase="E"], .kompas[data-fase="F"] .letter[data-fase="F"] { fill: var(--inkt) }
-.kompas.groot { width: min(100%, 420px); margin: 8px auto }
+.ringen { display: block; overflow: visible; --inkt-op-geel: #1E1407 }
+.ringen .boog { fill: none; stroke: var(--k); stroke-opacity: .14; transition: stroke-width .2s, stroke-opacity .2s }
+.ringen .boog.gezet { stroke-opacity: 1 }
+.ringen-groot .boog { stroke-width: 40 }
+.ringen-klein .boog { stroke-width: 6.5 }
+.ringen .kern { fill: var(--inkt) }
+.ringen .rand { fill: none; stroke: var(--inkt); stroke-width: 1.2; stroke-dasharray: 3 3; display: none }
+.ringen-groot .rand { stroke-width: 3; stroke-dasharray: 10 9 }
+.ringen.afslag .rand { display: inline }
+.ringen.afslag .boog:not(.gezet) { stroke-opacity: 0 }
+/* namen langs de bogen: wit op de fasekleur, donker op geel (ook in donkere modus), zacht als de stap niet gezet is */
+.ringen .naam { font-family: var(--kop); font-weight: 700; font-size: 12px; letter-spacing: 0; fill: var(--zacht); pointer-events: none }
+.ringen .naam.gezet { fill: #fff }
+.ringen .naam.gezet[data-fase="D"] { fill: var(--inkt-op-geel) }
+/* grote figuur op /methode/: elke boog is een knop; hover en de gekozen stap maken hem dikker */
+.groot-figuur .ringen { width: min(100%, 460px); margin: 8px auto }
+.groot-figuur .boog { cursor: pointer }
+.groot-figuur .boog:hover, .groot-figuur .boog.kies { stroke-width: 48 }
+.groot-figuur .boog:focus { outline: none }
+.groot-figuur .boog:focus-visible { stroke-width: 48; outline: 2px dashed var(--inkt); outline-offset: 2px }
 
 /* kaart */
 .kaart { position: relative; aspect-ratio: 1028 / 1024; width: 100%; max-height: 72vh; max-width: calc(72vh * 1028 / 1024); margin: 0 auto }
@@ -114,7 +121,7 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
   body.met-card { padding-bottom: calc(var(--peek) + 12px) }
 }
 @media (min-width: 900px) { .greep { display: none } .card-kop { cursor: default; touch-action: auto; user-select: auto } }
-@media (prefers-reduced-motion: reduce) { .card, .traject, .kompas .boog { transition: none } }
+@media (prefers-reduced-motion: reduce) { .card, .traject, .ringen .boog { transition: none } }
 
 /* thema's: één gestippeld kader zoals in het logo, de thema's erin gescheiden door hun stip */
 .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px }
@@ -146,8 +153,20 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .onder-kaart { font-size: .9rem; margin: 14px 0 0; text-align: center }
 .fase-uitleg { background: var(--vlak); padding: 14px 18px; margin-top: 12px; border-top: 10px solid var(--band, var(--bruin)) }
 .fasen { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 6px }
-.fasen li { display: grid; grid-template-columns: 2em 1fr; gap: 10px; align-items: baseline }
+.fasen > li { display: grid; grid-template-columns: 2em 1fr; gap: 10px; align-items: baseline }
 .fasen .f { font-family: var(--kop); font-weight: 900; color: var(--k) }
+.fasen strong { font-family: var(--kop); font-weight: 800 }
+/* stapknoppen onder de grote figuur: zelfde keuze als een tik op de boog */
+.stapknoppen { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px }
+.stapknoppen button { font: inherit; font-size: .88rem; color: var(--inkt); background: var(--vlak); border: 2px solid transparent; border-left: 6px solid var(--k); padding: 4px 10px; cursor: pointer; text-align: left }
+.stapknoppen button:hover { border-color: var(--k) }
+.stapknoppen button[aria-pressed="true"] { border-color: var(--inkt); border-left-color: var(--k) }
+.afslag-tekst { margin: 10px 0 0; font-size: .92rem; color: var(--zacht); max-width: 62ch }
+.fase-uitleg .boven { margin: 0 0 4px }
+/* afslag in de card en op de trajectpagina */
+.afslag-reden { padding: 8px 12px; border: 2px dashed var(--inkt); background: var(--creme) }
+.tra-figuur { display: inline-flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--zacht) }
+.tra-figuur .ringen { width: 40px }
 
 /* ---------- homepagina: blokken in de kleuren van het logo, zoals leidenbuurtkennis.org ---------- */
 .knop { display: inline-block; font-family: var(--kop); font-weight: 800; font-size: 1rem; color: var(--inkt); background: var(--vlak); text-decoration: none; padding: 10px 16px; border: 3px dashed var(--inkt) }
@@ -171,8 +190,8 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .blok.wit { --bg: var(--vlak) }
 .kop-rij { display: grid; gap: 20px; align-items: center }
 @media (min-width: 760px) { .kop-rij { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) } }
-.klein-kompas { display: block; max-width: 300px; width: 100%; margin: 0 auto }
-.klein-kompas .kompas { width: 100% }
+.klein-figuur { display: block; max-width: 300px; width: 100%; margin: 0 auto }
+.klein-figuur .ringen { width: 100% }
 /* metrolijn, zoals in het methode-overzicht: per fase een lijn in de fasekleur, een bolletje per stap */
 .metro { list-style: none; margin: 30px 0 30px; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) }
 .metro li { position: relative; padding: 40px 22px 0 0 }

@@ -151,15 +151,21 @@
 }
 .bron a { color: inherit; }
 
-/* Het rondje: hoe voller, hoe verder in de methode. */
+/* De ringen (_includes/ringen.svg): per fase een boog per stap, van binnen naar buiten.
+   Een gezette stap is vol, de rest licht; bij een afslag valt de rest weg en staat er een stippelcirkel omheen. */
 .symbool {
   display: block;
   flex: none;
-  width: 18px;
-  height: 18px;
-  color: var(--heading);
+  width: 22px;
+  height: 22px;
   overflow: visible;
 }
+.ringen .boog { fill: none; stroke: var(--k); stroke-width: 6.5; stroke-opacity: 0.14; }
+.ringen .boog.gezet { stroke-opacity: 1; }
+.ringen .kern { fill: var(--heading); }
+.ringen .rand { display: none; fill: none; stroke: var(--heading); stroke-width: 2; stroke-dasharray: 4 4; }
+.ringen.afslag .rand { display: inline; }
+.ringen.afslag .boog:not(.gezet) { stroke-opacity: 0; }
 
 /* ---------- buurtknoppen ---------- */
 
@@ -253,18 +259,18 @@
 .fase {
   position: relative;
   display: grid;
-  grid-template-columns: 18px minmax(0, 1fr);
+  grid-template-columns: 22px minmax(0, 1fr);
   column-gap: 14px;
   padding: 12px 0;
 }
 .fase .symbool { margin-top: 2px; }
 
-/* lijn tussen de rondjes: de stappen hebben een volgorde */
+/* lijn tussen de fases */
 .fase:not(:last-child)::after {
   content: "";
   position: absolute;
-  left: 8.25px;
-  top: 36px;
+  left: 10.25px;
+  top: 40px;
   bottom: -10px;
   width: 1.5px;
   background: var(--line);
