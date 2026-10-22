@@ -74,9 +74,10 @@ function kies(id) {
   document.querySelectorAll('.stapknoppen button').forEach(k => k.setAttribute('aria-pressed', String(k.dataset.stap === id)));
   try { history.replaceState(null, '', '#' + id); } catch (e) {}
 }
-// hover (alleen met een muis): alvast tonen; weg met de muis terug naar de gekozen stap of de dichte doos
-figuur.addEventListener('pointerover', e => { if (e.pointerType !== 'mouse') return; const b = e.target.closest('.boog'); toon(b ? b.dataset.stap : gekozen); });
-figuur.addEventListener('pointerleave', () => toon(gekozen));
+// hover (alleen met een muis): zolang er niets gekozen is, alvast doos en uitleg tonen; weg met de muis terug naar de dichte doos.
+// Is er een stap gekozen, dan blijven doos en uitleg staan en wordt alleen de boog onder de muis dikker (CSS :hover).
+figuur.addEventListener('pointerover', e => { if (e.pointerType !== 'mouse' || gekozen) return; const b = e.target.closest('.boog'); toon(b ? b.dataset.stap : ''); });
+figuur.addEventListener('pointerleave', () => { if (!gekozen) toon(''); });
 figuur.addEventListener('click', e => { const b = e.target.closest('.boog'); if (b) kies(b.dataset.stap); });
 figuur.addEventListener('keydown', e => { const b = e.target.closest('.boog'); if (b && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); kies(b.dataset.stap); } });
 document.querySelector('.fasen').addEventListener('click', e => { const k = e.target.closest('button[data-stap]'); if (k) kies(k.dataset.stap); });
