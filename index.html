@@ -24,7 +24,7 @@ thuis: true
       <h2 class="tweeregel groen">{{ H.beleid_kop }}<span>{{ H.beleid_kop_onder }}</span></h2>
       <p class="lead">{{ H.beleid_tekst }}</p>
     </div>
-    <a class="klein-kompas" href="{{ '/methode/' | relative_url }}" aria-label="Naar de methode">{% include kompas.svg %}</a>
+    <a class="klein-figuur" href="{{ '/methode/' | relative_url }}" aria-label="Naar de methode">{% include ringen.svg maat="groot" alles="ja" %}</a>
   </div>
   <ol class="metro">
   {%- for s in H.stappen %}
@@ -58,18 +58,11 @@ thuis: true
   </div>
   <a class="mini-kaart" href="{{ '/kaart/' | relative_url }}" aria-label="Naar de kaart">{% include kaart-leiden.svg %}</a>
   <style>
+  {%- comment -%} kleur per buurt: de hoogste fase in de eigen stappen en die van de trajecten (zie _includes/stappen-van.html) {%- endcomment -%}
   {%- for b in site.buurten %}
-    {%- assign f = b.fase | append: "" | slice: 0 | upcase -%}
-    {%- if f == "" -%}
-      {%- for t in site.trajecten -%}
-        {%- if t.buurten contains b.slug or t.buurten contains b.path -%}
-          {%- assign tf = t.fase | append: "" | slice: 0 | upcase -%}
-          {%- if tf > f %}{% assign f = tf %}{% endif -%}
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endif -%}
-    {%- if f != "" %}
-  .mini-kaart #{{ b.plek }} { fill: var(--fase-{{ f }}) }
+    {%- include stappen-van.html ding=b buurt="ja" -%}
+    {%- if sv_fase != "" %}
+  .mini-kaart #{{ b.plek }} { fill: var(--fase-{{ sv_fase }}) }
     {%- endif -%}
   {%- endfor %}
   </style>

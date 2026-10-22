@@ -1,0 +1,84 @@
+{%- comment -%}
+  De methodefiguur: een cirkel met een kwart per fase en een boog per stap.
+  Midden = de kern (wij en onze partners), rand = de hele buurt. Een gezette stap is een volle boog,
+  de rest staat er licht (zie .ringen in assets/bk.css). Er is geen volgorde: elke combinatie kan.
+  Fases en stappen komen uit _data/methode.yml: de zichtbare fases, in volgorde linksboven,
+  rechtsboven, rechtsonder, linksonder. De bogen worden hier uitgerekend, dus meer of minder stappen
+  in een fase kan zonder dit bestand aan te passen.
+
+  Parameters (allemaal optioneel):
+    maat="groot"     de grote versie (methodepagina, viewBox 440); anders de kleine (kaart, viewBox 72)
+    stappen=lijst    gezette stappen als kleine codes: b1, c2 ...
+    alles="ja"       alle bogen gezet
+    afslag="code"    een afslag (geen-vervolg, doorverwezen): niet-gezette bogen weg, stippelcirkel eromheen
+    namen="ja"       stapnamen (kort) langs de bogen, alleen bij groot
+    knoppen="ja"     bogen zijn knoppen (tab en Enter)
+    klasse="..."     extra class op de svg
+    label="..."      tekst voor schermlezers
+  Elke boog heeft data-stap="b1" en data-fase="B"; een script zet .gezet aan of uit.
+{%- endcomment -%}
+{%- assign rg_fases = site.data.methode.fases | where_exp: "f", "f.zichtbaar != false" -%}
+{%- comment -%} Per kwart de richting (cos, sin) van begin en eind van een boog, met een kleine hoekmarge:
+  3 graden bij groot, 5 bij klein. Hoeken zoals in SVG: 0 is rechts, 90 is onder. {%- endcomment -%}
+{%- if include.maat == "groot" -%}
+  {%- assign rg_m = 220 -%}{%- assign rg_kern = 28 -%}{%- assign rg_r = 220 -%}{%- assign rg_stip = 10 -%}{%- assign rg_rand = 214 -%}{%- assign rg_tekst = 4 -%}
+  {%- assign rg_hoek = "-0.99863 -0.05234 -0.05234 -0.99863|0.05234 -0.99863 0.99863 -0.05234|0.99863 0.05234 0.05234 0.99863|-0.05234 0.99863 -0.99863 0.05234" | split: "|" -%}
+{%- else -%}
+  {%- assign rg_m = 36 -%}{%- assign rg_kern = 5 -%}{%- assign rg_r = 34 -%}{%- assign rg_stip = 2 -%}{%- assign rg_rand = 35 -%}{%- assign rg_tekst = 0 -%}
+  {%- assign rg_hoek = "-0.99619 -0.08716 -0.08716 -0.99619|0.08716 -0.99619 0.99619 -0.08716|0.99619 0.08716 0.08716 0.99619|-0.08716 0.99619 -0.99619 0.08716" | split: "|" -%}
+{%- endif -%}
+{%- comment -%} tekstpaden lopen over het hele kwart, zodat lange namen passen {%- endcomment -%}
+{%- assign rg_heel = "-1 0 0 -1|0 -1 1 0|1 0 0 1|0 1 -1 0" | split: "|" -%}
+{%- assign rg_maat = rg_m | times: 2 -%}
+{%- assign rg_namen = false -%}{%- if include.namen == "ja" and include.maat == "groot" -%}{%- assign rg_namen = true -%}{%- endif -%}
+<svg class="ringen {% if include.maat == 'groot' %}ringen-groot{% else %}ringen-klein{% endif %}{% if include.afslag and include.afslag != '' %} afslag{% endif %}{% if include.klasse %} {{ include.klasse }}{% endif %}" viewBox="0 0 {{ rg_maat }} {{ rg_maat }}" role="img" aria-label="{{ include.label | default: 'De BuurtKennis-methode: per fase een boog per stap, van de kern naar de hele buurt' | escape }}"{% if include.afslag %} data-afslag="{{ include.afslag }}"{% endif %}>
+<circle class="rand" cx="{{ rg_m }}" cy="{{ rg_m }}" r="{{ rg_rand }}"/>
+<circle class="kern" cx="{{ rg_m }}" cy="{{ rg_m }}" r="{{ rg_stip }}"/>
+{%- for rg_f in rg_fases limit: 4 -%}
+  {%- assign rg_k = forloop.index0 -%}
+  {%- assign rg_u = rg_hoek[rg_k] | split: " " -%}
+  {%- assign rg_n = rg_f.stappen.size -%}
+  {%- if rg_n == 0 %}{% continue %}{% endif -%}
+  {%- assign rg_band = rg_r | minus: rg_kern | times: 1.0 | divided_by: rg_n -%}
+  {%- for rg_s in rg_f.stappen -%}
+    {%- assign rg_c = rg_s.code | downcase -%}
+    {%- assign rg_mid = forloop.index0 | plus: 0.5 | times: rg_band | plus: rg_kern -%}
+    {%- assign rg_rr = rg_mid | round: 1 -%}
+    {%- assign rg_x1 = rg_mid | times: rg_u[0] | plus: rg_m | round: 1 -%}
+    {%- assign rg_y1 = rg_mid | times: rg_u[1] | plus: rg_m | round: 1 -%}
+    {%- assign rg_x2 = rg_mid | times: rg_u[2] | plus: rg_m | round: 1 -%}
+    {%- assign rg_y2 = rg_mid | times: rg_u[3] | plus: rg_m | round: 1 -%}
+    {%- assign rg_gezet = false -%}{%- if include.alles == "ja" or include.stappen contains rg_c -%}{%- assign rg_gezet = true -%}{%- endif %}
+<path class="boog{% if rg_gezet %} gezet{% endif %}" data-stap="{{ rg_c }}" data-fase="{{ rg_f.code }}" style="--k:var(--fase-{{ rg_f.code }})" d="M{{ rg_x1 }} {{ rg_y1 }}A{{ rg_rr }} {{ rg_rr }} 0 0 1 {{ rg_x2 }} {{ rg_y2 }}"{% if include.knoppen == "ja" %} tabindex="0" role="button" aria-label="{{ rg_s.code }} {{ rg_s.naam | escape }}"{% endif %}/>
+  {%- endfor -%}
+{%- endfor -%}
+{%- if rg_namen -%}
+{%- comment -%} namen: bovenste helft met de klok mee, onderste helft andersom, zodat de tekst rechtop staat {%- endcomment %}
+<defs>
+{%- for rg_f in rg_fases limit: 4 -%}
+  {%- assign rg_k = forloop.index0 -%}
+  {%- assign rg_u = rg_heel[rg_k] | split: " " -%}
+  {%- assign rg_n = rg_f.stappen.size -%}
+  {%- if rg_n == 0 %}{% continue %}{% endif -%}
+  {%- assign rg_band = rg_r | minus: rg_kern | times: 1.0 | divided_by: rg_n -%}
+  {%- for rg_s in rg_f.stappen -%}
+    {%- assign rg_mid = forloop.index0 | plus: 0.5 | times: rg_band | plus: rg_kern -%}
+    {%- if rg_k < 2 %}{% assign rg_mid = rg_mid | minus: rg_tekst %}{% else %}{% assign rg_mid = rg_mid | plus: rg_tekst %}{% endif -%}
+    {%- assign rg_rr = rg_mid | round: 1 -%}
+    {%- assign rg_x1 = rg_mid | times: rg_u[0] | plus: rg_m | round: 1 -%}
+    {%- assign rg_y1 = rg_mid | times: rg_u[1] | plus: rg_m | round: 1 -%}
+    {%- assign rg_x2 = rg_mid | times: rg_u[2] | plus: rg_m | round: 1 -%}
+    {%- assign rg_y2 = rg_mid | times: rg_u[3] | plus: rg_m | round: 1 %}
+<path id="ringpad-{{ rg_s.code | downcase }}" d="{% if rg_k < 2 %}M{{ rg_x1 }} {{ rg_y1 }}A{{ rg_rr }} {{ rg_rr }} 0 0 1 {{ rg_x2 }} {{ rg_y2 }}{% else %}M{{ rg_x2 }} {{ rg_y2 }}A{{ rg_rr }} {{ rg_rr }} 0 0 0 {{ rg_x1 }} {{ rg_y1 }}{% endif %}"/>
+  {%- endfor -%}
+{%- endfor %}
+</defs>
+{%- for rg_f in rg_fases limit: 4 -%}
+  {%- for rg_s in rg_f.stappen -%}
+    {%- assign rg_c = rg_s.code | downcase -%}
+    {%- assign rg_gezet = false -%}{%- if include.alles == "ja" or include.stappen contains rg_c -%}{%- assign rg_gezet = true -%}{%- endif %}
+<text class="naam{% if rg_gezet %} gezet{% endif %}" data-stap="{{ rg_c }}" data-fase="{{ rg_f.code }}" text-anchor="middle" aria-hidden="true"><textPath href="#ringpad-{{ rg_c }}" startOffset="50%">{{ rg_s.kort | default: rg_s.naam | escape }}</textPath></text>
+  {%- endfor -%}
+{%- endfor -%}
+{%- endif %}
+</svg>

@@ -1,0 +1,32 @@
+{%- comment -%}
+  Zet se: de gezette stappen van include.ding (een traject, buurt of thema), als kleine codes
+  in de volgorde van _data/methode.yml. Zonder stappen geldt de oude fase als terugval:
+  fase X = alle stappen van de fases vóór X plus de eerste stap van X;
+  een stapcode (D1) = alle stappen tot en met die stap. Op de oude kaart (_overzicht) heet dat veld stap.
+  Dezelfde regel staat in JavaScript in _includes/kaart-blok.html (eigen).
+{%- endcomment -%}
+{%- assign se = "" | split: "" -%}
+{%- assign se_ruw = "" | split: "" -%}
+{%- for se_s in include.ding.stappen -%}{%- assign se_c = se_s | append: "" | downcase | strip -%}{%- assign se_ruw = se_ruw | push: se_c -%}{%- endfor -%}
+{%- for se_f in site.data.methode.fases -%}{%- for se_s in se_f.stappen -%}{%- assign se_c = se_s.code | downcase -%}{%- if se_ruw contains se_c -%}{%- assign se = se | push: se_c -%}{%- endif -%}{%- endfor -%}{%- endfor -%}
+{%- if se.size == 0 -%}
+  {%- assign se_oud = include.ding.fase | default: include.ding.stap | append: "" | upcase | strip -%}
+  {%- assign se_tot = "" -%}{%- assign se_vorige = "" -%}{%- assign se_gevonden = false -%}
+  {%- if se_oud != "" -%}
+    {%- for se_f in site.data.methode.fases -%}
+      {%- if se_gevonden %}{% break %}{% endif -%}
+      {%- if se_f.code == se_oud -%}
+        {%- assign se_gevonden = true -%}
+        {%- if se_f.stappen.size > 0 %}{% assign se_tot = se_f.stappen[0].code %}{% else %}{% assign se_tot = se_vorige %}{% endif -%}
+      {%- else -%}
+        {%- for se_s in se_f.stappen -%}
+          {%- unless se_gevonden -%}{%- assign se_vorige = se_s.code -%}{%- if se_s.code == se_oud %}{% assign se_tot = se_s.code %}{% assign se_gevonden = true %}{% endif -%}{%- endunless -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+  {%- if se_tot != "" -%}
+    {%- assign se_klaar = false -%}
+    {%- for se_f in site.data.methode.fases -%}{%- for se_s in se_f.stappen -%}{%- unless se_klaar -%}{%- assign se_c = se_s.code | downcase -%}{%- assign se = se | push: se_c -%}{%- if se_s.code == se_tot %}{% assign se_klaar = true %}{% endif -%}{%- endunless -%}{%- endfor -%}{%- endfor -%}
+  {%- endif -%}
+{%- endif -%}

@@ -1,16 +1,19 @@
 {%- comment -%}
-  De kaart met kompas en veegkaart. Data:
-  _buurten/   elke buurt van Leiden; telt mee zodra er een fase, doel, activiteit of traject is
+  De kaart met de methodefiguur (ringen) en veegkaart. Data:
+  _buurten/   elke buurt van Leiden; telt mee zodra er stappen, een fase, doel, activiteit of traject is
   _trajecten/ thematische trajecten in één of meer buurten — elk een doosje in die buurt
-  De kleur van een buurt is zijn eigen fase; zonder eigen fase de verste fase van de trajecten die er lopen.
+  Stappen: het veld stappen (b1, c2 ...); zonder stappen geldt de oude fase als terugval
+  (fase X = alle stappen van de fases vóór X plus de eerste stap van X).
+  Een buurt toont zijn eigen stappen samen met die van de trajecten die er lopen.
+  De kleur van een buurt is de fase met de hoogste letter in die stappen.
   _data/cbs.yml  codes, namen en middens van wijken en buurten
 {%- endcomment -%}
 {% include doos-symbolen.svg %}
 <div class="hub">
   <p class="plek naam" id="plek">Leiden</p>
-  <div class="kompas-rij">
-    {% include kompas.svg %}
-    <a class="fase-label" id="fase-label" href="{{ '/methode/' | relative_url }}" target="_blank" rel="noopener">BuurtKennis fase<small>van kwestie tot onderzoek ↗</small></a>
+  <div class="ringen-rij">
+    {% include ringen.svg %}
+    <a class="fase-label" id="fase-label" href="{{ '/methode/' | relative_url }}" target="_blank" rel="noopener">BuurtKennis-methode<small>van kwestie tot onderzoek ↗</small></a>
   </div>
   <div class="kaart" id="kaart">{% include kaart-leiden.svg %}</div>
   <section class="card" id="card" data-stand="dicht" aria-live="polite">
@@ -26,16 +29,17 @@
 (function () {
 'use strict';
 const FASES = {{ site.data.methode.fases | jsonify }};
+const AFSLAGEN = {{ site.data.methode.afslagen | jsonify }};
 // thema's uit _themas, op bestandsnaam; een traject mag de sleutel, de bestandsnaam of het pad noemen
 const THEMAS = { {% for t in site.themas %}{{ t.slug | jsonify }}: { "naam": {{ t.naam | jsonify }}, "kleur": {{ t.eigen_kleur | default: t.kleur | default: '#888888' | jsonify }} },{% endfor %} };
 const THEMA_ALIAS = { {% for t in site.themas %}{% if t.sleutel %}{{ t.sleutel | jsonify }}: {{ t.slug | jsonify }}, {% endif %}{{ t.path | jsonify }}: {{ t.slug | jsonify }},{% endfor %} };
 const CBS = {{ site.data.cbs | jsonify }};
-const ALLE_BUURTEN = [{% for b in site.buurten %}{"id":{{ b.slug | jsonify }},"pad":{{ b.path | jsonify }},"naam":{{ b.naam | jsonify }},"plek":{{ b.plek | jsonify }},"fase":{{ b.fase | jsonify }},"sinds":{{ b.sinds | jsonify }},"doel":{{ b.doel | jsonify }},"activiteiten":{{ b.activiteiten | default: empty | jsonify }},"links":{{ b.links | default: empty | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
-const TRAJECTEN = [{% for t in site.trajecten %}{"id":{{ t.slug | jsonify }},"titel":{{ t.titel | jsonify }},"fase":{{ t.fase | jsonify }},"thema":{{ t.thema | jsonify }},"buurten":{{ t.buurten | default: empty | jsonify }},"sinds":{{ t.sinds | jsonify }},"doel":{{ t.doel | jsonify }},"activiteiten":{{ t.activiteiten | default: empty | jsonify }},"url":{{ t.url | relative_url | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
+const ALLE_BUURTEN = [{% for b in site.buurten %}{"id":{{ b.slug | jsonify }},"pad":{{ b.path | jsonify }},"naam":{{ b.naam | jsonify }},"plek":{{ b.plek | jsonify }},"fase":{{ b.fase | jsonify }},"stappen":{{ b.stappen | jsonify }},"stap":{{ b.stap | jsonify }},"reden":{{ b.reden | jsonify }},"naar":{{ b.naar | jsonify }},"sinds":{{ b.sinds | jsonify }},"doel":{{ b.doel | jsonify }},"activiteiten":{{ b.activiteiten | default: empty | jsonify }},"links":{{ b.links | default: empty | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
+const TRAJECTEN = [{% for t in site.trajecten %}{"id":{{ t.slug | jsonify }},"titel":{{ t.titel | jsonify }},"fase":{{ t.fase | jsonify }},"stappen":{{ t.stappen | jsonify }},"stap":{{ t.stap | jsonify }},"reden":{{ t.reden | jsonify }},"naar":{{ t.naar | jsonify }},"thema":{{ t.thema | jsonify }},"buurten":{{ t.buurten | default: empty | jsonify }},"sinds":{{ t.sinds | jsonify }},"doel":{{ t.doel | jsonify }},"activiteiten":{{ t.activiteiten | default: empty | jsonify }},"url":{{ t.url | relative_url | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
 // elke CBS-buurt heeft een bestand; op de kaart telt een buurt pas mee als er iets loopt:
-// een fase, doel of activiteit, of een traject dat er loopt
+// stappen, een fase, een afslag, doel of activiteit, of een traject dat er loopt
 const inTraject = b => TRAJECTEN.some(t => (t.buurten || []).some(id => id === b.id || id === b.pad));
-const BUURTEN = ALLE_BUURTEN.filter(b => b.fase || b.doel || (b.activiteiten || []).length || inTraject(b));
+const BUURTEN = ALLE_BUURTEN.filter(b => [].concat(b.stappen || []).length || b.fase || b.stap || b.doel || (b.activiteiten || []).length || inTraject(b));
 TRAJECTEN.forEach(t => { t.thema = THEMA_ALIAS[t.thema] || t.thema; });
 const FASEN_URL = {{ '/methode/' | relative_url | jsonify }};
 
@@ -43,11 +47,11 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const letter = f => String(f || '').charAt(0).toUpperCase();
 const faseNaam = f => (FASES.find(x => x.code === letter(f)) || {}).naam || '';
-const faseKleur = f => letter(f) ? `var(--fase-${letter(f)})` : 'var(--doos)';   // buurt zonder fase: alleen trajecten
+const faseKleur = f => letter(f) ? `var(--fase-${letter(f)})` : 'var(--doos)';   // zonder stappen
 const MAANDEN = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
 const maand = s => { if (!s) return ''; const [j, m] = String(s).split('-'); return m ? MAANDEN[+m - 1] + ' ' + j : j; };
 const svg = document.querySelector('#kaart svg');
-const kompas = document.querySelector('.kompas-rij .kompas');
+const figuur = document.querySelector('.ringen-rij .ringen');
 const card = $('card');
 
 // --- trajecten horen bij buurten; een wijk toont de buurten erin ---
@@ -59,16 +63,41 @@ const buurtenInWijk = code => BUURTEN.filter(b => wijkVan(b.plek) === code);
 const naamVan = t => buurtenVan(t).map(b => b.naam).join(', ');
 const themaNaam = th => (THEMAS[th] || {}).naam || '';
 
-// --- kleur van de buurten: de eigen fase; zonder eigen fase de verste fase van de trajecten die er lopen ---
-const versteTraject = b => trajectenBij(b.plek).map(t => t.fase).filter(f => letter(f)).sort((x, y) => letter(y).localeCompare(letter(x)))[0] || '';
+// --- stappen: geen volgorde, alleen een set gezette stappen ---
+const ALLE = FASES.flatMap(f => (f.stappen || []).map(s => s.code.toLowerCase()));   // alle stappen, in de volgorde van methode.yml
+const IN_FIGUUR = FASES.filter(f => f.zichtbaar !== false).reduce((n, f) => n + (f.stappen || []).length, 0);
+// eigen stappen; zonder stappen de oude fase als terugval: fase X = alle stappen van de fases vóór X plus de eerste van X
+// (een stapcode als D1 = alle stappen tot en met D1)
+function eigen(x) {
+  const ruw = [].concat(x.stappen || []).flatMap(c => String(c).toLowerCase().split(/[\s,]+/));
+  const gezet = ALLE.filter(c => ruw.includes(c));
+  if (gezet.length) return gezet;
+  const oud = String(x.fase || '').toUpperCase().trim(); if (!oud) return [];
+  let tot = '', vorige = '';
+  for (const f of FASES) {
+    const st = f.stappen || [];
+    if (f.code === oud) { tot = st.length ? st[0].code : vorige; break; }
+    const s = st.find(s => s.code === oud); if (s) { tot = s.code; break; }
+    if (st.length) vorige = st[st.length - 1].code;
+  }
+  return tot ? ALLE.slice(0, ALLE.indexOf(tot.toLowerCase()) + 1) : [];
+}
+const samen = lijsten => ALLE.filter(c => lijsten.some(l => l.includes(c)));
+// de fase met de hoogste letter in de set (zie de aannames in de PR)
+const hoogste = st => { let top = ''; FASES.forEach(f => { if ((f.stappen || []).some(s => st.includes(s.code.toLowerCase()))) top = f.code; }); return top; };
+const afslagVan = x => AFSLAGEN.find(a => a.code === x.stap) || null;
+const rang = x => FASES.findIndex(f => f.code === x.top);
+TRAJECTEN.forEach(t => { t.st = eigen(t); t.top = hoogste(t.st); t.afslag = afslagVan(t); });
+
+// --- kleur van de buurten: de hoogste fase in de eigen stappen en die van de trajecten die er lopen ---
 const laag = naam => { const g = document.createElementNS('http://www.w3.org/2000/svg', 'g'); g.setAttribute('class', naam); svg.querySelector('.trajecten').before(g); return g; };
 const kopie = el => { const o = document.createElementNS('http://www.w3.org/2000/svg', 'path'); o.setAttribute('d', el.getAttribute('d')); return o; };
 const omtrek = laag('omtrek'), keuze = laag('keuze');
 BUURTEN.forEach(b => {
-  b.verste = letter(b.fase) ? b.fase : versteTraject(b);
+  b.st = samen([eigen(b), ...trajectenBij(b.plek).map(t => t.st)]); b.top = hoogste(b.st); b.afslag = afslagVan(b);
   const el = document.getElementById(b.plek);
-  if (el && b.verste) {
-    el.classList.add('actief-buurt'); el.style.setProperty('--t', faseKleur(b.verste));
+  if (el && b.top) {
+    el.classList.add('actief-buurt'); el.style.setProperty('--t', faseKleur(b.top));
     omtrek.append(kopie(el));
   }
 });
@@ -95,25 +124,34 @@ BUURTEN.forEach(b => {
   });
 })();
 
-// --- kompas en kop ---
-function zetFase(f) {
-  const l = letter(f); kompas.dataset.fase = l;
+// --- figuur en kop: de gezette stappen van de gekozen buurt of het gekozen traject ---
+const aantalStappen = st => `${st.length} van ${IN_FIGUUR} ${IN_FIGUUR === 1 ? 'stap' : 'stappen'}`;
+const afslagNaam = a => a ? a.kort || a.naam : '';
+function zetFiguur(x) {
+  const st = x ? x.st : [], af = x ? x.afslag : null, top = x ? x.top : '';
+  figuur.querySelectorAll('.boog').forEach(b => b.classList.toggle('gezet', st.includes(b.dataset.stap)));
+  figuur.classList.toggle('afslag', !!af);
+  figuur.setAttribute('aria-label', x ? `${aantalStappen(st)} gezet${af ? ', ' + afslagNaam(af).toLowerCase() : ''}` : 'De BuurtKennis-methode');
   const lab = $('fase-label');
-  if (l) { lab.innerHTML = `${esc(faseNaam(f))}<small>fase ${esc(f)} · lees meer ↗</small>`; lab.href = FASEN_URL + '#' + l; }
-  else { lab.innerHTML = 'BuurtKennis fase<small>van kwestie tot onderzoek ↗</small>'; lab.href = FASEN_URL; }
-  $('plek').style.setProperty('--k', l ? `var(--fase-${l}-tekst, var(--fase-${l}))` : 'var(--bruin)');
+  if (af || top) {
+    lab.innerHTML = `${esc(af ? afslagNaam(af) : faseNaam(top))}<small>${aantalStappen(st)} · lees meer ↗</small>`;
+    lab.href = FASEN_URL + (st.length ? '#' + st[st.length - 1] : '');
+  } else { lab.innerHTML = 'BuurtKennis-methode<small>van kwestie tot onderzoek ↗</small>'; lab.href = FASEN_URL; }
+  $('plek').style.setProperty('--k', top ? `var(--fase-${top}-tekst, var(--fase-${top}))` : 'var(--bruin)');
 }
-// --- kop: naam en kompas van wat gekozen is; hover toont alvast wat je zou kiezen ---
-let staat = { naam: 'Leiden', fase: '' };
-function kop(naam, f) { staat = { naam, fase: f }; $('plek').textContent = naam; zetFase(f); }
-function voorproef(naam, f) { $('plek').textContent = naam; zetFase(f); }
-function herstel() { voorproef(staat.naam, staat.fase); }
+// --- kop: naam en figuur van wat gekozen is; hover toont alvast wat je zou kiezen ---
+let staat = { naam: 'Leiden', x: null };
+function kop(naam, x) { staat = { naam, x }; $('plek').textContent = naam; zetFiguur(x); }
+function voorproef(naam, x) { $('plek').textContent = naam; zetFiguur(x); }
+function herstel() { voorproef(staat.naam, staat.x); }
 // één stippelkader met alle thema's erin, gescheiden door hun stip
 const themaTags = ths => { const ok = [...new Set(ths)].filter(th => THEMAS[th]); return ok.length ? `<span class="tags">${ok.map(th => `<span class="thema" style="--tk:${esc(THEMAS[th].kleur)}">${esc(THEMAS[th].naam)}</span>`).join('')}</span>` : ''; };
 const sindsRegel = s => s ? `<span class="sinds">sinds ${esc(maand(s))}</span>` : '';
-const lijstTrajecten = ts => ts.length ? `<ul class="lijst">${ts.map(t => `<li><button type="button" data-traject="${esc(t.id)}" style="--k:${faseKleur(t.fase)}"><span class="f">${letter(t.fase)}</span><span><strong>${esc(t.titel)}</strong><br><small>${esc(naamVan(t))}${themaNaam(t.thema) ? ' · ' + esc(themaNaam(t.thema)) : ''}</small></span></button></li>`).join('')}</ul>` : '';
+const lijstTrajecten = ts => ts.length ? `<ul class="lijst">${ts.map(t => `<li><button type="button" data-traject="${esc(t.id)}" style="--k:${faseKleur(t.top)}"><span class="f">${t.top}</span><span><strong>${esc(t.titel)}</strong><br><small>${esc([naamVan(t), themaNaam(t.thema), afslagNaam(t.afslag)].filter(Boolean).join(' · '))}</small></span></button></li>`).join('')}</ul>` : '';
 const aantalTrajecten = n => n ? n + (n === 1 ? ' traject' : ' trajecten') : '';
-const lijstBuurten = bs => bs.length ? `<ul class="lijst">${bs.map(b => `<li><button type="button" data-buurt="${esc(b.plek)}" style="--k:${faseKleur(b.verste)}"><span class="f">${letter(b.verste)}</span><span><strong>${esc(b.naam)}</strong><br><small>${esc([faseNaam(b.verste), aantalTrajecten(trajectenBij(b.plek).length)].filter(Boolean).join(' · '))}</small></span></button></li>`).join('')}</ul>` : '';
+const lijstBuurten = bs => bs.length ? `<ul class="lijst">${bs.map(b => `<li><button type="button" data-buurt="${esc(b.plek)}" style="--k:${faseKleur(b.top)}"><span class="f">${b.top}</span><span><strong>${esc(b.naam)}</strong><br><small>${esc([b.afslag ? afslagNaam(b.afslag) : faseNaam(b.top), aantalTrajecten(trajectenBij(b.plek).length)].filter(Boolean).join(' · '))}</small></span></button></li>`).join('')}</ul>` : '';
+// afslag: wat er gebeurde, met de reden (en bij doorverwezen naar wie)
+const afslagBlok = x => x.afslag ? `<p class="afslag-reden"><strong>${esc(afslagNaam(x.afslag))}</strong>${x.naar ? ' naar ' + esc(x.naar) : ''}${x.reden ? '. ' + esc(x.reden) : ''}</p>` : '';
 const lijstActiviteiten = (as, f) => as && as.length ? `<ul class="activiteiten" style="--k:${faseKleur(f)}">${as.map(a => `<li>${esc(a.wat)}${a.wanneer || a.waar ? `<span class="wanneer">${esc([a.wanneer, a.waar].filter(Boolean).join(' · '))}</span>` : ''}</li>`).join('')}</ul>` : '';
 
 let huidig = '';
@@ -127,8 +165,8 @@ function markeer(sel) {
 function adres(h) { try { history.replaceState(null, '', h ? '#' + h : location.pathname + location.search); } catch (e) {} }
 
 function toonLeiden() {
-  huidig = ''; markeer(null); kop('Leiden', '');
-  const bs = BUURTEN.slice().sort((a, b) => letter(b.verste).localeCompare(letter(a.verste)));
+  huidig = ''; markeer(null); kop('Leiden', null);
+  const bs = BUURTEN.slice().sort((a, b) => rang(b) - rang(a));
   vul('Lopend in Leiden', `<span class="sinds">${bs.length} ${bs.length === 1 ? 'buurt' : 'buurten'}, ${TRAJECTEN.length} ${TRAJECTEN.length === 1 ? 'traject' : 'trajecten'}</span>`,
     `<h3>Buurten</h3>${lijstBuurten(bs)}
      ${TRAJECTEN.length ? '<h3>Trajecten</h3>' + lijstTrajecten(TRAJECTEN) : ''}`);
@@ -138,12 +176,12 @@ function toonBuurt(code) {
   const b = buurtMetPlek(code); const cbs = CBS[code] || {};
   const ts = trajectenBij(code);
   huidig = 'buurt:' + code; markeer([document.getElementById(code), ...ts.flatMap(t => [...svg.querySelectorAll(`.traject[data-id="${CSS.escape(t.id)}"][data-plek="${code}"]`)])]);
-  kop(b ? b.naam : (cbs.naam || ''), b ? b.verste : '');
+  kop(b ? b.naam : (cbs.naam || ''), b || null);
   if (b) {
     vul('Lopend in ' + b.naam, themaTags(ts.map(t => t.thema)) + sindsRegel(b.sinds),
-      `${b.doel ? `<p>${esc(b.doel)}</p>` : ''}
+      `${afslagBlok(b)}${b.doel ? `<p>${esc(b.doel)}</p>` : ''}
        ${ts.length ? '<h3>Trajecten</h3>' + lijstTrajecten(ts) : ''}
-       ${b.activiteiten.length ? '<h3>Activiteiten</h3>' + lijstActiviteiten(b.activiteiten, b.verste) : ''}`);
+       ${b.activiteiten.length ? '<h3>Activiteiten</h3>' + lijstActiviteiten(b.activiteiten, b.top) : ''}`);
     adres(b.id);
   } else {
     const wijk = wijkVan(code); const wijkNaam = (CBS[wijk] || {}).naam; const inWijk = buurtenInWijk(wijk);
@@ -157,10 +195,10 @@ function toonBuurt(code) {
 function toonTraject(id) {
   const t = TRAJECTEN.find(x => x.id === id); if (!t) return toonLeiden();
   huidig = 'traject:' + id; markeer([...svg.querySelectorAll(`.traject[data-id="${CSS.escape(id)}"]`), ...buurtenVan(t).map(b => document.getElementById(b.plek))]);
-  kop(naamVan(t), t.fase);
+  kop(naamVan(t), t);
   vul(t.titel, themaTags([t.thema]) + sindsRegel(t.sinds),
-    `${t.doel ? `<p>${esc(t.doel)}</p>` : ''}
-     ${t.activiteiten.length ? '<h3>Activiteiten</h3>' + lijstActiviteiten(t.activiteiten, t.fase) : ''}
+    `${afslagBlok(t)}${t.doel ? `<p>${esc(t.doel)}</p>` : ''}
+     ${t.activiteiten.length ? '<h3>Activiteiten</h3>' + lijstActiviteiten(t.activiteiten, t.top) : ''}
      <p><a class="uit" href="${esc(t.url)}" target="_blank" rel="noopener">Meer over dit traject</a></p>`);
   zetStand('dicht'); adres(t.id);
 }
@@ -196,16 +234,16 @@ document.addEventListener('click', e => {
   const lt = e.target.closest('[data-traject]'); if (lt) return toonTraject(lt.dataset.traject);
   const lb = e.target.closest('[data-buurt]'); if (lb) return toonBuurt(lb.dataset.buurt);
   const b = e.target.closest('.buurt'); if (b) return huidig === 'buurt:' + b.id ? toonLeiden() : toonBuurt(b.id);
-  if (e.target.closest('.card, a, button, .kompas-rij, .bk-kop')) return;
+  if (e.target.closest('.card, a, button, .ringen-rij, .bk-kop')) return;
   toonLeiden();
 });
-// --- hover (alleen met een muis): naam en kompas alvast tonen, bij weggaan terug ---
+// --- hover (alleen met een muis): naam en figuur alvast tonen, bij weggaan terug ---
 svg.addEventListener('pointerover', e => {
   if (e.pointerType !== 'mouse') return;
   const d = e.target.closest('.traject'); const t = d && TRAJECTEN.find(x => x.id === d.dataset.id);
-  if (t) return voorproef(naamVan(t), t.fase);   // boven de kaart altijd de plek; de titel staat in de card
+  if (t) return voorproef(naamVan(t), t);   // boven de kaart altijd de plek; de titel staat in de card
   const el = e.target.closest('.buurt');
-  if (el) { const b = buurtMetPlek(el.id); return voorproef(b ? b.naam : ((CBS[el.id] || {}).naam || el.dataset.naam || ''), b ? b.verste : ''); }
+  if (el) { const b = buurtMetPlek(el.id); return voorproef(b ? b.naam : ((CBS[el.id] || {}).naam || el.dataset.naam || ''), b || null); }
   herstel();
 });
 svg.addEventListener('pointerleave', herstel);

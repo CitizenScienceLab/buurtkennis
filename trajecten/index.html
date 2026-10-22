@@ -4,18 +4,37 @@ title: Buurten en trajecten
 description: Waar BuurtKennis actief is, en welke trajecten er lopen.
 ---
 {%- assign MAANDEN = "januari,februari,maart,april,mei,juni,juli,augustus,september,oktober,november,december" | split: "," -%}
+{%- comment -%} Sorteren op de hoogste fase in de stappen (zie _includes/stappen-van.html), daarna op naam:
+  per item een sleutel "rang|naam|slug" met de hoogste fase eerst. {%- endcomment -%}
+{%- assign rij = "" | split: "" -%}
+{%- for b in site.buurten -%}
+  {%- assign mee = false -%}{%- if b.stappen.size > 0 or b.fase or b.stap or b.doel or b.activiteiten %}{% assign mee = true %}{% endif -%}
+  {%- for t in site.trajecten %}{% if t.buurten contains b.slug or t.buurten contains b.path %}{% assign mee = true %}{% endif %}{% endfor -%}
+  {%- unless mee %}{% continue %}{% endunless -%}
+  {%- include stappen-van.html ding=b buurt="ja" -%}
+  {%- assign sleutel = 90 | minus: sv_rang | append: "|" | append: b.naam | append: "|" | append: b.slug -%}
+  {%- assign rij = rij | push: sleutel -%}
+{%- endfor -%}
+{%- assign rij = rij | sort -%}
 <h1>Buurten en trajecten</h1>
 <h2>Buurten</h2>
 <ul class="lijst">
-{%- assign bs = site.buurten | sort: "fase" | reverse %}
-{%- for b in bs %}{% assign mee = false %}{% if b.fase or b.doel or b.activiteiten %}{% assign mee = true %}{% endif %}{% for t in site.trajecten %}{% if t.buurten contains b.slug or t.buurten contains b.path %}{% assign mee = true %}{% endif %}{% endfor %}{% unless mee %}{% continue %}{% endunless %}{% assign f = b.fase | slice: 0 | upcase %}{% if f == "" %}{% for t in site.trajecten %}{% if t.buurten contains b.slug or t.buurten contains b.path %}{% assign tf = t.fase | slice: 0 | upcase %}{% if tf > f %}{% assign f = tf %}{% endif %}{% endif %}{% endfor %}{% endif %}{% assign fn = "" %}{% for x in site.data.methode.fases %}{% if x.code == f %}{% assign fn = x.naam %}{% endif %}{% endfor %}
-  <li><a href="{{ '/kaart/' | relative_url }}#{{ b.slug }}" target="_blank" rel="noopener" style="--k:{% if f == "" %}var(--doos){% else %}var(--fase-{{ f }}){% endif %}"><span class="f">{{ f }}</span><span><strong>{{ b.naam }}</strong> ↗<br><small>{% if fn == "" %}alleen trajecten{% else %}{{ fn }}{% endif %}</small></span></a></li>
+{%- for r in rij %}{% assign slug = r | split: "|" | last %}{% assign b = site.buurten | where: "slug", slug | first %}
+{%- include stappen-van.html ding=b buurt="ja" %}
+  <li><a href="{{ '/kaart/' | relative_url }}#{{ b.slug }}" target="_blank" rel="noopener" style="--k:{% if sv_fase == "" %}var(--doos){% else %}var(--fase-{{ sv_fase }}){% endif %}"><span class="f">{{ sv_fase }}</span><span><strong>{{ b.naam }}</strong> ↗<br><small>{% if sv_afslag != "" %}{{ sv_afslagnaam }}{% elsif sv_fasenaam == "" %}alleen trajecten{% else %}{{ sv_fasenaam }}{% endif %}{% if sv.size > 0 %} · {{ sv.size }} van {{ sv_totaal }} stappen{% endif %}</small></span></a></li>
 {%- endfor %}
 </ul>
+{%- assign rij = "" | split: "" -%}
+{%- for t in site.trajecten -%}
+  {%- include stappen-van.html ding=t -%}
+  {%- assign sleutel = 90 | minus: sv_rang | append: "|" | append: t.titel | append: "|" | append: t.slug -%}
+  {%- assign rij = rij | push: sleutel -%}
+{%- endfor -%}
+{%- assign rij = rij | sort %}
 <h2 style="margin-top:20px">Trajecten</h2>
 <ul class="lijst">
-{%- assign ts = site.trajecten | sort: "fase" | reverse %}
-{%- for t in ts %}{% assign f = t.fase | slice: 0 | upcase %}
-  <li><a href="{{ t.url | relative_url }}" target="_blank" rel="noopener" style="--k:var(--fase-{{ f }})"><span class="f">{{ f }}</span><span><strong>{{ t.titel }}</strong> ↗<br><small>{% for bs in t.buurten %}{% assign b = site.buurten | where: "slug", bs | first %}{% unless b %}{% assign b = site.buurten | where: "path", bs | first %}{% endunless %}{% if b %}{{ b.naam }}{% unless forloop.last %}, {% endunless %}{% endif %}{% endfor %} · {%- assign th = nil -%}{%- for x in site.themas -%}{%- if x.sleutel == t.thema or x.slug == t.thema or x.path == t.thema -%}{%- assign th = x -%}{%- endif -%}{%- endfor -%}{{ th.naam | default: t.thema }}{% if t.sinds %}{% assign m = t.sinds | split: "-" %} · sinds {% assign mi = m[1] | minus: 1 %}{{ MAANDEN[mi] }} {{ m[0] }}{% endif %}</small></span></a></li>
+{%- for r in rij %}{% assign slug = r | split: "|" | last %}{% assign t = site.trajecten | where: "slug", slug | first %}
+{%- include stappen-van.html ding=t %}
+  <li><a href="{{ t.url | relative_url }}" target="_blank" rel="noopener" style="--k:{% if sv_fase == "" %}var(--doos){% else %}var(--fase-{{ sv_fase }}){% endif %}"><span class="f">{{ sv_fase }}</span><span><strong>{{ t.titel }}</strong> ↗<br><small>{% for bs in t.buurten %}{% assign b = site.buurten | where: "slug", bs | first %}{% unless b %}{% assign b = site.buurten | where: "path", bs | first %}{% endunless %}{% if b %}{{ b.naam }}{% unless forloop.last %}, {% endunless %}{% endif %}{% endfor %} · {%- assign th = nil -%}{%- for x in site.themas -%}{%- if x.sleutel == t.thema or x.slug == t.thema or x.path == t.thema -%}{%- assign th = x -%}{%- endif -%}{%- endfor -%}{{ th.naam | default: t.thema }}{% if sv_afslag != "" %} · {{ sv_afslagnaam }}{% endif %}{% if t.sinds %}{% assign m = t.sinds | split: "-" %} · sinds {% assign mi = m[1] | minus: 1 %}{{ MAANDEN[mi] }} {{ m[0] }}{% endif %}</small></span></a></li>
 {%- endfor %}
 </ul>

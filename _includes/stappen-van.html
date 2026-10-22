@@ -1,0 +1,32 @@
+{%- comment -%}
+  Rekent voor include.ding (een traject of buurt) uit:
+    sv            de gezette stappen (kleine codes, in de volgorde van _data/methode.yml)
+    sv_fase       de fase met de hoogste letter in die stappen ("" zonder stappen)
+    sv_fasenaam   naam van die fase
+    sv_rang       plek van die fase in methode.yml (1 = eerste, 0 = geen), om op te sorteren
+    sv_laatste    de laatste gezette stap (voor een link naar /methode/#d1)
+    sv_afslag     de afslag uit stap: (geen-vervolg, doorverwezen) of ""; sv_afslagnaam de korte naam
+    sv_totaal     aantal stappen in de figuur
+  Met buurt="ja" tellen de stappen van de trajecten in die buurt mee;
+  met themas=lijst die van de thema's (oude kaart op /overzicht).
+{%- endcomment -%}
+{%- include stappen-eigen.html ding=include.ding -%}
+{%- assign sv_ruw = se -%}
+{%- if include.buurt == "ja" -%}
+  {%- for sv_t in site.trajecten -%}
+    {%- if sv_t.buurten contains include.ding.slug or sv_t.buurten contains include.ding.path -%}
+      {%- include stappen-eigen.html ding=sv_t -%}{%- assign sv_ruw = sv_ruw | concat: se -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- for sv_t in include.themas -%}{%- include stappen-eigen.html ding=sv_t -%}{%- assign sv_ruw = sv_ruw | concat: se -%}{%- endfor -%}
+{%- assign sv = "" | split: "" -%}{%- assign sv_fase = "" -%}{%- assign sv_fasenaam = "" -%}{%- assign sv_rang = 0 -%}{%- assign sv_laatste = "" -%}{%- assign sv_totaal = 0 -%}
+{%- for sv_f in site.data.methode.fases -%}
+  {%- if sv_f.zichtbaar != false %}{% assign sv_totaal = sv_totaal | plus: sv_f.stappen.size %}{% endif -%}
+  {%- for sv_s in sv_f.stappen -%}
+    {%- assign sv_c = sv_s.code | downcase -%}
+    {%- if sv_ruw contains sv_c -%}{%- assign sv = sv | push: sv_c -%}{%- assign sv_fase = sv_f.code -%}{%- assign sv_fasenaam = sv_f.naam -%}{%- assign sv_rang = forloop.parentloop.index -%}{%- assign sv_laatste = sv_c -%}{%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- assign sv_afslag = "" -%}{%- assign sv_afslagnaam = "" -%}
+{%- for sv_a in site.data.methode.afslagen -%}{%- if include.ding.stap == sv_a.code -%}{%- assign sv_afslag = sv_a.code -%}{%- assign sv_afslagnaam = sv_a.kort | default: sv_a.naam -%}{%- endif -%}{%- endfor -%}

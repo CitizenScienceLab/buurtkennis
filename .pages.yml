@@ -13,7 +13,7 @@ content:
     filename: "{primary}.md"
     view:
       primary: naam
-      fields: [naam, fase, sinds]
+      fields: [naam, stappen, sinds]
       sort: [naam]
     fields:
       - { name: naam, label: Naam, type: string, required: true }
@@ -77,8 +77,23 @@ content:
             - { name: BU05460901, label: "Kloosterhof (Stevenshofdistrict)" }
             - { name: BU05460902, label: "Dobbewijk-Noord (Stevenshofdistrict)" }
             - { name: BU05460903, label: "Dobbewijk-Zuid (Stevenshofdistrict)" }
+      - name: stappen
+        label: "Stappen (de gezette stappen; elke combinatie kan, ook zonder volgorde)"
+        type: select
+        options:
+          multiple: true
+          values:
+            - { name: b1, label: "B1 · Oriënteren" }
+            - { name: b2, label: "B2 · Ophalen kwesties" }
+            - { name: b3, label: "B3 · Kwesties sorteren" }
+            - { name: c1, label: "C1 · Werving betrokkenen" }
+            - { name: c2, label: "C2 · Vraagstuk vormen" }
+            - { name: d1, label: "D1 · Onderzoeken levensvatbaarheid" }
+            - { name: d2, label: "D2 · Co-creatie initiatief" }
+            - { name: e1, label: "E1 · Opstarten samenwerking" }
+            - { name: e2, label: "E2 · Start onderzoek" }
       - name: fase
-        label: "Fase (leeg laten als er alleen trajecten lopen)"
+        label: "Fase (oud; telt alleen zolang Stappen leeg is)"
         type: select
         options:
           values:
@@ -88,6 +103,15 @@ content:
             - { name: D, label: "D Samen plannen" }
             - { name: E, label: "E Onderzoek starten" }
             - { name: F, label: "F BuurtKennis delen" }
+      - name: stap
+        label: "Afslag (leeg laten zolang het loopt)"
+        type: select
+        options:
+          values:
+            - { name: geen-vervolg, label: "Geen vervolg" }
+            - { name: doorverwezen, label: "Doorverwezen" }
+      - { name: reden, label: "Reden van de afslag (optioneel)", type: text }
+      - { name: naar, label: "Doorverwezen naar (optioneel, geen namen van personen)", type: string }
       - { name: sinds, label: "Sinds (jaar-maand, bv. 2026-09)", type: string, options: { pattern: "^[0-9]{4}-[0-9]{2}$" } }
       - { name: doel, label: Doel, type: text }
       - name: activiteiten
@@ -116,20 +140,43 @@ content:
     filename: "{primary}.md"
     view:
       primary: titel
-      fields: [titel, fase, thema, sinds]
+      fields: [titel, stappen, thema, sinds]
       sort: [fase, titel]
     fields:
       - { name: titel, label: Titel, type: string, required: true }
-      - name: fase
-        label: Fase
+      - name: stappen
+        label: "Stappen (de gezette stappen; elke combinatie kan, ook zonder volgorde)"
         type: select
-        required: true
+        options:
+          multiple: true
+          values:
+            - { name: b1, label: "B1 · Oriënteren" }
+            - { name: b2, label: "B2 · Ophalen kwesties" }
+            - { name: b3, label: "B3 · Kwesties sorteren" }
+            - { name: c1, label: "C1 · Werving betrokkenen" }
+            - { name: c2, label: "C2 · Vraagstuk vormen" }
+            - { name: d1, label: "D1 · Onderzoeken levensvatbaarheid" }
+            - { name: d2, label: "D2 · Co-creatie initiatief" }
+            - { name: e1, label: "E1 · Opstarten samenwerking" }
+            - { name: e2, label: "E2 · Start onderzoek" }
+      - name: fase
+        label: "Fase (oud; telt alleen zolang Stappen leeg is)"
+        type: select
         options:
           values:
             - { name: B, label: "B Kwesties verzamelen" }
             - { name: C, label: "C Vraagstuk vormen" }
             - { name: D, label: "D Samen plannen" }
             - { name: E, label: "E Onderzoek starten" }
+      - name: stap
+        label: "Afslag (leeg laten zolang het loopt)"
+        type: select
+        options:
+          values:
+            - { name: geen-vervolg, label: "Geen vervolg" }
+            - { name: doorverwezen, label: "Doorverwezen" }
+      - { name: reden, label: "Reden van de afslag (optioneel)", type: text }
+      - { name: naar, label: "Doorverwezen naar (optioneel, geen namen van personen)", type: string }
       - name: thema
         label: Thema
         type: reference
