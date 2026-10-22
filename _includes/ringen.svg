@@ -14,7 +14,7 @@
     namen="ja"       stapnamen (kort) langs de bogen, alleen bij groot
     knoppen="ja"     bogen zijn knoppen (tab en Enter)
     doos="ja"        alleen bij groot: een grote kern met de doos erin in plaats van de stip. Standaard de
-                     dichte doos (#doos-dicht uit _includes/doos-symbolen.svg, die moet op de pagina staan);
+                     dichte doos (assets/doosjes/dicht.svg, zelfde maat en plek als de doosjes, zodat de doos niet verspringt);
                      met .toon op een .doos-fase (en .met-doos op de svg) het doosje van die fase (doos in methode.yml)
     klasse="..."     extra class op de svg
     label="..."      tekst voor schermlezers
@@ -40,9 +40,11 @@
 <circle class="rand" cx="{{ rg_m }}" cy="{{ rg_m }}" r="{{ rg_rand }}"/>
 {%- if rg_doos %}
 <g class="midden-doos" aria-hidden="true">
-<use class="doos-dicht" href="#doos-dicht" x="145" y="160" width="150" height="120"/>
+{%- comment -%} alle doosjes even groot en op dezelfde plek: de doos blijft staan, alleen het icoon erboven wisselt.
+  12 hoger dan het midden, zodat doos en icoon samen in de kern passen {%- endcomment %}
+<image class="doos-dicht" href="{{ '/assets/doosjes/dicht.svg' | relative_url }}" x="135" y="134" width="170" height="141"/>
 {%- for rg_f in rg_fases limit: 4 %}{% if rg_f.doos %}
-<image class="doos-fase" data-fase="{{ rg_f.code }}" href="{{ rg_f.doos | relative_url }}" x="135" y="146" width="170" height="141"/>
+<image class="doos-fase" data-fase="{{ rg_f.code }}" href="{{ rg_f.doos | relative_url }}" x="135" y="134" width="170" height="141"/>
 {%- endif %}{% endfor %}
 </g>
 {%- else %}

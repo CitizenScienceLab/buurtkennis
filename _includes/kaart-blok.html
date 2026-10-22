@@ -14,7 +14,7 @@
   <p class="plek naam" id="plek">Leiden</p>
   <div class="ringen-rij">
     {% include ringen.svg %}
-    <span class="figuur-doos leeg" id="figuur-doos" aria-hidden="true"><img alt=""><svg viewBox="0 -8 100 80"><use href="#doos-dicht"/></svg></span>
+    <span class="figuur-doos" id="figuur-doos" aria-hidden="true"><img alt="" src="{{ '/assets/doosjes/dicht.svg' | relative_url }}"></span>
     <a class="fase-label" id="fase-label" href="{{ '/methode/' | relative_url }}">BuurtKennis-methode<small>van kwestie tot onderzoek</small></a>
   </div>
   <div class="kaart" id="kaart">{% include kaart-leiden.svg %}</div>
@@ -128,13 +128,13 @@ BUURTEN.forEach(b => {
 })();
 
 // --- figuur en kop: de gezette stappen van de gekozen buurt of het gekozen traject ---
-// het doosje van de hoogste fase; vooraf laden, zodat hover niet knippert
-const doosVan = top => { const f = FASES.find(x => x.code === top); return f && f.doos ? BASIS + f.doos : ''; };
+// het doosje van de hoogste fase, anders de dichte doos; vooraf laden, zodat hover niet knippert
+const DICHT = {{ '/assets/doosjes/dicht.svg' | relative_url | jsonify }};
+const doosVan = top => { const f = FASES.find(x => x.code === top); return f && f.doos ? BASIS + f.doos : DICHT; };
 FASES.forEach(f => { if (f.doos) new Image().src = BASIS + f.doos; });
 function zetDoos(top) {
   const d = doosVan(top), vak = $('figuur-doos'), img = vak.querySelector('img');
-  if (d && img.getAttribute('src') !== d) img.setAttribute('src', d);
-  vak.classList.toggle('leeg', !d);
+  if (img.getAttribute('src') !== d) img.setAttribute('src', d);
 }
 const aantalStappen = st => `${st.length} van ${IN_FIGUUR} ${IN_FIGUUR === 1 ? 'stap' : 'stappen'}`;
 const afslagNaam = a => a ? a.kort || a.naam : '';

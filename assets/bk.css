@@ -56,10 +56,9 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
    Bij een afslag vallen de niet-gezette bogen weg en staat er een stippelcirkel om de figuur. */
 .ringen-rij { display: flex; align-items: center; gap: 12px; min-height: 64px; margin-bottom: 10px }
 .ringen-rij .ringen { width: 64px; flex: none }
-/* het doosje van de fase uit het label; zonder stappen de lege, dichte doos */
+/* het doosje van de fase uit het label; zonder stappen de dichte doos (assets/doosjes/dicht.svg) */
 .figuur-doos { width: 60px; flex: none }
-.figuur-doos img, .figuur-doos svg { display: block; width: 100%; height: auto }
-.figuur-doos.leeg img, .figuur-doos:not(.leeg) svg { display: none }
+.figuur-doos img { display: block; width: 100%; height: auto }
 .fase-label { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--inkt); text-decoration: none; line-height: 1.2 }
 .fase-label small { display: block; font-family: var(--tekst); font-weight: 400; font-size: .8rem; color: var(--zacht) }
 .ringen { display: block; overflow: visible; --inkt-op-geel: #1E1407 }

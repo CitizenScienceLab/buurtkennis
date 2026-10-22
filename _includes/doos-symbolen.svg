@@ -4,9 +4,4 @@
 <polygon points="16,24 50,38 50,64 16,50" style="fill:var(--doos)"/>
 <polygon points="50,38 84,24 84,50 50,64" style="fill:var(--doos)"/>
 <polygon points="16,24 50,38 38,46 4,32" style="fill:var(--doos)"/>
-</g></symbol><symbol id="doos-dicht" viewBox="0 -8 100 80"><g stroke-width="2.5" stroke-linejoin="round" style="stroke:var(--doos-lijn)">
-<polygon points="50,10 84,24 50,38 16,24" style="fill:var(--doos)"/>
-<line x1="33" y1="17" x2="67" y2="31"/>
-<polygon points="16,24 50,38 50,64 16,50" style="fill:var(--doos)"/>
-<polygon points="50,38 84,24 84,50 50,64" style="fill:var(--doos)"/>
 </g></symbol></svg>
