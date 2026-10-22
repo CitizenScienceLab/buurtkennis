@@ -16,7 +16,7 @@ Een map zonder `_` ervoor is een pagina. Een map of bestand dat met `_` begint i
 - `_data/cbs.yml`: wijken en buurten van Leiden met hun CBS-code; `_data/methode.yml`: fases en stappen (GitBook is de bron; hier staan volgorde, kleur, links, de korte naam op de figuur en het verhaal per stap)
 - `trajecten/`: lijst van buurten en trajecten; `werkversie.html`: de kaart, ook als hij uit staat
 - `assets/bk.css`: stijl van de kaart; `assets/site.css`: stijl van de losse pagina's
-- `_includes/kaart-leiden.svg`: de getekende kaart; `_includes/kaart-blok.html`: kaart, figuur en card; `_includes/ringen.svg`: de methodefiguur, groot en klein; `_includes/stappen-van.html`: de stappen van een buurt of traject, met de terugval op `fase`; `_includes/doos-symbolen.svg`: de doos
+- `_includes/kaart-leiden.svg`: de getekende kaart; `_includes/kaart-blok.html`: kaart, figuur en card; `_includes/ringen.svg`: de methodefiguur, groot en klein; `_includes/stappen-van.html`: de stappen van een buurt of traject, met de terugval op `fase`; `_includes/doos-symbolen.svg`: de doos (ook de lege, dichte doos); `assets/doosjes/`: de doosjes per fase (b.svg … e.svg, genoemd bij `doos` in `_data/methode.yml`; een nieuwe versie zet je op dezelfde plek)
 - [`overzicht/`](overzicht/): de eerdere kaart (versie 1), met `_overzicht/` als bron
 - [`hittemaatregelen/`](hittemaatregelen/): ideeën uit de workshop over hittestress van 27 augustus 2026
 - `_config.yml`: instellingen voor de bouw (GitHub Pages bouwt deze repo met Jekyll); `_data/instellingen.yml`: kaarten aan of uit

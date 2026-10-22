@@ -15,6 +15,8 @@
 #   kort                 de naam op de boog in de figuur (kort houden)
 #   verhaal              kop en tekst voor de uitleg op /methode/
 #   kleur, kleur_donker  voor de oude kaart op /overzicht (de rest van de site gebruikt assets/bk.css)
+#   doos                 het doosje van de fase (Jordy's projectstijl), op de methodepagina en de kaart.
+#                        Een nieuwe versie zet je op dezelfde plek in assets/doosjes/.
 
 # Link naar het overzicht van de methode in GitBook
 handleiding: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/readme"
@@ -29,6 +31,7 @@ fases:
 
   - code: B
     naam: "Kwesties verzamelen"
+    doos: /assets/doosjes/b.svg
     kleur: "#9DB6E2"
     kleur_donker: "#46669F"
     stappen:
@@ -56,6 +59,7 @@ fases:
 
   - code: C
     naam: "Vraagstuk vormen"
+    doos: /assets/doosjes/c.svg
     kleur: "#5F86CC"
     kleur_donker: "#6B91D9"
     stappen:
@@ -76,6 +80,7 @@ fases:
 
   - code: D
     naam: "Samen plannen"
+    doos: /assets/doosjes/d.svg
     kleur: "#2C54A3"
     kleur_donker: "#9DBBF0"
     stappen:
@@ -96,6 +101,7 @@ fases:
 
   - code: E
     naam: "Onderzoek starten"
+    doos: /assets/doosjes/e.svg
     kleur: "#23244C"
     kleur_donker: "#D6E2F8"
     stappen:

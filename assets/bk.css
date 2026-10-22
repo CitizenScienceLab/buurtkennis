@@ -56,6 +56,10 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
    Bij een afslag vallen de niet-gezette bogen weg en staat er een stippelcirkel om de figuur. */
 .ringen-rij { display: flex; align-items: center; gap: 12px; min-height: 64px; margin-bottom: 10px }
 .ringen-rij .ringen { width: 64px; flex: none }
+/* het doosje van de fase uit het label; zonder stappen de lege, dichte doos */
+.figuur-doos { width: 60px; flex: none }
+.figuur-doos img, .figuur-doos svg { display: block; width: 100%; height: auto }
+.figuur-doos.leeg img, .figuur-doos:not(.leeg) svg { display: none }
 .fase-label { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--inkt); text-decoration: none; line-height: 1.2 }
 .fase-label small { display: block; font-family: var(--tekst); font-weight: 400; font-size: .8rem; color: var(--zacht) }
 .ringen { display: block; overflow: visible; --inkt-op-geel: #1E1407 }
@@ -73,7 +77,18 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .ringen .naam.gezet { fill: #fff }
 .ringen .naam.gezet[data-fase="D"] { fill: var(--inkt-op-geel) }
 /* grote figuur op /methode/: elke boog is een knop; hover en de gekozen stap maken hem dikker */
-.groot-figuur .ringen { width: min(100%, 460px); margin: 8px auto }
+/* met de doosjes in de hoeken buiten de cirkel (variant a): smal erboven en eronder, breed ernaast */
+.groot-figuur { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "h1 h2" "ring ring" "h4 h3"; gap: 4px 12px; max-width: 760px; margin: 8px auto }
+.groot-figuur .ringen { grid-area: ring; width: min(100%, 460px); margin: 4px auto }
+.fasedoos { margin: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 2px }
+.fasedoos img { display: block; width: clamp(72px, 22vw, 120px); height: auto }
+.fasedoos figcaption { font-family: var(--kop); font-weight: 900; font-size: .85rem; line-height: 1.15; color: var(--kt) }
+.hoek-1 { grid-area: h1; align-self: end } .hoek-2 { grid-area: h2; align-self: end; align-items: flex-end; text-align: right }
+.hoek-3 { grid-area: h3; align-self: start; align-items: flex-end; text-align: right } .hoek-4 { grid-area: h4; align-self: start }
+@media (min-width: 760px) {
+  .groot-figuur { grid-template-columns: 130px minmax(0, 460px) 130px; grid-template-areas: "h1 ring h2" "h4 ring h3"; justify-content: center }
+  .hoek-1, .hoek-2 { align-self: start } .hoek-3, .hoek-4 { align-self: end }
+}
 .groot-figuur .boog { cursor: pointer }
 .groot-figuur .boog:hover, .groot-figuur .boog.kies { stroke-width: 48 }
 .groot-figuur .boog:focus { outline: none }

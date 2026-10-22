@@ -5,7 +5,8 @@
   Stappen: het veld stappen (b1, c2 ...); zonder stappen geldt de oude fase als terugval
   (fase X = alle stappen van de fases vóór X plus de eerste stap van X).
   Een buurt toont zijn eigen stappen samen met die van de trajecten die er lopen.
-  De kleur van een buurt is de fase met de hoogste letter in die stappen.
+  De kleur van een buurt is de fase met de hoogste letter in die stappen; naast de ringen staat het doosje
+  van die fase (doos in _data/methode.yml), zonder stappen de lege doos.
   _data/cbs.yml  codes, namen en middens van wijken en buurten
 {%- endcomment -%}
 {% include doos-symbolen.svg %}
@@ -13,6 +14,7 @@
   <p class="plek naam" id="plek">Leiden</p>
   <div class="ringen-rij">
     {% include ringen.svg %}
+    <span class="figuur-doos leeg" id="figuur-doos" aria-hidden="true"><img alt=""><svg viewBox="0 -8 100 80"><use href="#doos-dicht"/></svg></span>
     <a class="fase-label" id="fase-label" href="{{ '/methode/' | relative_url }}" target="_blank" rel="noopener">BuurtKennis-methode<small>van kwestie tot onderzoek ↗</small></a>
   </div>
   <div class="kaart" id="kaart">{% include kaart-leiden.svg %}</div>
@@ -42,6 +44,7 @@ const inTraject = b => TRAJECTEN.some(t => (t.buurten || []).some(id => id === b
 const BUURTEN = ALLE_BUURTEN.filter(b => [].concat(b.stappen || []).length || b.fase || b.stap || b.doel || (b.activiteiten || []).length || inTraject(b));
 TRAJECTEN.forEach(t => { t.thema = THEMA_ALIAS[t.thema] || t.thema; });
 const FASEN_URL = {{ '/methode/' | relative_url | jsonify }};
+const BASIS = {{ site.baseurl | default: '' | jsonify }};
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -125,12 +128,21 @@ BUURTEN.forEach(b => {
 })();
 
 // --- figuur en kop: de gezette stappen van de gekozen buurt of het gekozen traject ---
+// het doosje van de hoogste fase; vooraf laden, zodat hover niet knippert
+const doosVan = top => { const f = FASES.find(x => x.code === top); return f && f.doos ? BASIS + f.doos : ''; };
+FASES.forEach(f => { if (f.doos) new Image().src = BASIS + f.doos; });
+function zetDoos(top) {
+  const d = doosVan(top), vak = $('figuur-doos'), img = vak.querySelector('img');
+  if (d && img.getAttribute('src') !== d) img.setAttribute('src', d);
+  vak.classList.toggle('leeg', !d);
+}
 const aantalStappen = st => `${st.length} van ${IN_FIGUUR} ${IN_FIGUUR === 1 ? 'stap' : 'stappen'}`;
 const afslagNaam = a => a ? a.kort || a.naam : '';
 function zetFiguur(x) {
   const st = x ? x.st : [], af = x ? x.afslag : null, top = x ? x.top : '';
   figuur.querySelectorAll('.boog').forEach(b => b.classList.toggle('gezet', st.includes(b.dataset.stap)));
   figuur.classList.toggle('afslag', !!af);
+  zetDoos(top);
   figuur.setAttribute('aria-label', x ? `${aantalStappen(st)} gezet${af ? ', ' + afslagNaam(af).toLowerCase() : ''}` : 'De BuurtKennis-methode');
   const lab = $('fase-label');
   if (af || top) {
