@@ -1,5 +1,9 @@
 ---
 titel: De bodemkwaliteit van het Roomburgpark
+stappen:
+  - e1
+  - d1
+  - c1
 fase: E
 thema: _themas/bodem.md
 buurten:
