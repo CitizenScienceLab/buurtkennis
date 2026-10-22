@@ -6,7 +6,6 @@ stappen:
   - b3
   - d1
   - e1
-  - c1
 thema: _themas/luchtkwaliteit.md
 buurten:
   - _buurten/groenoord.md
