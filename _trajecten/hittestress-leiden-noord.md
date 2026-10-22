@@ -3,7 +3,6 @@ titel: Hittestress in Leiden Noord
 stappen:
   - d1
   - d2
-  - e1
   - c1
   - b1
   - b2
