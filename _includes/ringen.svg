@@ -13,6 +13,9 @@
     afslag="code"    een afslag (geen-vervolg, doorverwezen): niet-gezette bogen weg, stippelcirkel eromheen
     namen="ja"       stapnamen (kort) langs de bogen, alleen bij groot
     knoppen="ja"     bogen zijn knoppen (tab en Enter)
+    doos="ja"        alleen bij groot: een grote kern met de doos erin in plaats van de stip. Standaard de
+                     dichte doos (#doos-dicht uit _includes/doos-symbolen.svg, die moet op de pagina staan);
+                     met .toon op een .doos-fase (en .met-doos op de svg) het doosje van die fase (doos in methode.yml)
     klasse="..."     extra class op de svg
     label="..."      tekst voor schermlezers
   Elke boog heeft data-stap="b1" en data-fase="B"; een script zet .gezet aan of uit.
@@ -27,13 +30,24 @@
   {%- assign rg_m = 36 -%}{%- assign rg_kern = 5 -%}{%- assign rg_r = 34 -%}{%- assign rg_stip = 2 -%}{%- assign rg_rand = 35 -%}{%- assign rg_tekst = 0 -%}
   {%- assign rg_hoek = "-0.99619 -0.08716 -0.08716 -0.99619|0.08716 -0.99619 0.99619 -0.08716|0.99619 0.08716 0.08716 0.99619|-0.08716 0.99619 -0.99619 0.08716" | split: "|" -%}
 {%- endif -%}
+{%- comment -%} met de doos in het midden: kern 92 op buitenstraal 220 (in de schets 84 op 200) {%- endcomment -%}
+{%- assign rg_doos = false -%}{%- if include.doos == "ja" and include.maat == "groot" -%}{%- assign rg_doos = true -%}{%- assign rg_kern = 92 -%}{%- endif -%}
 {%- comment -%} tekstpaden lopen over het hele kwart, zodat lange namen passen {%- endcomment -%}
 {%- assign rg_heel = "-1 0 0 -1|0 -1 1 0|1 0 0 1|0 1 -1 0" | split: "|" -%}
 {%- assign rg_maat = rg_m | times: 2 -%}
 {%- assign rg_namen = false -%}{%- if include.namen == "ja" and include.maat == "groot" -%}{%- assign rg_namen = true -%}{%- endif -%}
-<svg class="ringen {% if include.maat == 'groot' %}ringen-groot{% else %}ringen-klein{% endif %}{% if include.afslag and include.afslag != '' %} afslag{% endif %}{% if include.klasse %} {{ include.klasse }}{% endif %}" viewBox="0 0 {{ rg_maat }} {{ rg_maat }}" role="img" aria-label="{{ include.label | default: 'De BuurtKennis-methode: per fase een boog per stap, van de kern naar de hele buurt' | escape }}"{% if include.afslag %} data-afslag="{{ include.afslag }}"{% endif %}>
+<svg class="ringen {% if include.maat == 'groot' %}ringen-groot{% else %}ringen-klein{% endif %}{% if include.afslag and include.afslag != '' %} afslag{% endif %}{% if rg_doos %} ringen-doos{% endif %}{% if include.klasse %} {{ include.klasse }}{% endif %}" viewBox="0 0 {{ rg_maat }} {{ rg_maat }}" role="img" aria-label="{{ include.label | default: 'De BuurtKennis-methode: per fase een boog per stap, van de kern naar de hele buurt' | escape }}"{% if include.afslag %} data-afslag="{{ include.afslag }}"{% endif %}>
 <circle class="rand" cx="{{ rg_m }}" cy="{{ rg_m }}" r="{{ rg_rand }}"/>
+{%- if rg_doos %}
+<g class="midden-doos" aria-hidden="true">
+<use class="doos-dicht" href="#doos-dicht" x="145" y="160" width="150" height="120"/>
+{%- for rg_f in rg_fases limit: 4 %}{% if rg_f.doos %}
+<image class="doos-fase" data-fase="{{ rg_f.code }}" href="{{ rg_f.doos | relative_url }}" x="135" y="146" width="170" height="141"/>
+{%- endif %}{% endfor %}
+</g>
+{%- else %}
 <circle class="kern" cx="{{ rg_m }}" cy="{{ rg_m }}" r="{{ rg_stip }}"/>
+{%- endif %}
 {%- for rg_f in rg_fases limit: 4 -%}
   {%- assign rg_k = forloop.index0 -%}
   {%- assign rg_u = rg_hoek[rg_k] | split: " " -%}

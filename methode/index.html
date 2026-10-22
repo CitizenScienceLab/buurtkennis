@@ -6,18 +6,19 @@ description: "Van kwesties verzamelen tot onderzoek starten: de stappen van de B
 {%- assign F = site.data.methode.fases | where_exp: "f", "f.zichtbaar != false" -%}
 <h1>Van kwestie tot onderzoek</h1>
 <p class="intro">Elke fase begint dichtbij, bij ons en onze partners, en reikt stap voor stap verder de buurt in. Een kwestie hoeft niet alle stappen in volgorde te doorlopen. Tik op een stap; de uitgebreide uitleg staat in de <a class="uit" href="{{ site.data.methode.handleiding }}" target="_blank" rel="noopener">methodiek</a>.</p>
-{%- comment -%} de doosjes staan in de hoeken buiten de cirkel, in dezelfde volgorde als de kwarten:
-  linksboven, rechtsboven, rechtsonder, linksonder (zie assets/bk.css, .groot-figuur) {%- endcomment %}
+{% include doos-symbolen.svg %}
+{%- comment -%} de fasetitels staan rond de cirkel bij hun kwart: linksboven, rechtsboven, rechtsonder, linksonder
+  (zie assets/bk.css, .groot-figuur). In het midden de doos: dicht, of het doosje van de fase die je aanwijst. {%- endcomment %}
 <div class="groot-figuur">
   {%- for f in F limit: 4 %}
-  <figure class="fasedoos hoek-{{ forloop.index }}" style="--kt:var(--fase-{{ f.code }}-tekst, var(--fase-{{ f.code }}))">{% if f.doos %}<img src="{{ f.doos | relative_url }}" alt="" width="120" height="100">{% endif %}<figcaption>{{ f.naam }}</figcaption></figure>
+  <p class="fasetitel hoek-{{ forloop.index }}" style="--kt:var(--fase-{{ f.code }}-tekst, var(--fase-{{ f.code }}))">{{ f.naam }}</p>
   {%- endfor %}
-  {% include ringen.svg maat="groot" alles="ja" namen="ja" knoppen="ja" %}
+  {% include ringen.svg maat="groot" alles="ja" namen="ja" knoppen="ja" doos="ja" %}
 </div>
 <div class="fase-uitleg" id="uitleg" aria-live="polite">
   <p class="boven" id="u-fase">De methode</p>
   <h2 id="u-kop">Kies een stap</h2>
-  <p id="u-tekst">Het midden is de kern: wij en onze partners. Hoe verder naar buiten, hoe meer van de buurt meedoet.</p>
+  <p id="u-tekst">Het midden is de kern: wij en onze partners. Hoe verder naar buiten, hoe meer van de buurt meedoet. Wijs een stap aan; in het midden verschijnt het doosje van die fase.</p>
   <p id="u-link"></p>
 </div>
 <ol class="fasen">
@@ -47,20 +48,34 @@ const STAPPEN = FASES.flatMap(f => (f.stappen || []).map(s => Object.assign({}, 
 const figuur = document.querySelector('.groot-figuur .ringen');
 const $ = id => document.getElementById(id);
 const uitLink = (href, tekst) => { const a = document.createElement('a'); a.className = 'uit'; a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = tekst; return a; };
+// de begintekst van de uitleg, voor als er niets gekozen is
+const BEGIN = { fase: $('u-fase').textContent, kop: $('u-kop').textContent, tekst: $('u-tekst').textContent };
 let gekozen = '';
-function kies(id) {
-  const s = STAPPEN.find(x => x.id === id); if (!s) return;
-  gekozen = id;
-  figuur.querySelectorAll('.boog').forEach(b => b.classList.toggle('kies', b.dataset.stap === id));
-  document.querySelectorAll('.stapknoppen button').forEach(k => k.setAttribute('aria-pressed', String(k.dataset.stap === id)));
+// toon: doos in het midden, dikke boog en uitleg van een stap (of de begintoestand met de dichte doos)
+function toon(id) {
+  const s = STAPPEN.find(x => x.id === id);
+  let doos = false;
+  figuur.querySelectorAll('.doos-fase').forEach(i => { const aan = !!s && i.dataset.fase === s.fase.code; i.classList.toggle('toon', aan); doos = doos || aan; });
+  figuur.classList.toggle('met-doos', doos);
+  figuur.querySelectorAll('.boog').forEach(b => b.classList.toggle('kies', !!s && b.dataset.stap === id));
+  $('uitleg').style.setProperty('--band', s ? `var(--fase-${s.fase.code})` : 'var(--bruin)');
+  if (!s) { $('u-fase').textContent = BEGIN.fase; $('u-kop').textContent = BEGIN.kop; $('u-tekst').textContent = BEGIN.tekst; $('u-link').replaceChildren(); return; }
   const v = s.verhaal || {};
-  $('uitleg').style.setProperty('--band', `var(--fase-${s.fase.code})`);
   $('u-fase').textContent = `${s.code} · ${s.naam} · ${s.fase.naam}`;
   $('u-kop').textContent = v.kop || s.naam;
   $('u-tekst').textContent = v.tekst || '';
   $('u-link').replaceChildren(s.link ? uitLink(s.link, `Lees meer over ${s.naam} in de methodiek`) : uitLink(HANDLEIDING, 'Lees meer in de methodiek'));
+}
+// kies: een tik of klik; blijft staan, ook in het adres
+function kies(id) {
+  if (!STAPPEN.some(x => x.id === id)) return;
+  gekozen = id; toon(id);
+  document.querySelectorAll('.stapknoppen button').forEach(k => k.setAttribute('aria-pressed', String(k.dataset.stap === id)));
   try { history.replaceState(null, '', '#' + id); } catch (e) {}
 }
+// hover (alleen met een muis): alvast tonen; weg met de muis terug naar de gekozen stap of de dichte doos
+figuur.addEventListener('pointerover', e => { if (e.pointerType !== 'mouse') return; const b = e.target.closest('.boog'); toon(b ? b.dataset.stap : gekozen); });
+figuur.addEventListener('pointerleave', () => toon(gekozen));
 figuur.addEventListener('click', e => { const b = e.target.closest('.boog'); if (b) kies(b.dataset.stap); });
 figuur.addEventListener('keydown', e => { const b = e.target.closest('.boog'); if (b && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); kies(b.dataset.stap); } });
 document.querySelector('.fasen').addEventListener('click', e => { const k = e.target.closest('button[data-stap]'); if (k) kies(k.dataset.stap); });

@@ -77,14 +77,12 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .ringen .naam.gezet { fill: #fff }
 .ringen .naam.gezet[data-fase="D"] { fill: var(--inkt-op-geel) }
 /* grote figuur op /methode/: elke boog is een knop; hover en de gekozen stap maken hem dikker */
-/* met de doosjes in de hoeken buiten de cirkel (variant a): smal erboven en eronder, breed ernaast */
+/* fasetitels rond de cirkel bij hun kwart: smal erboven en eronder, breed ernaast */
 .groot-figuur { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "h1 h2" "ring ring" "h4 h3"; gap: 4px 12px; max-width: 760px; margin: 8px auto }
 .groot-figuur .ringen { grid-area: ring; width: min(100%, 460px); margin: 4px auto }
-.fasedoos { margin: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 2px }
-.fasedoos img { display: block; width: clamp(72px, 22vw, 120px); height: auto }
-.fasedoos figcaption { font-family: var(--kop); font-weight: 900; font-size: .85rem; line-height: 1.15; color: var(--kt) }
-.hoek-1 { grid-area: h1; align-self: end } .hoek-2 { grid-area: h2; align-self: end; align-items: flex-end; text-align: right }
-.hoek-3 { grid-area: h3; align-self: start; align-items: flex-end; text-align: right } .hoek-4 { grid-area: h4; align-self: start }
+.fasetitel { margin: 0; font-family: var(--kop); font-weight: 900; font-size: clamp(.9rem, 2.4vw, 1.05rem); line-height: 1.15; color: var(--kt) }
+.hoek-1 { grid-area: h1; align-self: end } .hoek-2 { grid-area: h2; align-self: end; text-align: right }
+.hoek-3 { grid-area: h3; align-self: start; text-align: right } .hoek-4 { grid-area: h4; align-self: start }
 @media (min-width: 760px) {
   .groot-figuur { grid-template-columns: 130px minmax(0, 460px) 130px; grid-template-areas: "h1 ring h2" "h4 ring h3"; justify-content: center }
   .hoek-1, .hoek-2 { align-self: start } .hoek-3, .hoek-4 { align-self: end }
@@ -93,6 +91,13 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .groot-figuur .boog:hover, .groot-figuur .boog.kies { stroke-width: 48 }
 .groot-figuur .boog:focus { outline: none }
 .groot-figuur .boog:focus-visible { stroke-width: 48; outline: 2px dashed var(--inkt); outline-offset: 2px }
+/* met de doos in het midden (doos="ja"): grotere kern, dunnere bogen; standaard de dichte doos,
+   het script zet .toon op het doosje van de fase die je aanwijst (en .met-doos op de figuur) */
+.ringen-doos .boog { stroke-width: 32 }
+.groot-figuur .ringen-doos .boog:hover, .groot-figuur .ringen-doos .boog.kies, .groot-figuur .ringen-doos .boog:focus-visible { stroke-width: 38 }
+.midden-doos { pointer-events: none }
+.midden-doos .doos-fase:not(.toon) { display: none }
+.ringen-doos.met-doos .doos-dicht { display: none }
 
 /* kaart */
 .kaart { position: relative; aspect-ratio: 1028 / 1024; width: 100%; max-height: 72vh; max-width: calc(72vh * 1028 / 1024); margin: 0 auto }
