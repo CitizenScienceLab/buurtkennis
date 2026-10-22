@@ -1,5 +1,11 @@
 ---
 titel: Is Sociale Cohesie met burgerwetenschap te onderzoeken?
+stappen:
+  - b1
+  - b2
+  - b3
+  - c1
+  - d1
 fase: C
 thema: sociaal
 buurten:
