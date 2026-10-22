@@ -10,6 +10,7 @@ thuis: true
 <section class="held vol" style="--bg: var(--creme)">
   <h1 class="tweeregel">{{ H.kop }}<span>{{ H.kop_onder }}</span></h1>
   <div class="held-knoppen">
+    <a class="knop vol-knop uit" href="{{ H.kwestiekaart }}" target="_blank" rel="noopener">{{ H.kwestie_knop }}</a>
     <a class="knop" href="#hoe">Hoe het werkt</a>
     <a class="knop" href="#doe-mee">Doe mee</a>
   </div>
@@ -77,10 +78,10 @@ thuis: true
 <section class="blok geel vol" id="doe-mee">
   <div class="kop-rij">
     <div>
-      <h2 class="tweeregel rood">{{ H.doe_mee_kop }}<span>{{ H.doe_mee_kop_onder }}</span></h2>
+      <h2 class="tweeregel rood">{{ H.cta_kop }}<span>{{ H.cta_kop_onder }}</span></h2>
       <p class="lead">{{ H.doe_mee_tekst }}</p>
     </div>
-    <a class="knop groot uit" href="{{ H.kwestiekaart }}" target="_blank" rel="noopener">Kaart jouw kwestie aan</a>
+    <a class="knop groot uit" href="{{ H.kwestiekaart }}" target="_blank" rel="noopener">{{ H.kwestie_knop }}</a>
   </div>
   <ul class="rollen">
   {%- for r in H.rollen %}

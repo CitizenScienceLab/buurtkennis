@@ -6,6 +6,12 @@ band: "Voor een **gezonde leefomgeving** in Leiden"
 kwestiekaart: "https://edu.nl/tqj9n"
 contact_mail: "csl@leidenuniv.nl"
 
+# Oproep die op elke pagina terugkomt, met de knop naar de kwestiekaart
+cta_kop: "Hoe maken we van jóuw buurt"
+cta_kop_onder: "een gezonde leefomgeving?"
+cta_tekst: "Onderzoek het! Geef op wat er bij jou in de buurt speelt, dan zoeken we samen uit hoe het zit."
+kwestie_knop: "Geef een kwestie op"
+
 beleid_kop: "Van buurtgesprek"
 beleid_kop_onder: "naar beleid"
 beleid_tekst: "We werken samen aan jouw onderwerp: we luisteren naar de bewoners die het aangaat, onderzoeken het samen, en zorgen dat de inzichten terechtkomen bij de gemeente of in een initiatief."
@@ -24,9 +30,7 @@ kaart_kop: "Waar loopt"
 kaart_kop_onder: "BuurtKennis nu?"
 kaart_tekst: "Op de kaart zie je in welke buurten we werken, welke trajecten daar lopen en hoe ver ze zijn."
 
-doe_mee_kop: "Jouw wijk,"
-doe_mee_kop_onder: "jouw kennis"
-doe_mee_tekst: "Er zijn veel manieren om mee te doen, van een uurtje meedenken tot zelf onderzoek doen in je eigen straat. Iedereen is welkom."
+doe_mee_tekst: "Onderzoek het! Er zijn veel manieren om mee te doen, van een uurtje meedenken tot zelf onderzoek doen in je eigen straat. Iedereen is welkom."
 rollen:
   - { kop: "Buurtbewoner", tekst: "Deel wat jij belangrijk vindt in je wijk. Kom naar een bijeenkomst, vul de kwestiekaart in of doe mee aan een meting." }
   - { kop: "Lokale partner", tekst: "Buurthuis, wijkvereniging of initiatief in Leiden? We werken graag samen om de kwesties in jullie buurt in kaart te brengen." }

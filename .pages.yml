@@ -217,7 +217,10 @@ content:
       - { name: band, label: "Groene band", type: string }
       - { name: kwestiekaart, label: "Link naar de online kwestiekaart", type: string }
       - { name: contact_mail, label: "Contactadres", type: string }
-      - { name: hoe_kop, label: "Hoe het werkt: kop", type: string }
+      - { name: cta_kop, label: "Oproep op elke pagina: kop", type: string }
+      - { name: cta_kop_onder, label: "Oproep op elke pagina: kop, tweede regel", type: string }
+      - { name: cta_tekst, label: "Oproep op elke pagina: tekst", type: text }
+      - { name: kwestie_knop, label: "Tekst op de knop naar de kwestiekaart", type: string }
       - name: stappen
         label: "Hoe het werkt: stappen"
         type: object
@@ -227,13 +230,15 @@ content:
           - { name: kop, label: Kop, type: string }
           - { name: tekst, label: Tekst, type: text }
       - { name: beleid_kop, label: "Van buurtgesprek naar beleid: kop", type: string }
+      - { name: beleid_kop_onder, label: "Van buurtgesprek naar beleid: kop, tweede regel", type: string }
       - { name: beleid_tekst, label: "Van buurtgesprek naar beleid: tekst", type: text }
       - { name: themas_kop, label: "Thema's: kop", type: string }
+      - { name: themas_kop_onder, label: "Thema's: kop, tweede regel", type: string }
       - { name: themas_tekst, label: "Thema's: tekst", type: text }
       - { name: themas_uitgelicht, label: "Thema's: uitgelicht (bestandsnamen uit _themas)", type: string, list: true }
       - { name: kaart_kop, label: "Kaart: kop", type: string }
+      - { name: kaart_kop_onder, label: "Kaart: kop, tweede regel", type: string }
       - { name: kaart_tekst, label: "Kaart: tekst", type: text }
-      - { name: doe_mee_kop, label: "Doe mee: kop", type: string }
       - { name: doe_mee_tekst, label: "Doe mee: tekst", type: text }
       - name: rollen
         label: "Doe mee: rollen"
