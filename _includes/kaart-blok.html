@@ -15,7 +15,7 @@
   <div class="ringen-rij">
     {% include ringen.svg %}
     <span class="figuur-doos leeg" id="figuur-doos" aria-hidden="true"><img alt=""><svg viewBox="0 -8 100 80"><use href="#doos-dicht"/></svg></span>
-    <a class="fase-label" id="fase-label" href="{{ '/methode/' | relative_url }}" target="_blank" rel="noopener">BuurtKennis-methode<small>van kwestie tot onderzoek ↗</small></a>
+    <a class="fase-label" id="fase-label" href="{{ '/methode/' | relative_url }}">BuurtKennis-methode<small>van kwestie tot onderzoek</small></a>
   </div>
   <div class="kaart" id="kaart">{% include kaart-leiden.svg %}</div>
   <section class="card" id="card" data-stand="dicht" aria-live="polite">
@@ -146,9 +146,9 @@ function zetFiguur(x) {
   figuur.setAttribute('aria-label', x ? `${aantalStappen(st)} gezet${af ? ', ' + afslagNaam(af).toLowerCase() : ''}` : 'De BuurtKennis-methode');
   const lab = $('fase-label');
   if (af || top) {
-    lab.innerHTML = `${esc(af ? afslagNaam(af) : faseNaam(top))}<small>${aantalStappen(st)} · lees meer ↗</small>`;
+    lab.innerHTML = `${esc(af ? afslagNaam(af) : faseNaam(top))}<small>${aantalStappen(st)} · lees meer</small>`;
     lab.href = FASEN_URL + (st.length ? '#' + st[st.length - 1] : '');
-  } else { lab.innerHTML = 'BuurtKennis-methode<small>van kwestie tot onderzoek ↗</small>'; lab.href = FASEN_URL; }
+  } else { lab.innerHTML = 'BuurtKennis-methode<small>van kwestie tot onderzoek</small>'; lab.href = FASEN_URL; }
   $('plek').style.setProperty('--k', top ? `var(--fase-${top}-tekst, var(--fase-${top}))` : 'var(--bruin)');
 }
 // --- kop: naam en figuur van wat gekozen is; hover toont alvast wat je zou kiezen ---
@@ -211,7 +211,7 @@ function toonTraject(id) {
   vul(t.titel, themaTags([t.thema]) + sindsRegel(t.sinds),
     `${afslagBlok(t)}${t.doel ? `<p>${esc(t.doel)}</p>` : ''}
      ${t.activiteiten.length ? '<h3>Activiteiten</h3>' + lijstActiviteiten(t.activiteiten, t.top) : ''}
-     <p><a class="uit" href="${esc(t.url)}" target="_blank" rel="noopener">Meer over dit traject</a></p>`);
+     <p><a href="${esc(t.url)}">Meer over dit traject →</a></p>`);
   zetStand('dicht'); adres(t.id);
 }
 
