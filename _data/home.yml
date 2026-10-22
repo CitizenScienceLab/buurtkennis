@@ -17,7 +17,7 @@ beleid_kop_onder: "naar beleid"
 beleid_tekst: "We werken samen aan jouw onderwerp: we luisteren naar de bewoners die het aangaat, onderzoeken het samen, en zorgen dat de inzichten terechtkomen bij de gemeente of in een initiatief."
 stappen:
   - { fase: B, kop: "Kwesties verzamelen", tekst: "In bijeenkomsten en op andere manieren halen we op wat bewoners écht belangrijk vinden in hun leefomgeving." }
-  - { fase: C, kop: "Vraagstuk vormen", tekst: "Samen met experts en betrokkenen maken we van de kwesties onderzoeksvragen." }
+  - { fase: C, kop: "Vraagstuk vormen", tekst: "Samen met experts en betrokkenen in de buurt maken we onderzoeksvragen van de kwesties." }
   - { fase: D, kop: "Samen plannen", tekst: "Met bewoners, studenten en onderzoekers ontwerpen we een aanpak die past bij de buurt en het thema." }
   - { fase: E, kop: "Onderzoek starten", tekst: "Het buurtonderzoek gaat van start. Bewoners meten zelf, begeleid door studenten en onderzoekers." }
 

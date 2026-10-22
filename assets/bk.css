@@ -156,6 +156,7 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .fasen > li { display: grid; grid-template-columns: 2em 1fr; gap: 10px; align-items: baseline }
 .fasen .f { font-family: var(--kop); font-weight: 900; color: var(--k) }
 .fasen strong { font-family: var(--kop); font-weight: 800 }
+.fase-beschrijving { margin: 2px 0 6px; font-size: .92rem; color: var(--zacht); max-width: 62ch }
 /* stapknoppen onder de grote figuur: zelfde keuze als een tik op de boog */
 .stapknoppen { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px }
 .stapknoppen button { font: inherit; font-size: .88rem; color: var(--inkt); background: var(--vlak); border: 2px solid transparent; border-left: 6px solid var(--k); padding: 4px 10px; cursor: pointer; text-align: left }

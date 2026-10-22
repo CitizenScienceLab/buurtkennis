@@ -3,6 +3,9 @@
 # GitBook is de bron: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/
 # Namen en links volgen GitBook; de uitgebreide uitleg staat daar.
 # Hier staat wat GitBook niet heeft: volgorde, kleur, de korte naam op de figuur en het korte verhaal per stap.
+# Dat verhaal (kop en tekst) komt uit de methode-tijdlijn (BK Methode.pdf, rij "Uitleg onderdeel");
+# de beschrijving per fase en de teksten van de pagina komen uit de inleiding in GitBook.
+# Alles is te bewerken in het beheerscherm (app.pagescms.org, De methode).
 #
 # De figuur: elke zichtbare fase is een kwart (in deze volgorde linksboven, rechtsboven,
 # rechtsonder, linksonder), met een boog per stap, van binnen (wij en onze partners)
@@ -13,11 +16,21 @@
 #                        als geheel, niet over waar een kwestie staat.
 #   link: ""             de stap staat er zonder link, tot de pagina in GitBook staat
 #   kort                 de naam op de boog in de figuur (kort houden)
-#   verhaal              kop en tekst voor de uitleg op /methode/
+#   beschrijving         korte uitleg van de fase op /methode/
+#   verhaal              kop en tekst voor de uitleg van een stap op /methode/
 #   kleur, kleur_donker  voor de oude kaart op /overzicht (de rest van de site gebruikt assets/bk.css)
 
 # Link naar het overzicht van de methode in GitBook
 handleiding: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/readme"
+
+# Teksten op /methode/
+pagina:
+  kop: "Van kwestie tot onderzoek"
+  intro: "Met BuurtKennis in Leiden werken we aan lokale onderwerpen met betrokken bewoners, onderzoeken die samen, en vormen zo waardevolle inzichten voor een initiatief of de gemeente. We hebben het project opgedeeld in fases die elk een volgende stap zijn in de levensloop van een kwestie tot onderzoek."
+  figuur: "Het midden is de kern: wij en onze partners. Hoe verder naar buiten, hoe meer van de buurt meedoet."
+  beslismoment: "Iedere fase eindigt met een beslismoment: gaan we door met deze kwestie, of past het toch niet helemaal in het project? Soms is er dan geen vervolg, of koppelen we de kwestie aan de juiste persoon."
+  meer_kop: "Leer hoe wij dit hebben aangepakt"
+  meer_tekst: "De methodieken in onze toolkit helpen je op weg om soortgelijke activiteiten en projecten te organiseren. We laten zien hoe wij dit hebben aangepakt, waar dat op gebaseerd is, en wat wij hebben geleerd."
 
 fases:
   - code: A
@@ -25,12 +38,14 @@ fases:
     zichtbaar: false
     kleur: "#D3DDEE"
     kleur_donker: "#33496F"
+    beschrijving: "Verzamelen van partners, organiseren van samenwerkingen, en bepalen projectdoelen."
     stappen: []
 
   - code: B
     naam: "Kwesties verzamelen"
     kleur: "#9DB6E2"
     kleur_donker: "#46669F"
+    beschrijving: "We verkennen de buurt en brengen kwesties rondom een gezonde leefomgeving in kaart via gesprekken met bewoners en betrokkenen."
     stappen:
       - code: B1
         naam: "Oriënteren"
@@ -58,18 +73,19 @@ fases:
     naam: "Vraagstuk vormen"
     kleur: "#5F86CC"
     kleur_donker: "#6B91D9"
+    beschrijving: "Samen met experts en betrokkenen in de buurt maken we onderzoeksvragen van de kwesties om waardevolle kennis te verzamelen."
     stappen:
       - code: C1
         naam: "Werving betrokkenen"
         kort: "Werving"
-        link: ""
+        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/vraagstuk-vormen/c1-werving-betrokkenen"
         verhaal:
           kop: "De betrokkenen"
           tekst: "We gaan op zoek naar betrokken buurtbewoners die van hun buurt een gezonde leefomgeving willen maken. We spreken ze wat langer over de kwestie en kijken wie er geïnteresseerd is in onderzoek doen."
       - code: C2
         naam: "Vraagstuk vormen"
         kort: "Vraagstuk vormen"
-        link: ""
+        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/vraagstuk-vormen/c2-vraagstuk-vormen"
         verhaal:
           kop: "Concretiserende stap"
           tekst: "We zetten de verzamelde kwesties om in heldere, concrete vraagstukken voor de volgende stap. Daarvoor zoeken we experts op het gebied en beginnen we met de selectie van passende opleidingen."
@@ -78,18 +94,19 @@ fases:
     naam: "Samen plannen"
     kleur: "#2C54A3"
     kleur_donker: "#9DBBF0"
+    beschrijving: "Met bewoners, studenten en onderzoekers ontwerpen we een aanpak die past bij de buurt en het thema."
     stappen:
       - code: D1
         naam: "Onderzoeken levensvatbaarheid"
         kort: "Levensvatbaarheid"
-        link: ""
+        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/co-creatie-initiatief/d1-onderzoeken-levensvatbaarheid"
         verhaal:
           kop: "Groen licht?"
           tekst: "In overleg met beleidsmedewerkers en experts kijken we of we hier een BuurtKennis-onderzoek van kunnen maken. Als er potentie in een onderzoek zit, zoeken we studenten die dit willen begeleiden."
       - code: D2
         naam: "Co-creatie initiatief"
         kort: "Co-creatie initiatief"
-        link: ""
+        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/co-creatie-initiatief/d2-co-creatie-initiatief"
         verhaal:
           kop: "Samen plannen"
           tekst: "We gaan samen nadenken over de vorm van het project. Daarbij houden we rekening met de context van de buurt en het thema. Uit dit co-creatieproces ontstaat een actieve groep kartrekkers van het project."
@@ -98,18 +115,19 @@ fases:
     naam: "Onderzoek starten"
     kleur: "#23244C"
     kleur_donker: "#D6E2F8"
+    beschrijving: "Het buurtonderzoek gaat van start. Bewoners meten zelf, begeleid door studenten en onderzoekers."
     stappen:
       - code: E1
         naam: "Opstarten samenwerking"
         kort: "Samenwerking"
-        link: ""
+        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/e-onderzoek-beginnen/e1-opstarten-samenwerking"
         verhaal:
           kop: "Samen denken"
           tekst: "De kersverse werkgroep maakt een onderzoeksplan en wij faciliteren de vorming van een eerste structuur in de samenwerking tussen buurtbewoners en gemeente of onderzoekers."
       - code: E2
         naam: "Start onderzoek"
         kort: "Start onderzoek"
-        link: ""
+        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/e-onderzoek-beginnen/e2-start-onderzoek"
         verhaal:
           kop: "Samen onderzoeken"
           tekst: "Het project gaat van start en we kijken wie er nog meer mee wil doen uit de buurt. Het project gaat hier zijn eigen weg, en wij zoeken indien nodig naar een goede landingsplek voor het project."
@@ -119,6 +137,7 @@ fases:
     zichtbaar: false
     kleur: "#23244C"
     kleur_donker: "#D6E2F8"
+    beschrijving: "De kennis die is opgedaan tijdens het project en door de onderzoeken wordt gedeeld."
     stappen: []
 
 # Een traject of buurt kan de methode ook verlaten. Zet dan

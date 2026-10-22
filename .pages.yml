@@ -305,6 +305,73 @@ content:
       - { name: contact_tekst, label: "Contact", type: text }
 
 
+  - name: methode
+    label: De methode
+    type: file
+    path: _data/methode.yml
+    format: yaml
+    fields:
+      - { name: handleiding, label: "Link naar de methode in GitBook", type: string }
+      - name: pagina
+        label: "Teksten op /methode/"
+        type: object
+        fields:
+          - { name: kop, label: Kop, type: string }
+          - { name: intro, label: Inleiding, type: text }
+          - { name: figuur, label: "Uitleg bij de figuur (voordat je een stap kiest)", type: text }
+          - { name: beslismoment, label: "Beslismoment (onder de stappen)", type: text }
+          - { name: meer_kop, label: "Onderaan: kop", type: string }
+          - { name: meer_tekst, label: "Onderaan: tekst", type: text }
+      - name: fases
+        label: "Fases en stappen (codes en kleuren niet veranderen)"
+        type: object
+        list: true
+        fields:
+          - { name: code, label: "Code (niet veranderen)", type: string }
+          - { name: naam, label: Naam, type: string }
+          - { name: beschrijving, label: "Korte uitleg van de fase", type: text }
+          - { name: zichtbaar, label: "In de figuur", type: boolean, default: true }
+          - { name: doos, label: "Doosje (pad naar het plaatje)", type: string }
+          - { name: kleur, label: "Kleur op /overzicht", type: string }
+          - { name: kleur_donker, label: "Kleur op /overzicht, donker", type: string }
+          - name: stappen
+            label: Stappen
+            type: object
+            list: true
+            fields:
+              - { name: code, label: "Code (niet veranderen)", type: string }
+              - { name: naam, label: Naam, type: string }
+              - { name: kort, label: "Korte naam op de figuur", type: string }
+              - { name: link, label: "Link naar GitBook", type: string }
+              - name: verhaal
+                label: "Uitleg op /methode/"
+                type: object
+                fields:
+                  - { name: kop, label: Kop, type: string }
+                  - { name: tekst, label: Tekst, type: text }
+      - name: afslagen
+        label: "Afslagen (codes niet veranderen)"
+        type: object
+        list: true
+        fields:
+          - { name: code, label: "Code (niet veranderen)", type: string }
+          - { name: naam, label: Naam, type: string }
+          - { name: kort, label: "Korte naam", type: string }
+
+  - name: paginas
+    label: Pagina's
+    type: file
+    path: _data/paginas.yml
+    format: yaml
+    fields:
+      - name: themas
+        label: "Thema's-pagina"
+        type: object
+        fields:
+          - { name: kop, label: Kop, type: string }
+          - { name: kop_onder, label: "Kop, tweede regel", type: string }
+          - { name: intro, label: Inleiding, type: text }
+
   - name: instellingen
     label: Instellingen (kaart aan/uit)
     type: file
