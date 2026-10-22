@@ -4,8 +4,9 @@ title: Thema's · Leiden BuurtKennis
 description: Onderzoeksthema's voor een gezonde buurt, en wat je er zelf aan kunt onderzoeken.
 ---
 {%- assign themas = site.themas | where_exp: "t", "t.vraag" | sort: "volgorde" -%}{%- comment -%} alleen thema's met een vraag krijgen een blok; de rest is alleen een tag {%- endcomment -%}
-<h1 class="tweeregel">Thema's voor een<span>gezonde buurt</span></h1>
-<p class="intro">Een aantal thema's komt steeds terug als het over een gezonde leefomgeving gaat. Andere onderwerpen kwamen naar boven in eerder onderzoek. Het Citizen Science Lab verzamelt methodes om al die onderwerpen in je eigen buurt te onderzoeken.</p>
+{%- assign P = site.data.paginas.themas %}
+<h1 class="tweeregel">{{ P.kop }}<span>{{ P.kop_onder }}</span></h1>
+<p class="intro">{{ P.intro }}</p>
 <div class="held-knoppen">
   <a class="knop vol-knop uit" href="{{ site.data.home.kwestiekaart }}" target="_blank" rel="noopener">{{ site.data.home.kwestie_knop }}</a>
 </div>

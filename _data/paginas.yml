@@ -1,0 +1,6 @@
+# Teksten van losse pagina's. Ook te bewerken in het beheerscherm (app.pagescms.org, Pagina's).
+# De homepagina staat in home.yml, de methode in methode.yml.
+themas:
+  kop: "Thema's voor een"
+  kop_onder: "gezonde buurt"
+  intro: "Een aantal thema's komt steeds terug als het over een gezonde leefomgeving gaat. Andere onderwerpen kwamen naar boven in eerder onderzoek. Het Citizen Science Lab verzamelt methodes om al die onderwerpen in je eigen buurt te onderzoeken."
