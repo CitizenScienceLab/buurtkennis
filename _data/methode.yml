@@ -32,7 +32,7 @@ fases:
     naam: Project opstarten
     beschrijving: Verzamelen van partners, organiseren van samenwerkingen, en
       bepalen projectdoelen.
-    zichtbaar: true
+    zichtbaar: false
     kleur: "#D3DDEE"
     kleur_donker: "#33496F"
   - code: B
@@ -155,7 +155,7 @@ fases:
     naam: BuurtKennis delen
     beschrijving: De kennis die is opgedaan in het project en vanuit de onderzoeken
       wordt gedeeld.
-    zichtbaar: true
+    zichtbaar: false
     kleur: "#23244C"
     kleur_donker: "#D6E2F8"
 afslagen:
