@@ -46,10 +46,10 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .plek { font-family: var(--titel); font-weight: 400; color: var(--k, var(--bruin)); font-size: clamp(1.6rem, 6vw, 2.2rem); line-height: 1.2; height: 1.2em; letter-spacing: -0.01em; margin: 18px 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
 
 /* indeling: mobiel naam, figuur, kaart, veegkaart; desktop naam en figuur boven de kaart links, card rechts */
-.hub { display: grid; gap: 4px; grid-template-areas: "naam" "figuur" "kaart" }
-.hub .naam { grid-area: naam } .hub .ringen-rij { grid-area: figuur } .hub .kaart { grid-area: kaart }
+.hub { display: grid; gap: 4px; grid-template-areas: "naam" "figuur" "themas" "kaart" }
+.hub .naam { grid-area: naam } .hub .ringen-rij { grid-area: figuur } .hub .thema-regel { grid-area: themas } .hub .kaart { grid-area: kaart }
 @media (min-width: 900px) {
-  .hub { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); grid-template-areas: "naam card" "figuur card" "kaart card"; grid-template-rows: auto auto 1fr; column-gap: 32px; align-items: start }
+  .hub { grid-template-columns: minmax(0, 1fr) minmax(0, 25rem); grid-template-areas: "naam card" "figuur card" "themas card" "kaart card"; grid-template-rows: auto auto auto 1fr; column-gap: 32px; align-items: start }
   .hub .card { position: sticky; top: 12px; margin-top: 64px; max-height: calc(100vh - 100px); display: flex; flex-direction: column }
   .hub .card-body { flex: 1 1 auto; min-height: 0 }
   .hub .card { grid-area: card }
@@ -57,7 +57,15 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 
 /* methodefiguur: de ringen (_includes/ringen.svg). Een gezette stap is vol in de fasekleur, de rest licht.
    Bij een afslag vallen de niet-gezette bogen weg en staat er een stippelcirkel om de figuur. */
-.ringen-rij { display: flex; align-items: center; gap: 12px; min-height: 64px; margin-bottom: 10px }
+.ringen-rij { display: flex; align-items: center; gap: 12px; min-height: 64px; margin-bottom: 4px }
+/* themaregel onder de figuur: thema-labels en de titel, één regel met een vaste hoogte zodat de kaart niet verspringt */
+.thema-regel { display: flex; align-items: center; gap: 8px; height: 30px; margin: 0 0 8px; white-space: nowrap; overflow-x: auto; overflow-y: hidden; min-width: 0; scrollbar-width: none;
+  mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent) }
+.thema-regel::-webkit-scrollbar { display: none }
+.regel-tekst:last-child { padding-right: 24px }
+.thema-regel .thema-label { flex: none }
+.regel-tekst { font-family: var(--kop); font-weight: 800; font-size: .9rem; color: var(--inkt); overflow: hidden; text-overflow: ellipsis; min-width: 7.5em }
+.regel-tekst.zacht { font-family: var(--tekst); font-weight: 400; font-size: .85rem; color: var(--zacht) }
 .ringen-rij .ringen { width: 64px; flex: none }
 /* het doosje van de fase uit het label; zonder stappen de dichte doos (assets/doosjes/dicht.svg) */
 .figuur-doos { width: 60px; flex: none }
@@ -125,7 +133,30 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .traject.gekozen .schijf { stroke-width: 3.5; stroke-dasharray: none }
 .traject:focus-visible { outline: none }
 .tra-kop { margin-bottom: 20px }
-.kaart.iets-gekozen .traject:not(.gekozen) { opacity: .6 }
+.kaart.iets-gekozen .trajecten > .traject:not(.gekozen), .kaart.iets-gekozen .groep.open .in-groep:not(.gekozen), .kaart.iets-gekozen .groep:not(.vast) .stapel { opacity: .6 }
+
+/* stapel: meerdere trajecten in één buurt. Dicht één doos met een teller; open (hover, focus of gekozen)
+   waaieren de doosjes uit over een cirkel, met gestippelde spaken naar het midden. */
+.stapel { cursor: pointer; transition: transform .2s ease }
+.stapel:focus-visible { outline: none }
+.stapel .schijf { fill: var(--vlak); stroke: var(--inkt); stroke-width: 0 }
+.stapel .achter { stroke-width: 2; stroke-dasharray: 5 4 }
+.stapel:hover .schijf:not(.achter), .stapel:focus-visible .schijf:not(.achter) { stroke-width: 3; stroke-dasharray: 6 4 }
+.teller circle { fill: var(--inkt) }
+.teller text { fill: var(--vlak); font-family: var(--kop); font-weight: 900; font-size: 15px; text-anchor: middle }
+.teller, .stapel .achter { transition: opacity .15s ease }
+.groep .vang { fill: transparent; pointer-events: none }
+.groep.open .vang { pointer-events: all }
+.groep .spaak { stroke: var(--inkt); stroke-width: 2.5; stroke-dasharray: 4 5; stroke-linecap: round; opacity: 0; transform: scale(0); transition: transform .22s ease, opacity .15s ease }
+.groep .in-groep { transform: translate(0, 0) scale(.3); opacity: 0; pointer-events: none;
+  transition: transform .26s cubic-bezier(.3, 1.35, .5, 1) calc(var(--i) * 35ms), opacity .15s ease calc(var(--i) * 35ms) }
+.groep.open .in-groep { transform: translate(var(--dx), var(--dy)) scale(1); opacity: 1; pointer-events: auto }
+.groep.open .spaak { transform: scale(1); opacity: .5 }
+.groep.open .stapel { transform: scale(.55) }
+.groep.open .teller, .groep.open .stapel .achter { opacity: 0 }
+/* zolang een stapel openstaat, wijken de andere doosjes even */
+.trajecten > .traject, .trajecten > .groep { transition: opacity .15s ease }
+.trajecten:has(.groep.open:not(.vast)) > :not(.open) { opacity: .25 }
 
 /* veegkaart (mobiel), vaste kolom (desktop) */
 .card { background: var(--vlak); color: var(--inkt); min-width: 0 }
@@ -143,13 +174,12 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
   body.met-card { padding-bottom: calc(var(--peek) + 12px) }
 }
 @media (min-width: 900px) { .greep { display: none } .card-kop { cursor: default; touch-action: auto; user-select: auto } }
-@media (prefers-reduced-motion: reduce) { .card, .traject, .ringen .boog { transition: none } }
+@media (prefers-reduced-motion: reduce) { .card, .traject, .ringen .boog, .stapel, .groep .spaak, .groep .in-groep, .teller, .stapel .achter { transition: none } }
 
-/* thema's: één gestippeld kader zoals in het logo, de thema's erin gescheiden door hun stip */
+/* thema: een eigen gestippeld kader per thema, zoals de labels op /themas. Geen kleur: op de kaart is kleur de fase. */
 .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px }
-.tags { font-family: var(--kop); font-weight: 800; font-size: .78rem; line-height: 1.2; padding: 4px 10px; border: 2px dashed var(--inkt); color: var(--inkt); display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; background: var(--vlak) }
-.tags .thema { display: inline-flex; align-items: center; gap: 6px }
-.tags .thema::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--tk); flex: none }
+.thema-label { display: inline-block; font-family: var(--kop); font-weight: 800; font-size: .78rem; line-height: 1.2; padding: 3px 9px; border: 2px dashed var(--inkt); color: var(--inkt); background: var(--vlak); text-decoration: none }
+a.thema-label:hover { background: var(--inkt); color: var(--vlak) }
 .sinds { font-size: .82rem; color: var(--zacht) }
 .boven { font-family: var(--kop); font-weight: 800; font-size: .9rem; color: var(--zacht); margin: 0; text-transform: uppercase; letter-spacing: .04em }
 .fase-pil { display: inline-flex; align-items: center; gap: 8px; font-family: var(--kop); font-weight: 800; font-size: .85rem; color: var(--inkt); text-decoration: none }

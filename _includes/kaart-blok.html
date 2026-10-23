@@ -17,6 +17,7 @@
     <span class="figuur-doos" id="figuur-doos" aria-hidden="true"><img alt="" src="{{ '/assets/doosjes/dicht.svg' | relative_url }}"></span>
     <a class="fase-label" id="fase-label" href="{{ '/methode/' | relative_url }}">BuurtKennis-methode<small>van kwestie tot onderzoek</small></a>
   </div>
+  <p class="thema-regel" id="thema-regel"></p>
   <div class="kaart" id="kaart">{% include kaart-leiden.svg %}</div>
   <section class="card" id="card" data-stand="dicht" aria-live="polite">
     <div class="card-kop" id="card-kop">
@@ -33,7 +34,7 @@
 const FASES = {{ site.data.methode.fases | jsonify }};
 const AFSLAGEN = {{ site.data.methode.afslagen | jsonify }};
 // thema's uit _themas, op bestandsnaam; een traject mag de sleutel, de bestandsnaam of het pad noemen
-const THEMAS = { {% for t in site.themas %}{{ t.slug | jsonify }}: { "naam": {{ t.naam | jsonify }}, "kleur": {{ t.eigen_kleur | default: t.kleur | default: '#888888' | jsonify }} },{% endfor %} };
+const THEMAS = { {% for t in site.themas %}{{ t.slug | jsonify }}: { "naam": {{ t.naam | jsonify }}, "blok": {% if t.vraag %}true{% else %}false{% endif %} },{% endfor %} };
 const THEMA_ALIAS = { {% for t in site.themas %}{% if t.sleutel %}{{ t.sleutel | jsonify }}: {{ t.slug | jsonify }}, {% endif %}{{ t.path | jsonify }}: {{ t.slug | jsonify }},{% endfor %} };
 const CBS = {{ site.data.cbs | jsonify }};
 const ALLE_BUURTEN = [{% for b in site.buurten %}{"id":{{ b.slug | jsonify }},"pad":{{ b.path | jsonify }},"naam":{{ b.naam | jsonify }},"plek":{{ b.plek | jsonify }},"fase":{{ b.fase | jsonify }},"stappen":{{ b.stappen | jsonify }},"stap":{{ b.stap | jsonify }},"reden":{{ b.reden | jsonify }},"naar":{{ b.naar | jsonify }},"sinds":{{ b.sinds | jsonify }},"doel":{{ b.doel | jsonify }},"activiteiten":{{ b.activiteiten | default: empty | jsonify }},"links":{{ b.links | default: empty | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
@@ -44,6 +45,7 @@ const inTraject = b => TRAJECTEN.some(t => (t.buurten || []).some(id => id === b
 const BUURTEN = ALLE_BUURTEN.filter(b => [].concat(b.stappen || []).length || b.fase || b.stap || b.doel || (b.activiteiten || []).length || inTraject(b));
 TRAJECTEN.forEach(t => { t.thema = THEMA_ALIAS[t.thema] || t.thema; });
 const FASEN_URL = {{ '/methode/' | relative_url | jsonify }};
+const THEMAS_URL = {{ '/themas/' | relative_url | jsonify }};
 const BASIS = {{ site.baseurl | default: '' | jsonify }};
 
 const $ = id => document.getElementById(id);
@@ -105,7 +107,54 @@ BUURTEN.forEach(b => {
   }
 });
 
-// --- doosjes slim neerzetten: binnen hun plek, niet over elkaar ---
+// --- stapels: meerdere trajecten in één buurt worden één doos met een teller ---
+// hover (muis), focus of een gekozen buurt/traject waaiert de stapel uit tot losse doosjes, met spaken naar het midden
+const NS = 'http://www.w3.org/2000/svg';
+const laagT = svg.querySelector('.trajecten');
+const perPlek = {};
+svg.querySelectorAll('.traject').forEach(d => (perPlek[d.dataset.plek] = perPlek[d.dataset.plek] || []).push(d));
+Object.entries(perPlek).forEach(([plek, ds]) => {
+  if (ds.length < 2) return;
+  const n = ds.length, R = Math.max(54, 31 / Math.sin(Math.PI / n));   // straal: doosjes raken elkaar net niet
+  const vast = ds.find(d => d.dataset.vast) || ds[0];
+  const g = document.createElementNS(NS, 'g');
+  g.setAttribute('class', 'groep'); g.dataset.plek = plek; g.dataset.r = R;
+  g.setAttribute('transform', vast.getAttribute('transform')); if (vast.dataset.vast) g.dataset.vast = '1';
+  const naam = (buurtMetPlek(plek) || {}).naam || (CBS[plek] || {}).naam || '';
+  g.innerHTML = `<circle class="vang" r="${(R + 34).toFixed(0)}"/>` + ds.map(() => '<line class="spaak"/>').join('') +
+    `<g class="stapel" tabindex="0" role="button" aria-expanded="false" aria-label="${esc(n + ' trajecten in ' + naam)}">` +
+    `<circle class="schijf achter" r="27" cx="7" cy="-6"/><circle class="schijf" r="27"/><use href="#doos" x="-22" y="-19" width="44" height="36"/>` +
+    `<g class="teller" transform="translate(21,-21)"><circle r="12"/><text dy=".35em">${n}</text></g></g>`;
+  ds.forEach((d, i) => { d.removeAttribute('transform'); delete d.dataset.vast; d.classList.add('in-groep'); d.style.setProperty('--i', i); g.append(d); });
+  laagT.append(g);   // stapels boven de losse doosjes
+  richt(g, 0);
+});
+// de doosjes van een stapel over een cirkel, gedraaid over hoek (radialen); de eerste begint bovenaan
+function richt(g, hoek) {
+  const ds = [...g.querySelectorAll('.in-groep')], sp = g.querySelectorAll('.spaak'), R = +g.dataset.r, n = ds.length;
+  return ds.map((d, i) => {
+    const a = -Math.PI / 2 + hoek + i * 2 * Math.PI / n, x = R * Math.cos(a), y = R * Math.sin(a);
+    d.style.setProperty('--dx', x.toFixed(1) + 'px'); d.style.setProperty('--dy', y.toFixed(1) + 'px');
+    sp[i].setAttribute('x2', x.toFixed(1)); sp[i].setAttribute('y2', y.toFixed(1));
+    return [x, y];
+  });
+}
+const groepen = [...svg.querySelectorAll('.groep')];
+function waaier(g, open) {
+  open = open || g.classList.contains('vast');
+  g.classList.toggle('open', open); g.querySelector('.stapel').setAttribute('aria-expanded', open);
+}
+// een stapel met iets gekozens erin blijft open
+function zetGroepen() { groepen.forEach(g => { g.classList.toggle('vast', !!g.querySelector('.gekozen')); waaier(g, g.matches(':hover, :focus-within') && MUIS); }); }
+groepen.forEach(g => {
+  let dicht;
+  g.addEventListener('pointerenter', e => { if (e.pointerType !== 'mouse') return; clearTimeout(dicht); waaier(g, true); });
+  g.addEventListener('pointerleave', e => { if (e.pointerType !== 'mouse') return; dicht = setTimeout(() => waaier(g, false), 200); });
+  g.addEventListener('focusin', () => waaier(g, true));
+  g.addEventListener('focusout', e => { if (!g.contains(e.relatedTarget)) waaier(g, false); });
+});
+
+// --- doosjes en stapels slim neerzetten: binnen hun plek, niet over elkaar ---
 (function plaats() {
   const MIN = 56, STAP = 11, vast = [], pt = svg.createSVGPoint();
   const binnen = (code, x, y) => { const el = document.getElementById(code); if (!el || !el.isPointInFill) return true; pt.x = x; pt.y = y; return el.isPointInFill(pt); };
@@ -114,9 +163,9 @@ BUURTEN.forEach(b => {
   const ring = [];
   for (let i = -30; i <= 30; i++) for (let j = -30; j <= 30; j++) { const dx = (i + (j % 2) * 0.5) * STAP, dy = j * STAP * 0.87; ring.push([dx, dy, Math.hypot(dx, dy)]); }
   ring.sort((a, b) => a[2] - b[2]);
-  const doosjes = [...svg.querySelectorAll('.traject')];
+  const doosjes = [...laagT.children];   // losse doosjes en stapels
   doosjes.filter(d => d.dataset.vast).forEach(d => { const m = d.getAttribute('transform').match(/translate\(([\d.-]+),([\d.-]+)\)/); vast.push([+m[1], +m[2]]); });
-  doosjes.filter(d => !d.dataset.vast).sort((a, b) => a.dataset.id.localeCompare(b.dataset.id)).forEach(d => {
+  doosjes.filter(d => !d.dataset.vast).sort((a, b) => (a.dataset.id || a.dataset.plek).localeCompare(b.dataset.id || b.dataset.plek)).forEach(d => {
     const c = CBS[d.dataset.plek] || { midden: [500, 500] };
     const [cx, cy] = c.midden; let gekozen = null;
     for (const [dx, dy] of ring) { const x = cx + dx, y = cy + dy; if (vrij(x, y) && binnen(d.dataset.plek, x, y) && binnen(d.dataset.plek, x - 20, y) && binnen(d.dataset.plek, x + 20, y)) { gekozen = [x, y]; break; } }
@@ -124,6 +173,20 @@ BUURTEN.forEach(b => {
     if (!gekozen) for (const [dx, dy] of ring) { const x = cx + dx, y = cy + dy; if (vrij(x, y)) { gekozen = [x, y]; break; } }
     gekozen = gekozen || [cx, cy];
     d.setAttribute('transform', `translate(${gekozen[0].toFixed(1)},${gekozen[1].toFixed(1)})`); vast.push(gekozen);
+  });
+  // stapels: draai de waaier naar de ruimte, weg van andere doosjes en liefst binnen de eigen buurt
+  const plekVan = el => el.getAttribute('transform').match(/translate\(([\d.-]+),([\d.-]+)\)/).slice(1).map(Number);
+  groepen.forEach(g => {
+    const [gx, gy] = plekVan(g), anderen = doosjes.filter(x => x !== g).map(plekVan), n = g.querySelectorAll('.in-groep').length;
+    let beste = 0, top = -Infinity;
+    for (let k = 0; k < 24; k++) {
+      const hoek = k * 2 * Math.PI / n / 24;
+      const ps = richt(g, hoek).map(([x, y]) => [gx + x, gy + y]);
+      const afstand = Math.min(...ps.flatMap(([x, y]) => anderen.map(([a, b]) => Math.min(110, Math.hypot(a - x, b - y)))), 110);
+      const score = afstand + 25 * ps.filter(([x, y]) => binnen(g.dataset.plek, x, y)).length / n - k * 0.01;   // bij gelijkspel: zo recht mogelijk
+      if (score > top) { top = score; beste = hoek; }
+    }
+    richt(g, beste);
   });
 })();
 
@@ -150,14 +213,25 @@ function zetFiguur(x) {
     lab.href = FASEN_URL + (st.length ? '#' + st[st.length - 1] : '');
   } else { lab.innerHTML = 'BuurtKennis-methode<small>van kwestie tot onderzoek</small>'; lab.href = FASEN_URL; }
   $('plek').style.setProperty('--k', top ? `var(--fase-${top}-tekst, var(--fase-${top}))` : 'var(--bruin)');
+  zetThemas(x);
+}
+// --- themaregel onder de figuur: de thema's als gestippelde labels, en de titel (traject) of het aantal trajecten (buurt) ---
+// wisselt mee bij hover, net als de naam en de figuur
+const MUIS = matchMedia('(hover: hover)').matches;
+const themaLabel = th => THEMAS[th].blok ? `<a class="thema-label" href="${THEMAS_URL}#${esc(th)}">${esc(THEMAS[th].naam)}</a>` : `<span class="thema-label">${esc(THEMAS[th].naam)}</span>`;
+function zetThemas(x) {
+  const r = $('thema-regel');
+  if (!x) { r.innerHTML = `<span class="regel-tekst zacht">${MUIS ? 'Wijs een doosje aan om te zien waar het over gaat' : 'Tik op een doosje om te zien waar het over gaat'}</span>`; return; }
+  const isTraject = 'titel' in x, ts = isTraject ? [x] : trajectenBij(x.plek);
+  const ths = [...new Set(ts.map(t => t.thema))].filter(th => THEMAS[th]);
+  const tekst = isTraject ? x.titel : (aantalTrajecten(ts.length) || 'nog geen traject');
+  r.innerHTML = ths.map(themaLabel).join('') + `<span class="regel-tekst">${esc(tekst)}</span>`;
 }
 // --- kop: naam en figuur van wat gekozen is; hover toont alvast wat je zou kiezen ---
 let staat = { naam: 'Leiden', x: null };
 function kop(naam, x) { staat = { naam, x }; $('plek').textContent = naam; zetFiguur(x); }
 function voorproef(naam, x) { $('plek').textContent = naam; zetFiguur(x); }
 function herstel() { voorproef(staat.naam, staat.x); }
-// één stippelkader met alle thema's erin, gescheiden door hun stip
-const themaTags = ths => { const ok = [...new Set(ths)].filter(th => THEMAS[th]); return ok.length ? `<span class="tags">${ok.map(th => `<span class="thema" style="--tk:${esc(THEMAS[th].kleur)}">${esc(THEMAS[th].naam)}</span>`).join('')}</span>` : ''; };
 const sindsRegel = s => s ? `<span class="sinds">sinds ${esc(maand(s))}</span>` : '';
 const lijstTrajecten = ts => ts.length ? `<ul class="lijst">${ts.map(t => `<li><button type="button" data-traject="${esc(t.id)}" style="--k:${faseKleur(t.top)}"><span class="f">${t.top}</span><span><strong>${esc(t.titel)}</strong><br><small>${esc([naamVan(t), themaNaam(t.thema), afslagNaam(t.afslag)].filter(Boolean).join(' · '))}</small></span></button></li>`).join('')}</ul>` : '';
 const aantalTrajecten = n => n ? n + (n === 1 ? ' traject' : ' trajecten') : '';
@@ -173,6 +247,7 @@ function markeer(sel) {
   if (sel) sel.forEach(e => e && e.classList.add('gekozen'));
   keuze.replaceChildren(...(sel || []).filter(e => e && e.classList.contains('buurt')).map(kopie));
   $('kaart').classList.toggle('iets-gekozen', !!(sel && sel.some(e => e && e.classList.contains('traject'))));
+  zetGroepen();
 }
 function adres(h) { try { history.replaceState(null, '', h ? '#' + h : location.pathname + location.search); } catch (e) {} }
 
@@ -190,7 +265,7 @@ function toonBuurt(code) {
   huidig = 'buurt:' + code; markeer([document.getElementById(code), ...ts.flatMap(t => [...svg.querySelectorAll(`.traject[data-id="${CSS.escape(t.id)}"][data-plek="${code}"]`)])]);
   kop(b ? b.naam : (cbs.naam || ''), b || null);
   if (b) {
-    vul('Lopend in ' + b.naam, themaTags(ts.map(t => t.thema)) + sindsRegel(b.sinds),
+    vul('Lopend in ' + b.naam, sindsRegel(b.sinds),
       `${afslagBlok(b)}${b.doel ? `<p>${esc(b.doel)}</p>` : ''}
        ${ts.length ? '<h3>Trajecten</h3>' + lijstTrajecten(ts) : ''}
        ${b.activiteiten.length ? '<h3>Activiteiten</h3>' + lijstActiviteiten(b.activiteiten, b.top) : ''}`);
@@ -208,7 +283,7 @@ function toonTraject(id) {
   const t = TRAJECTEN.find(x => x.id === id); if (!t) return toonLeiden();
   huidig = 'traject:' + id; markeer([...svg.querySelectorAll(`.traject[data-id="${CSS.escape(id)}"]`), ...buurtenVan(t).map(b => document.getElementById(b.plek))]);
   kop(naamVan(t), t);
-  vul(t.titel, themaTags([t.thema]) + sindsRegel(t.sinds),
+  vul(t.titel, sindsRegel(t.sinds),
     `${afslagBlok(t)}${t.doel ? `<p>${esc(t.doel)}</p>` : ''}
      ${t.activiteiten.length ? '<h3>Activiteiten</h3>' + lijstActiviteiten(t.activiteiten, t.top) : ''}
      <p><a href="${esc(t.url)}">Meer over dit traject →</a></p>`);
@@ -243,6 +318,8 @@ function zetStand(s) { card.dataset.stand = s; card.style.transform = ''; }
 // --- klikken: doosje, buurt, lijst; ergens anders terug naar Leiden ---
 document.addEventListener('click', e => {
   const d = e.target.closest('.traject'); if (d) return toonTraject(d.dataset.id);
+  const st = e.target.closest('.stapel'); if (st) { const p = st.parentNode.dataset.plek; return huidig === 'buurt:' + p ? toonLeiden() : toonBuurt(p); }
+  if (e.target.closest('.groep')) return;   // tussen de uitgewaaierde doosjes: niets
   const lt = e.target.closest('[data-traject]'); if (lt) return toonTraject(lt.dataset.traject);
   const lb = e.target.closest('[data-buurt]'); if (lb) return toonBuurt(lb.dataset.buurt);
   const b = e.target.closest('.buurt'); if (b) return huidig === 'buurt:' + b.id ? toonLeiden() : toonBuurt(b.id);
@@ -253,13 +330,16 @@ document.addEventListener('click', e => {
 svg.addEventListener('pointerover', e => {
   if (e.pointerType !== 'mouse') return;
   const d = e.target.closest('.traject'); const t = d && TRAJECTEN.find(x => x.id === d.dataset.id);
-  if (t) return voorproef(naamVan(t), t);   // boven de kaart altijd de plek; de titel staat in de card
+  if (t) return voorproef(naamVan(t), t);   // boven de kaart altijd de plek; titel en thema in de regel onder de figuur
+  const g = e.target.closest('.groep');
+  if (g) { const b = buurtMetPlek(g.dataset.plek); return voorproef(b ? b.naam : '', b || null); }
   const el = e.target.closest('.buurt');
   if (el) { const b = buurtMetPlek(el.id); return voorproef(b ? b.naam : ((CBS[el.id] || {}).naam || el.dataset.naam || ''), b || null); }
   herstel();
 });
 svg.addEventListener('pointerleave', herstel);
-document.addEventListener('keydown', e => { const d = e.target.closest && e.target.closest('.traject'); if (d && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toonTraject(d.dataset.id); } if (e.key === 'Escape') toonLeiden(); });
+document.addEventListener('keydown', e => { const d = e.target.closest && e.target.closest('.traject'); if (d && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toonTraject(d.dataset.id); }
+  const st = e.target.closest && e.target.closest('.stapel'); if (st && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toonBuurt(st.parentNode.dataset.plek); } if (e.key === 'Escape') toonLeiden(); });
 
 // --- begin: adres (#traject of #buurt) of Leiden ---
 document.body.classList.add('met-card');
