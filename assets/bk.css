@@ -242,9 +242,14 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .mini-kaart { display: block; aspect-ratio: 1028 / 1024; max-width: 380px; width: 100%; margin: 0 auto; position: relative }
 .mini-kaart svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none }
 .blok.geel { --bg: var(--fase-D) }
+/* rood blok met gele kop (doe mee, oproep): iets donkerder dan het logorood, zodat witte tekst leesbaar is */
+.blok.rood { --bg: #D93D00; color: #fff }
+.blok.rood .tweeregel { color: var(--fase-D) }
+.blok.rood .lead, .blok.rood .rollen p { color: #fff }
+.blok.rood .rollen h3 { color: var(--fase-D) }
 /* de gekleurde blokken (groen, blauw, geel) zien er in donkere modus hetzelfde uit als in lichte:
    anders wordt de tekst crème op geel en is hij niet te lezen */
-.band, .blok.blauw, .blok.geel { --creme: #FDFBF6; --vlak: #FFFFFF; --inkt: #1E1407; --bruin: #382202; --lijn: #1E1407; --zacht: #6B5A45; --doos-lijn: #382202 }
+.band, .blok.blauw, .blok.geel, .blok.rood { --creme: #FDFBF6; --vlak: #FFFFFF; --inkt: #1E1407; --bruin: #382202; --lijn: #1E1407; --zacht: #6B5A45; --doos-lijn: #382202 }
 /* hoofdknop naar de kwestiekaart: vol in plaats van alleen een kader */
 .knop.vol-knop { background: var(--inkt); color: var(--vlak) }
 .knop.vol-knop:hover { background: var(--vlak); color: var(--inkt) }
