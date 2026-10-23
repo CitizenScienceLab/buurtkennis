@@ -33,6 +33,9 @@ a.uit::after { content: "\00a0↗"; font-size: .85em }
 @media (min-width: 700px) { .bk-nav { width: auto } }
 .bk-nav a { font-family: var(--kop); font-weight: 800; font-size: .85rem; text-decoration: none; color: var(--inkt); padding: 4px 10px; border: 2px dashed transparent }
 .bk-nav a[aria-current="page"], .bk-nav a:hover { border-color: var(--inkt) }
+/* Doe mee in het menu: rood zoals het doe-mee-blok, op elke pagina */
+.bk-nav a.doe-mee { background: #D93D00; color: #fff }
+.bk-nav a.doe-mee:hover { background: var(--inkt); color: var(--vlak); border-color: var(--inkt) }
 
 h1 { font-family: var(--titel); font-weight: 400; font-size: clamp(1.8rem, 5.4vw, 2.6rem); line-height: 1.08; letter-spacing: -0.01em; color: var(--bruin); margin: 20px 0 10px; text-wrap: balance }
 h2 { font-family: var(--kop); font-weight: 900; font-size: 1.2rem; line-height: 1.15; color: var(--bruin); margin: 0 0 4px; letter-spacing: -0.01em }

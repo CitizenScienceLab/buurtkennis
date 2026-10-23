@@ -6,5 +6,6 @@
     <a href="{{ '/themas/' | relative_url }}" {% if hier contains "/themas/" %}aria-current="page"{% endif %}>Thema's</a>
     <a href="{{ '/kaart/' | relative_url }}" {% if hier contains "/kaart/" or hier contains "/trajecten/" %}aria-current="page"{% endif %}>In kaart</a>
     <a href="{{ '/methode/' | relative_url }}" {% if hier contains "/methode/" %}aria-current="page"{% endif %}>De methode</a>
+    <a class="doe-mee" href="{{ '/' | relative_url }}#doe-mee">Doe mee</a>
   </nav>
 </header>
