@@ -27,12 +27,14 @@ stappen:
       studenten en onderzoekers.
 beleid_kop: Van buurtkwestie
 beleid_kop_onder: naar buurtkennis
-beleid_tekst: Het onderwerp dat jij belangrijk vindt onderzoeken we samen. Wat
-  we leren komt terecht bij de gemeente of zetten we om in een initiatief.
+beleid_tekst: De onderwerpen die we met buurtbewoners in kaart brengen,
+  onderzoeken we samen. Wij leggen de link met de gemeente. Zo vormen we
+  waardevolle kennis voor verandering in de buurt en maken we van onze stad een
+  gezonde leefomgeving.
 themas_kop: Wat kunnen we samen
 themas_kop_onder: onderzoeken?
-themas_tekst: Bewoners bepalen welke kwesties het meest urgent zijn. Dit zijn de
-  thema's die tot nu toe leven in de Leidse wijken.
+themas_tekst: Bewoners bepalen welke kwesties het meest belangrijk zijn. Dit
+  zijn de thema's die tot nu toe leven in de Leidse wijken.
 themas_uitgelicht:
   - luchtkwaliteit
   - biodiversiteit
@@ -45,8 +47,7 @@ kaart_kop_onder: BuurtKennis nu?
 kaart_tekst: Op de kaart zie je in welke buurten we werken, welke trajecten daar
   lopen en hoe ver ze zijn.
 doe_mee_tekst: Onderzoek het! Er zijn veel manieren om mee te doen, van een
-  uurtje meedenken tot zelf onderzoek doen in je eigen straat. Iedereen is
-  welkom.
+  uurtje meedenken tot zelf onderzoek doen in je eigen straat.
 rollen:
   - kop: Buurtbewoner
     tekst: Deel wat jij belangrijk vindt in je wijk. Kom naar een bijeenkomst, vul
