@@ -1,46 +1,75 @@
-# Teksten van de homepagina. Ook te bewerken in het beheerscherm (app.pagescms.org, Homepagina).
-kop: "Kennis over de buurt"
-kop_onder: "voor jouw buurt"
-band: "Voor een **gezonde leefomgeving** in Leiden"
-
-kwestiekaart: "https://edu.nl/tqj9n"
-contact_mail: "csl@leidenuniv.nl"
-
-# Oproep die op elke pagina terugkomt, met de knop naar de kwestiekaart
-cta_kop: "Hoe maken we van jóuw buurt"
-cta_kop_onder: "een gezonde leefomgeving?"
-cta_tekst: "Onderzoek het! Geef op wat er bij jou in de buurt speelt, dan zoeken we samen uit hoe het zit."
-kwestie_knop: "Geef een kwestie op"
-
-beleid_kop: "Van buurtgesprek"
-beleid_kop_onder: "naar beleid"
-beleid_tekst: "We werken samen aan jouw onderwerp: we luisteren naar de bewoners die het aangaat, onderzoeken het samen, en zorgen dat de inzichten terechtkomen bij de gemeente of in een initiatief."
+kop: Kennis van de buurt
+kop_onder: met jouw buurt
+band: Voor een **gezonde leefomgeving** in Leiden
+kwestiekaart: https://edu.nl/tqj9n
+contact_mail: csl@leidenuniv.nl
+cta_kop: Hoe maken we van jóuw buurt
+cta_kop_onder: een gezonde leefomgeving?
+cta_tekst: Onderzoek het! Geef op wat er bij jou in de buurt speelt, dan zoeken
+  we samen uit hoe het zit.
+kwestie_knop: Geef een kwestie op
 stappen:
-  - { fase: B, kop: "Kwesties verzamelen", tekst: "In bijeenkomsten en op andere manieren halen we op wat bewoners écht belangrijk vinden in hun leefomgeving." }
-  - { fase: C, kop: "Vraagstuk vormen", tekst: "Samen met experts en betrokkenen in de buurt maken we onderzoeksvragen van de kwesties." }
-  - { fase: D, kop: "Samen plannen", tekst: "Met bewoners, studenten en onderzoekers ontwerpen we een aanpak die past bij de buurt en het thema." }
-  - { fase: E, kop: "Onderzoek starten", tekst: "Het buurtonderzoek gaat van start. Bewoners meten zelf, begeleid door studenten en onderzoekers." }
-
-themas_kop: "Wat kunnen we samen"
-themas_kop_onder: "onderzoeken?"
-themas_tekst: "Bewoners bepalen welke kwesties het meest urgent zijn. Dit zijn de thema's die tot nu toe leven in de Leidse wijken."
-themas_uitgelicht: [luchtkwaliteit, biodiversiteit, verkeersveiligheid, hittestress, lichtvervuiling, schoon-water]
-
-kaart_kop: "Waar loopt"
-kaart_kop_onder: "BuurtKennis nu?"
-kaart_tekst: "Op de kaart zie je in welke buurten we werken, welke trajecten daar lopen en hoe ver ze zijn."
-
-doe_mee_tekst: "Onderzoek het! Er zijn veel manieren om mee te doen, van een uurtje meedenken tot zelf onderzoek doen in je eigen straat. Iedereen is welkom."
+  - fase: B
+    kop: Kwesties verzamelen
+    tekst: We brengen in kaart welke onderwerpen buurtbewoners belangrijk vinden in
+      hun leefomgeving.
+  - fase: C
+    kop: Vraagstuk vormen
+    tekst: Samen met de betrokkenen zetten we de belangrijkste kwesties om in een
+      duidelijk vraagstuk voor onderzoek.
+  - fase: D
+    kop: Samen plannen
+    tekst: Experts en onderzoekers helpen ons een aanpak te vormen die past bij de
+      buurt en het onderwerp.
+  - fase: E
+    kop: Onderzoek starten
+    tekst: Het buurtonderzoek gaat van start. Bewoners meten zelf, begeleid door
+      studenten en onderzoekers.
+beleid_kop: Van buurtkwestie
+beleid_kop_onder: naar buurtkennis
+beleid_tekst: Het onderwerp dat jij belangrijk vindt onderzoeken we samen. Wat
+  we leren komt terecht bij de gemeente of zetten we om in een initiatief.
+themas_kop: Wat kunnen we samen
+themas_kop_onder: onderzoeken?
+themas_tekst: Bewoners bepalen welke kwesties het meest urgent zijn. Dit zijn de
+  thema's die tot nu toe leven in de Leidse wijken.
+themas_uitgelicht:
+  - luchtkwaliteit
+  - biodiversiteit
+  - verkeersveiligheid
+  - hittestress
+  - lichtvervuiling
+  - schoon-water
+kaart_kop: Waar loopt
+kaart_kop_onder: BuurtKennis nu?
+kaart_tekst: Op de kaart zie je in welke buurten we werken, welke trajecten daar
+  lopen en hoe ver ze zijn.
+doe_mee_tekst: Onderzoek het! Er zijn veel manieren om mee te doen, van een
+  uurtje meedenken tot zelf onderzoek doen in je eigen straat. Iedereen is
+  welkom.
 rollen:
-  - { kop: "Buurtbewoner", tekst: "Deel wat jij belangrijk vindt in je wijk. Kom naar een bijeenkomst, vul de kwestiekaart in of doe mee aan een meting." }
-  - { kop: "Lokale partner", tekst: "Buurthuis, wijkvereniging of initiatief in Leiden? We werken graag samen om de kwesties in jullie buurt in kaart te brengen." }
-  - { kop: "Student", tekst: "Werk mee aan echte wijkprojecten via Leren met de Stad. Van mbo tot universiteit, van sociaal werk tot wetenschap." }
-
-partners_tekst: "Leiden BuurtKennis is een project van het Citizen Science Lab van de Universiteit Leiden, samen met partners door de hele stad."
+  - kop: Buurtbewoner
+    tekst: Deel wat jij belangrijk vindt in je wijk. Kom naar een bijeenkomst, vul
+      de kwestiekaart in of doe mee aan een meting.
+  - kop: Lokale partner
+    tekst: Buurthuis, wijkvereniging of initiatief in Leiden? We werken graag samen
+      om de kwesties in jullie buurt in kaart te brengen.
+  - kop: Student
+    tekst: Werk mee aan echte wijkprojecten via Leren met de Stad. Van mbo tot
+      universiteit, van sociaal werk tot wetenschap.
+partners_tekst: Leiden BuurtKennis is een project van het Citizen Science Lab
+  van de Universiteit Leiden, samen met partners door de hele stad.
 partners:
-  - { wie: "Gemeente Leiden", wat: "beleid en stedelijke innovatie" }
-  - { wie: "Universiteit Leiden, Hogeschool Leiden, MBO Rijnland, Leren met de Stad", wat: "(student)onderzoek en wijkprojecten" }
-  - { wie: "Ideewinkel", wat: "netwerk om samenwerkingen te vinden" }
-  - { wie: "Incluzio en Buzz", wat: "wijkgerichte samenwerking en uitvoering" }
-  - { wie: "Energiek Leiden, Duurzaam Leiden, Netwerk Leiden Sneller Duurzaam", wat: "samenwerking met bewoners per thema" }
-contact_tekst: "Een kwestie of onderzoek aanmelden kan via de online kwestiekaart. Voor andere vragen mail je naar Jordy Janssen via csl@leidenuniv.nl."
+  - wie: Gemeente Leiden
+    wat: beleid en stedelijke innovatie
+  - wie: Universiteit Leiden, Hogeschool Leiden, MBO Rijnland, Leren met de Stad
+    wat: (student)onderzoek en wijkprojecten
+  - wie: Ideewinkel
+    wat: netwerk om samenwerkingen te vinden
+  - wie: Incluzio en Buzz
+    wat: wijkgerichte samenwerking en uitvoering
+  - wie: Energiek Leiden, Duurzaam Leiden, Netwerk Leiden Sneller Duurzaam
+    wat: samenwerking met bewoners per thema
+contact_tekst: Een kwestie of onderzoek aanmelden kan via de online
+  kwestiekaart. Voor andere vragen mail je naar Jordy Janssen via
+  csl@leidenuniv.nl.
