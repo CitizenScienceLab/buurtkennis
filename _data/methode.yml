@@ -1,155 +1,165 @@
-# De BuurtKennis-methode: fases en stappen, voor de methodefiguur (de ringen) en de kaart.
-#
-# GitBook is de bron: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/
-# Namen en links volgen GitBook; de uitgebreide uitleg staat daar.
-# Hier staat wat GitBook niet heeft: volgorde, kleur, de korte naam op de figuur en het korte verhaal per stap.
-# Dat verhaal (kop en tekst) komt uit de methode-tijdlijn (BK Methode.pdf, rij "Uitleg onderdeel");
-# de beschrijving per fase en de teksten van de pagina komen uit de inleiding in GitBook.
-# Alles is te bewerken in het beheerscherm (app.pagescms.org, De methode).
-#
-# De figuur: elke zichtbare fase is een kwart (in deze volgorde linksboven, rechtsboven,
-# rechtsonder, linksonder), met een boog per stap, van binnen (wij en onze partners)
-# naar buiten (de hele buurt). Meer of minder stappen in een fase kan gewoon: de bogen
-# worden dan vanzelf smaller of breder.
-#
-#   zichtbaar: false     de fase staat niet in de figuur. A en F gaan over het project
-#                        als geheel, niet over waar een kwestie staat.
-#   link: ""             de stap staat er zonder link, tot de pagina in GitBook staat
-#   kort                 de naam op de boog in de figuur (kort houden)
-#   beschrijving         korte uitleg van de fase op /methode/
-#   verhaal              kop en tekst voor de uitleg van een stap op /methode/
-#   kleur, kleur_donker  voor de oude kaart op /overzicht (de rest van de site gebruikt assets/bk.css)
-#   doos                 het doosje van de fase (Jordy's projectstijl), op de methodepagina en de kaart.
-#                        Een nieuwe versie zet je op dezelfde plek in assets/doosjes/.
-
-# Link naar het overzicht van de methode in GitBook
-handleiding: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/readme"
-
-# Teksten op /methode/
+handleiding: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/readme
 pagina:
-  kop: "Van kwestie tot onderzoek"
-  intro: "Met BuurtKennis in Leiden werken we aan lokale onderwerpen met betrokken bewoners, onderzoeken die samen, en vormen zo waardevolle inzichten voor een initiatief of de gemeente. We hebben het project opgedeeld in fases die elk een volgende stap zijn in de levensloop van een kwestie tot onderzoek."
-  figuur: "Het midden is de kern: wij en onze partners. Hoe verder naar buiten, hoe meer van de buurt meedoet. Wijs een stap aan; in het midden verschijnt het doosje van die fase."
-  beslismoment: "Iedere fase eindigt met een beslismoment: gaan we door met deze kwestie, of past het toch niet helemaal in het project? Soms is er dan geen vervolg, of koppelen we de kwestie aan de juiste persoon."
-  meer_kop: "Leer hoe wij dit hebben aangepakt"
-  meer_tekst: "De methodieken in onze toolkit helpen je op weg om soortgelijke activiteiten en projecten te organiseren. We laten zien hoe wij dit hebben aangepakt, waar dat op gebaseerd is, en wat wij hebben geleerd."
+  kop: Van kwestie tot onderzoek
+  intro: >-
+    Met BuurtKennis in Leiden werken we aan lokale onderwerpen met betrokken
+    bewoners, onderzoeken die samen, en vormen zo waardevolle inzichten voor een
+    initiatief of de gemeente. We hebben het project opgedeeld in fases die elk
+    een volgende stap zijn in de levensloop van een kwestie tot onderzoek. 
 
+
+    Kwesties komen op vele manieren bij ons terecht. Sommige onderwerpen spelen
+    al langer, maar hebben meer onderzoek nodig. Anderen komen naar boven
+    tijdens een inloopmiddag met de kwestiekaart. Wanneer we een traject
+    beginnen kijken we welke stappen er nodig zijn.
+
+
+    Wil je meer weten over onze methode, dan helpt deze wijzer je op weg. Wil je
+    ook werken met de methode?
+  figuur: "Kies een stap om er meer over te leren. Voor ieder traject is een
+    andere aanpak nodig, dit zie je terug in de verschillende fases. "
+  beslismoment: "Iedere fase eindigt met een beslismoment: gaan we door met deze
+    kwestie, of past het toch niet helemaal in het project? Soms is er dan geen
+    vervolg, of koppelen we de kwestie aan de juiste persoon."
+  meer_kop: Leer hoe wij dit hebben aangepakt
+  meer_tekst: De methodiek in onze toolkit helpt je op weg om soortgelijke
+    activiteiten en projecten te organiseren. We laten zien hoe wij dit hebben
+    aangepakt, waar dat op gebaseerd is, en wat wij hebben geleerd.
 fases:
   - code: A
-    naam: "Project opstarten"
+    naam: Project opstarten
+    beschrijving: Verzamelen van partners, organiseren van samenwerkingen, en
+      bepalen projectdoelen.
     zichtbaar: false
     kleur: "#D3DDEE"
     kleur_donker: "#33496F"
-    beschrijving: "Verzamelen van partners, organiseren van samenwerkingen, en bepalen projectdoelen."
-    stappen: []
-
   - code: B
-    naam: "Kwesties verzamelen"
+    naam: Kwesties verzamelen
+    beschrijving: We verkennen de buurt en brengen kwesties rondom een gezonde
+      leefomgeving in kaart via gesprekken met bewoners en betrokkenen.
+    zichtbaar: true
     doos: /assets/doosjes/b.svg
     kleur: "#9DB6E2"
     kleur_donker: "#46669F"
-    beschrijving: "We verkennen de buurt en brengen kwesties rondom een gezonde leefomgeving in kaart via gesprekken met bewoners en betrokkenen."
     stappen:
       - code: B1
-        naam: "Oriënteren"
-        kort: "Oriënteren"
-        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b1-orienteren"
+        naam: Oriënteren
+        kort: Oriënteren
+        link: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b1-orienteren
         verhaal:
-          kop: "Een eerste indruk"
-          tekst: "We bezoeken de buurt, interviewen buurtcoaches en vormen een beeld van hoe de BuurtKennis-methode daar het beste ingezet kan worden."
+          kop: Een eerste indruk
+          tekst: We bezoeken de buurt, interviewen buurtcoaches en vormen een beeld van
+            hoe de BuurtKennis-methode daar het beste ingezet kan worden.
       - code: B2
-        naam: "Ophalen kwesties"
-        kort: "Kwesties ophalen"
-        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b2-kwesties-verzamelen"
+        naam: Ophalen kwesties
+        kort: Kwesties ophalen
+        link: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b2-kwesties-verzamelen
         verhaal:
-          kop: "Wat speelt er?"
-          tekst: "We organiseren onderwerpen die al bekend zijn vanuit buurtspreekuren of stadsenquêtes en nodigen buurtbewoners uit."
+          kop: Wat speelt er?
+          tekst: We organiseren onderwerpen die al bekend zijn vanuit bijvoorbeeld
+            buurtspreekuren of stadsenquêtes en nodigen buurtbewoners uit.
       - code: B3
-        naam: "Kwesties sorteren"
-        kort: "Kwesties sorteren"
-        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b3-kwesties-sorteren"
+        naam: Kwesties sorteren
+        kort: Kwesties sorteren
+        link: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/kwesties-verzamelen/b3-kwesties-sorteren
         verhaal:
-          kop: "De bomen door het bos"
-          tekst: "We sorteren de kwesties op passendheid binnen het project en kijken wat we er anders mee kunnen doen."
-
+          kop: De bomen door het bos
+          tekst: We sorteren de kwesties op passendheid binnen het project en kijken wat
+            we er anders mee kunnen doen.
   - code: C
-    naam: "Vraagstuk vormen"
+    naam: Vraagstuk vormen
+    beschrijving: Samen met de betrokkenen zetten we de belangrijkste kwesties om in
+      een duidelijk vraagstuk voor onderzoek, om waardevolle kennis te
+      verzamelen.
+    zichtbaar: true
     doos: /assets/doosjes/c.svg
     kleur: "#5F86CC"
     kleur_donker: "#6B91D9"
-    beschrijving: "Samen met experts en betrokkenen in de buurt maken we onderzoeksvragen van de kwesties om waardevolle kennis te verzamelen."
     stappen:
       - code: C1
-        naam: "Werving betrokkenen"
-        kort: "Werving"
-        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/vraagstuk-vormen/c1-werving-betrokkenen"
+        naam: Werving betrokkenen
+        kort: Werving
+        link: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/vraagstuk-vormen/c1-werving-betrokkenen
         verhaal:
-          kop: "De betrokkenen"
-          tekst: "We gaan op zoek naar betrokken buurtbewoners die van hun buurt een gezonde leefomgeving willen maken. We spreken ze wat langer over de kwestie en kijken wie er geïnteresseerd is in onderzoek doen."
+          kop: De betrokkenen
+          tekst: We gaan op zoek naar betrokken buurtbewoners die van hun buurt een
+            gezonde leefomgeving willen maken. We spreken ze wat langer over de
+            kwestie en kijken wie er geïnteresseerd is in onderzoek doen.
       - code: C2
-        naam: "Vraagstuk vormen"
-        kort: "Vraagstuk vormen"
-        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/vraagstuk-vormen/c2-vraagstuk-vormen"
+        naam: Vraagstuk vormen
+        kort: Vraagstuk vormen
+        link: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/vraagstuk-vormen/c2-vraagstuk-vormen
         verhaal:
-          kop: "Concretiserende stap"
-          tekst: "We zetten de verzamelde kwesties om in heldere, concrete vraagstukken voor de volgende stap. Daarvoor zoeken we experts op het gebied en beginnen we met de selectie van passende opleidingen."
-
+          kop: Concretiserende stap
+          tekst: We zetten de verzamelde kwesties om in heldere, concrete vraagstukken
+            voor de volgende stap. Daarvoor zoeken we experts op het gebied en
+            beginnen we met de selectie van passende opleidingen.
   - code: D
-    naam: "Samen plannen"
+    naam: Samen plannen
+    beschrijving: Experts en onderzoekers helpen ons een aanpak te vormen die past
+      bij de buurt en het onderwerp.
+    zichtbaar: true
     doos: /assets/doosjes/d.svg
     kleur: "#2C54A3"
     kleur_donker: "#9DBBF0"
-    beschrijving: "Met bewoners, studenten en onderzoekers ontwerpen we een aanpak die past bij de buurt en het thema."
     stappen:
       - code: D1
-        naam: "Onderzoeken levensvatbaarheid"
-        kort: "Levensvatbaarheid"
-        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/co-creatie-initiatief/d1-onderzoeken-levensvatbaarheid"
+        naam: Onderzoeken levensvatbaarheid
+        kort: Levensvatbaarheid
+        link: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/co-creatie-initiatief/d1-onderzoeken-levensvatbaarheid
         verhaal:
-          kop: "Groen licht?"
-          tekst: "In overleg met beleidsmedewerkers en experts kijken we of we hier een BuurtKennis-onderzoek van kunnen maken. Als er potentie in een onderzoek zit, zoeken we studenten die dit willen begeleiden."
+          kop: Groen licht?
+          tekst: In overleg met beleidsmedewerkers en experts kijken we of we hier een
+            BuurtKennis-onderzoek van kunnen maken. Als er potentie in een
+            onderzoek zit, zoeken we studenten die dit willen begeleiden.
       - code: D2
-        naam: "Co-creatie initiatief"
-        kort: "Co-creatie initiatief"
-        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/co-creatie-initiatief/d2-co-creatie-initiatief"
+        naam: Co-creatie initiatief
+        kort: Co-creatie initiatief
+        link: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/co-creatie-initiatief/d2-co-creatie-initiatief
         verhaal:
-          kop: "Samen plannen"
-          tekst: "We gaan samen nadenken over de vorm van het project. Daarbij houden we rekening met de context van de buurt en het thema. Uit dit co-creatieproces ontstaat een actieve groep kartrekkers van het project."
-
+          kop: Samen plannen
+          tekst: We gaan samen nadenken over de vorm van het project. Daarbij houden we
+            rekening met de context van de buurt en het thema. Uit dit
+            co-creatieproces ontstaat een actieve groep kartrekkers van het
+            project.
   - code: E
-    naam: "Onderzoek starten"
+    naam: Onderzoek starten
+    beschrijving: Het buurtonderzoek gaat van start. Bewoners meten zelf, begeleid
+      door studenten en onderzoekers.
+    zichtbaar: true
     doos: /assets/doosjes/e.svg
     kleur: "#23244C"
     kleur_donker: "#D6E2F8"
-    beschrijving: "Het buurtonderzoek gaat van start. Bewoners meten zelf, begeleid door studenten en onderzoekers."
     stappen:
       - code: E1
-        naam: "Opstarten samenwerking"
-        kort: "Samenwerking"
-        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/e-onderzoek-beginnen/e1-opstarten-samenwerking"
+        naam: Opstarten samenwerking
+        kort: Samenwerking
+        link: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/e-onderzoek-beginnen/e1-opstarten-samenwerking
         verhaal:
-          kop: "Samen denken"
-          tekst: "De kersverse werkgroep maakt een onderzoeksplan en wij faciliteren de vorming van een eerste structuur in de samenwerking tussen buurtbewoners en gemeente of onderzoekers."
+          kop: Samen denken
+          tekst: De kersverse werkgroep maakt een onderzoeksplan en wij faciliteren de
+            vorming van een eerste structuur in de samenwerking tussen
+            buurtbewoners en gemeente of onderzoekers.
       - code: E2
-        naam: "Start onderzoek"
-        kort: "Start onderzoek"
-        link: "https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/e-onderzoek-beginnen/e2-start-onderzoek"
+        naam: Start onderzoek
+        kort: Start onderzoek
+        link: https://citizen-science-lab.gitbook.io/home/buurtkennis-methode/e-onderzoek-beginnen/e2-start-onderzoek
         verhaal:
-          kop: "Samen onderzoeken"
-          tekst: "Het project gaat van start en we kijken wie er nog meer mee wil doen uit de buurt. Het project gaat hier zijn eigen weg, en wij zoeken indien nodig naar een goede landingsplek voor het project."
-
+          kop: Samen onderzoeken
+          tekst: Het project gaat van start en we kijken wie er nog meer mee wil doen uit
+            de buurt. Het project gaat hier zijn eigen weg, en wij zoeken indien
+            nodig naar een goede landingsplek voor het project.
   - code: F
-    naam: "BuurtKennis delen"
+    naam: BuurtKennis delen
+    beschrijving: De kennis die is opgedaan tijdens het project en door de
+      onderzoeken wordt gedeeld.
     zichtbaar: false
     kleur: "#23244C"
     kleur_donker: "#D6E2F8"
-    beschrijving: "De kennis die is opgedaan tijdens het project en door de onderzoeken wordt gedeeld."
-    stappen: []
-
-# Een traject of buurt kan de methode ook verlaten. Zet dan
-#   stap: geen-vervolg   of   stap: doorverwezen
-# met eventueel reden: "waarom" (en bij doorverwezen naar: "bij wie").
-# De stappen die wel gezet zijn, blijven in de figuur staan; de rest valt weg.
 afslagen:
-  - { code: geen-vervolg, naam: "Geen vervolg", kort: "Geen vervolg" }
-  - { code: doorverwezen, naam: "Doorverwezen naar de juiste persoon", kort: "Doorverwezen" }
+  - code: geen-vervolg
+    naam: Geen vervolg
+    kort: Geen vervolg
+  - code: doorverwezen
+    naam: Doorverwezen naar de juiste persoon
+    kort: Doorverwezen
