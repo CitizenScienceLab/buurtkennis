@@ -330,7 +330,8 @@ content:
           - { name: code, label: "Code (niet veranderen)", type: string }
           - { name: naam, label: Naam, type: string }
           - { name: beschrijving, label: "Korte uitleg van de fase", type: text }
-          - { name: zichtbaar, label: "In de figuur", type: boolean, default: true }
+          - { name: zichtbaar, label: "In de figuur (de ringen)", type: boolean, default: true }
+          - { name: in_uitleg, label: "In de uitleg (de lijst onder de figuur)", type: boolean, default: true }
           - { name: doos, label: "Doosje (pad naar het plaatje)", type: string }
           - { name: kleur, label: "Kleur op /overzicht", type: string }
           - { name: kleur_donker, label: "Kleur op /overzicht, donker", type: string }

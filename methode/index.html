@@ -4,6 +4,7 @@ title: De methode · Leiden BuurtKennis
 description: "Van kwesties verzamelen tot onderzoek starten: de stappen van de BuurtKennis-methode, van de kern tot de hele buurt."
 ---
 {%- assign F = site.data.methode.fases | where_exp: "f", "f.zichtbaar != false" -%}
+{%- assign U = site.data.methode.fases | where_exp: "f", "f.in_uitleg != false" -%}{%- comment -%} F: in de figuur, U: in de lijst eronder {%- endcomment %}
 {%- assign P = site.data.methode.pagina -%}{%- comment -%} teksten: _data/methode.yml, ook in het beheerscherm {%- endcomment %}
 <h1>{{ P.kop }}</h1>
 <p class="intro">{{ P.intro }} De uitgebreide uitleg staat in de <a class="uit" href="{{ site.data.methode.handleiding }}" target="_blank" rel="noopener">methodiek</a>.</p>
@@ -22,19 +23,20 @@ description: "Van kwesties verzamelen tot onderzoek starten: de stappen van de B
   <p id="u-link"></p>
 </div>
 <ol class="fasen">
-{%- for f in F %}
+{%- for f in U %}
   <li style="--k:var(--fase-{{ f.code }})"><span class="f">{{ f.code }}</span><div><strong>{{ f.naam }}</strong>{% if f.beschrijving %}<p class="fase-beschrijving">{{ f.beschrijving }}</p>{% endif %}
+    {%- comment -%} alleen stappen die in de figuur staan zijn knoppen {%- endcomment -%}
+    {%- if f.stappen.size > 0 and f.zichtbaar != false %}
     <ul class="stapknoppen">
     {%- for s in f.stappen %}
       <li><button type="button" data-stap="{{ s.code | downcase }}" aria-pressed="false">{{ s.code }} {{ s.naam }}</button></li>
     {%- endfor %}
     </ul>
-    {%- if forloop.last %}
-    <p class="afslag-tekst">{{ P.beslismoment }}</p>
     {%- endif %}
   </div></li>
 {%- endfor %}
 </ol>
+<p class="afslag-tekst">{{ P.beslismoment }}</p>
 <section class="methode-meer">
   <h2>{{ P.meer_kop }}</h2>
   <p>{{ P.meer_tekst }} Lees verder in de <a class="uit" href="{{ site.data.methode.handleiding }}" target="_blank" rel="noopener">methodiek</a>.</p>

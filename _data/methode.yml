@@ -33,6 +33,7 @@ fases:
     beschrijving: Verzamelen van partners, organiseren van samenwerkingen, en
       bepalen projectdoelen.
     zichtbaar: false
+    in_uitleg: true
     kleur: "#D3DDEE"
     kleur_donker: "#33496F"
   - code: B
@@ -40,6 +41,7 @@ fases:
     beschrijving: We verkennen de buurt en brengen kwesties rondom een gezonde
       leefomgeving in kaart via gesprekken met bewoners en betrokkenen.
     zichtbaar: true
+    in_uitleg: true
     doos: /assets/doosjes/b.svg
     kleur: "#9DB6E2"
     kleur_donker: "#46669F"
@@ -74,6 +76,7 @@ fases:
       een duidelijk vraagstuk voor onderzoek, om waardevolle kennis te
       verzamelen.
     zichtbaar: true
+    in_uitleg: true
     doos: /assets/doosjes/c.svg
     kleur: "#5F86CC"
     kleur_donker: "#6B91D9"
@@ -101,6 +104,7 @@ fases:
     beschrijving: Experts en onderzoekers helpen ons een aanpak te vormen die past
       bij de buurt en het onderwerp.
     zichtbaar: true
+    in_uitleg: true
     doos: /assets/doosjes/d.svg
     kleur: "#2C54A3"
     kleur_donker: "#9DBBF0"
@@ -129,6 +133,7 @@ fases:
     beschrijving: Het buurtonderzoek gaat van start. Bewoners meten zelf, begeleid
       door studenten en onderzoekers.
     zichtbaar: true
+    in_uitleg: true
     doos: /assets/doosjes/e.svg
     kleur: "#23244C"
     kleur_donker: "#D6E2F8"
@@ -156,6 +161,7 @@ fases:
     beschrijving: De kennis die is opgedaan in het project en vanuit de onderzoeken
       wordt gedeeld.
     zichtbaar: false
+    in_uitleg: true
     kleur: "#23244C"
     kleur_donker: "#D6E2F8"
 afslagen:
