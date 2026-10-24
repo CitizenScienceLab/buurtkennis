@@ -59,12 +59,11 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
    Bij een afslag vallen de niet-gezette bogen weg en staat er een stippelcirkel om de figuur. */
 .ringen-rij { display: flex; align-items: center; gap: 12px; min-height: 64px; margin-bottom: 4px }
 /* themaregel onder de figuur: thema-labels en de titel, één regel met een vaste hoogte zodat de kaart niet verspringt */
-.thema-regel { display: flex; align-items: center; gap: 8px; height: 30px; margin: 0 0 8px; white-space: nowrap; overflow-x: auto; overflow-y: hidden; min-width: 0; scrollbar-width: none;
-  mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent) }
-.thema-regel::-webkit-scrollbar { display: none }
-.regel-tekst:last-child { padding-right: 24px }
-.thema-regel .thema-label { flex: none }
-.regel-tekst { font-family: var(--kop); font-weight: 800; font-size: .9rem; color: var(--inkt); overflow: hidden; text-overflow: ellipsis; min-width: 7.5em }
+/* titel op één regel met een vaste hoogte, zodat de kaart nooit verspringt; de labels hangen eronder, in de lege hoek linksboven de kaart */
+.thema-regel { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; height: 24px; margin: 0 0 8px; white-space: nowrap; min-width: 0; position: relative; z-index: 2 }
+.thema-regel .labels { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; flex: none }
+.thema-regel .regel-tekst { line-height: 24px; max-width: 100%; flex: none }
+.regel-tekst { font-family: var(--kop); font-weight: 800; font-size: .9rem; color: var(--inkt); overflow: hidden; text-overflow: ellipsis; min-width: 0 }
 .regel-tekst.zacht { font-family: var(--tekst); font-weight: 400; font-size: .85rem; color: var(--zacht) }
 .ringen-rij .ringen { width: 64px; flex: none }
 /* het doosje van de fase uit het label; zonder stappen de dichte doos (assets/doosjes/dicht.svg) */
@@ -178,8 +177,12 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 
 /* thema: een eigen gestippeld kader per thema, zoals de labels op /themas. Geen kleur: op de kaart is kleur de fase. */
 .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px }
-.thema-label { display: inline-block; font-family: var(--kop); font-weight: 800; font-size: .78rem; line-height: 1.2; padding: 3px 9px; border: 2px dashed var(--inkt); color: var(--inkt); background: var(--vlak); text-decoration: none }
-a.thema-label:hover { background: var(--inkt); color: var(--vlak) }
+/* thema: een eigen label per thema met een stip in de themakleur; een dunne, zachte stippellijn, zodat het label niet harder roept dan de titel */
+.thema-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--kop); font-weight: 700; font-size: .78rem; line-height: 1.2; padding: 4px 9px;
+  border: 1.5px dashed color-mix(in srgb, var(--inkt) 35%, transparent); color: var(--inkt); background: var(--vlak); text-decoration: none }
+a.thema-label:hover { border-color: var(--inkt); border-style: solid }
+.thema-label .stip { width: 9px; height: 9px; box-shadow: none }
+.thema-label.meer { color: var(--zacht); font-weight: 600 }
 .sinds { font-size: .82rem; color: var(--zacht) }
 .boven { font-family: var(--kop); font-weight: 800; font-size: .9rem; color: var(--zacht); margin: 0; text-transform: uppercase; letter-spacing: .04em }
 .fase-pil { display: inline-flex; align-items: center; gap: 8px; font-family: var(--kop); font-weight: 800; font-size: .85rem; color: var(--inkt); text-decoration: none }

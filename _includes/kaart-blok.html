@@ -34,7 +34,7 @@
 const FASES = {{ site.data.methode.fases | jsonify }};
 const AFSLAGEN = {{ site.data.methode.afslagen | jsonify }};
 // thema's uit _themas, op bestandsnaam; een traject mag de sleutel, de bestandsnaam of het pad noemen
-const THEMAS = { {% for t in site.themas %}{{ t.slug | jsonify }}: { "naam": {{ t.naam | jsonify }}, "blok": {% if t.vraag %}true{% else %}false{% endif %} },{% endfor %} };
+const THEMAS = { {% for t in site.themas %}{{ t.slug | jsonify }}: { "naam": {{ t.naam | jsonify }}, "blok": {% if t.vraag %}true{% else %}false{% endif %}, "kleur": {{ t.eigen_kleur | default: t.kleur | default: '#888888' | jsonify }} },{% endfor %} };
 const THEMA_ALIAS = { {% for t in site.themas %}{% if t.sleutel %}{{ t.sleutel | jsonify }}: {{ t.slug | jsonify }}, {% endif %}{{ t.path | jsonify }}: {{ t.slug | jsonify }},{% endfor %} };
 const CBS = {{ site.data.cbs | jsonify }};
 const ALLE_BUURTEN = [{% for b in site.buurten %}{"id":{{ b.slug | jsonify }},"pad":{{ b.path | jsonify }},"naam":{{ b.naam | jsonify }},"plek":{{ b.plek | jsonify }},"fase":{{ b.fase | jsonify }},"stappen":{{ b.stappen | jsonify }},"stap":{{ b.stap | jsonify }},"reden":{{ b.reden | jsonify }},"naar":{{ b.naar | jsonify }},"sinds":{{ b.sinds | jsonify }},"doel":{{ b.doel | jsonify }},"activiteiten":{{ b.activiteiten | default: empty | jsonify }},"links":{{ b.links | default: empty | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}];
@@ -215,17 +215,21 @@ function zetFiguur(x) {
   $('plek').style.setProperty('--k', top ? `var(--fase-${top}-tekst, var(--fase-${top}))` : 'var(--bruin)');
   zetThemas(x);
 }
-// --- themaregel onder de figuur: de thema's als gestippelde labels, en de titel (traject) of het aantal trajecten (buurt) ---
+// --- themaregel onder de figuur: de titel (traject) of het aantal trajecten (buurt), met daaronder de thema's als labels ---
+// de labels staan onder elkaar in de lege hoek linksboven de kaart; meer dan MAX_LABELS wordt "+ n thema's".
 // wisselt mee bij hover, net als de naam en de figuur
 const MUIS = matchMedia('(hover: hover)').matches;
-const themaLabel = th => THEMAS[th].blok ? `<a class="thema-label" href="${THEMAS_URL}#${esc(th)}">${esc(THEMAS[th].naam)}</a>` : `<span class="thema-label">${esc(THEMAS[th].naam)}</span>`;
+const themaLabel = th => { const binnen = `<span class="stip" style="--tk:${esc(THEMAS[th].kleur)}"></span>${esc(THEMAS[th].naam)}`;
+  return THEMAS[th].blok ? `<a class="thema-label" href="${THEMAS_URL}#${esc(th)}">${binnen}</a>` : `<span class="thema-label">${binnen}</span>`; };
 function zetThemas(x) {
   const r = $('thema-regel');
   if (!x) { r.innerHTML = `<span class="regel-tekst zacht">${MUIS ? 'Wijs een doosje aan om te zien waar het over gaat' : 'Tik op een doosje om te zien waar het over gaat'}</span>`; return; }
   const isTraject = 'titel' in x, ts = isTraject ? [x] : trajectenBij(x.plek);
   const ths = [...new Set(ts.map(t => t.thema))].filter(th => THEMAS[th]);
   const tekst = isTraject ? x.titel : (aantalTrajecten(ts.length) || 'nog geen traject');
-  r.innerHTML = ths.map(themaLabel).join('') + `<span class="regel-tekst">${esc(tekst)}</span>`;
+  const MAX_LABELS = 4, toon = ths.length > MAX_LABELS ? ths.slice(0, MAX_LABELS - 1) : ths, rest = ths.length - toon.length;
+  r.innerHTML = `<span class="regel-tekst">${esc(tekst)}</span>` +
+    (ths.length ? `<span class="labels">${toon.map(themaLabel).join('')}${rest ? `<span class="thema-label meer">+ ${rest} ${rest === 1 ? 'thema' : "thema's"}</span>` : ''}</span>` : '');
 }
 // --- kop: naam en figuur van wat gekozen is; hover toont alvast wat je zou kiezen ---
 let staat = { naam: 'Leiden', x: null };
