@@ -179,11 +179,10 @@ h3 { font-family: var(--kop); font-weight: 800; font-size: .95rem; color: var(--
 .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px }
 /* thema: een eigen label per thema met een stip in de themakleur; een dunne, zachte stippellijn, zodat het label niet harder roept dan de titel */
 .thema-label { display: inline-flex; align-items: center; gap: 6px; font-family: var(--kop); font-weight: 700; font-size: .78rem; line-height: 1.2; padding: 4px 9px;
-  border: 1.5px dashed rgba(30, 20, 7, .35); color: #1E1407; background: #FFFFFF; text-decoration: none }   /* ook in donkere modus wit, zodat elke themakleur zichtbaar is */
-a.thema-label:hover { border-color: #1E1407; border-style: solid }
-.thema-label.meer { color: #6B5A45 }
+  border: 1.5px dashed color-mix(in srgb, var(--inkt) 35%, transparent); color: var(--inkt); background: var(--vlak); text-decoration: none }
+a.thema-label:hover { border-color: var(--inkt); border-style: solid }
 .thema-label .stip { width: 9px; height: 9px; box-shadow: none }
-.thema-label.meer { font-weight: 600 }
+.thema-label.meer { color: var(--zacht); font-weight: 600 }
 .sinds { font-size: .82rem; color: var(--zacht) }
 .boven { font-family: var(--kop); font-weight: 800; font-size: .9rem; color: var(--zacht); margin: 0; text-transform: uppercase; letter-spacing: .04em }
 .fase-pil { display: inline-flex; align-items: center; gap: 8px; font-family: var(--kop); font-weight: 800; font-size: .85rem; color: var(--inkt); text-decoration: none }
