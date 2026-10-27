@@ -1,6 +1,3 @@
-# Teksten van de homepagina, per blok in de volgorde van de pagina.
-# Bewerk ze in Pages CMS onder "Homepagina". De oproep onderaan de andere
-# pagina's staat in _data/algemeen.yml ("Op elke pagina").
 bovenaan:
   kop: Kennis van jouw buurt
   kop_onder: met jouw buurt
@@ -8,32 +5,32 @@ bovenaan:
 hoe:
   kop: Van buurtvraag
   kop_onder: naar buurtkennis
-  tekst: BuurtKennis brengt onderwerpen die bewoners belangrijk vinden in
-    kaart. Samen met experts en de gemeente onderzoek je die zelf. Zo leren we hoe
-    jouw buurt kan verbeteren en maken we van onze stad een gezonde plek om in te
+  tekst: BuurtKennis brengt onderwerpen die bewoners belangrijk vinden in kaart.
+    Samen met experts en de gemeente onderzoek je die zelf. Zo leren we hoe jouw
+    buurt kan verbeteren en maken we van onze stad een gezonde plek om in te
     wonen.
   stappen:
     - fase: B
-      kop: Kwesties verzamelen
-      tekst: We brengen in kaart welke onderwerpen buurtbewoners belangrijk vinden in
-        hun leefomgeving.
+      kop: Verzamelen
+      tekst: Buurtbewoners vertellen welke onderwerpen ze in hun buurt belangrijk
+        vinden.
     - fase: C
-      kop: Vraagstuk vormen
-      tekst: Samen met de betrokkenen zetten we de belangrijkste kwesties om in een
-        duidelijk vraagstuk voor onderzoek.
+      kop: Kiezen
+      tekst: Samen met bewoners kijken we welke onderwerpen het meest geschikt zijn
+        voor een buurtonderzoek
     - fase: D
-      kop: Samen plannen
-      tekst: Experts en onderzoekers helpen ons een aanpak te vormen die past bij de
-        buurt en het onderwerp.
+      kop: Plannen
+      tekst: Buurtbewoners, onderzoekers en de gemeente maken samen een aanpak die
+        past bij de buurt en het onderwerp
     - fase: E
-      kop: Onderzoek starten
+      kop: Onderzoeken
       tekst: Het buurtonderzoek gaat van start. Bewoners meten zelf, begeleid door
-        studenten en onderzoekers.
+        BuurtKennis.
 themas:
   kop: Wat zou jij willen
   kop_onder: onderzoeken?
-  tekst: Bewoners bepalen zelf wat ze met Buurtkennis willen onderzoeken.
-    Deze onderwerpen zijn tot nu toe genoemd in Leidse wijken.
+  tekst: Bewoners bepalen zelf wat ze met Buurtkennis willen onderzoeken. Deze
+    onderwerpen zijn tot nu toe genoemd in Leidse wijken.
   uitgelicht:
     - luchtkwaliteit
     - biodiversiteit
@@ -49,8 +46,8 @@ kaart:
 doe_mee:
   kop: Hoe maken we van jóuw buurt
   kop_onder: een gezonde omgeving?
-  tekst: Onderzoek het! Er zijn veel manieren om mee te doen, van een
-    uurtje meedenken tot zelf onderzoek doen in je eigen straat.
+  tekst: Onderzoek het! Er zijn veel manieren om mee te doen, van een uurtje
+    meedenken tot zelf onderzoek doen in je eigen straat.
   rollen:
     - kop: Buurtbewoner
       tekst: Deel wat jij belangrijk vindt in je wijk. Kom naar een bijeenkomst, stel
@@ -63,8 +60,8 @@ doe_mee:
         aan het MBO, HBO of aan de universiteit, BuurtKennis kan een project
         hebben dat bij je past.
 partners:
-  tekst: Leiden BuurtKennis is een project van het Citizen Science Lab
-    van de Universiteit Leiden, samen met partners door de hele stad.
+  tekst: Leiden BuurtKennis is een project van het Citizen Science Lab van de
+    Universiteit Leiden, samen met partners door de hele stad.
   lijst:
     - wie: Gemeente Leiden
       wat: beleid en stedelijke innovatie
@@ -76,6 +73,5 @@ partners:
       wat: wijkgerichte samenwerking en uitvoering
     - wie: Energiek Leiden, Duurzaam Leiden, Netwerk Leiden Sneller Duurzaam
       wat: samenwerking met bewoners per thema
-  contact: Een kwestie of onderzoek aanmelden kan via de online
-    kwestiekaart. Voor andere vragen mail je naar Jordy Janssen via
-    csl@leidenuniv.nl.
+  contact: Een kwestie of onderzoek aanmelden kan via de online kwestiekaart. Voor
+    andere vragen mail je naar Jordy Janssen via csl@leidenuniv.nl.
