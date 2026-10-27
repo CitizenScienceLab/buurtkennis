@@ -4,7 +4,6 @@ stappen:
   - b1
   - b2
   - b3
-  - d1
   - e1
 thema: _themas/luchtkwaliteit.md
 buurten:
