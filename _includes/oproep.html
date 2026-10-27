@@ -1,10 +1,10 @@
-{%- assign H = site.data.home -%}
+{%- assign A = site.data.algemeen -%}
 <section class="blok rood vol oproep" aria-label="Doe mee">
   <div class="kop-rij">
     <div>
-      <h2 class="tweeregel">{{ H.cta_kop }}<span>{{ H.cta_kop_onder }}</span></h2>
-      <p class="lead">{{ H.cta_tekst }}</p>
+      <h2 class="tweeregel">{{ A.oproep.kop }}<span>{{ A.oproep.kop_onder }}</span></h2>
+      <p class="lead">{{ A.oproep.tekst }}</p>
     </div>
-    <a class="knop groot uit" href="{{ H.kwestiekaart }}" target="_blank" rel="noopener">{{ H.kwestie_knop }}</a>
+    <a class="knop groot uit" href="{{ A.kwestiekaart }}" target="_blank" rel="noopener">{{ A.kwestie_knop }}</a>
   </div>
 </section>
