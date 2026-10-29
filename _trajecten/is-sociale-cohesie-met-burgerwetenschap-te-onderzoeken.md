@@ -5,7 +5,6 @@ stappen:
   - b2
   - b3
   - c1
-  - d1
 fase: C
 thema: sociaal
 buurten:
