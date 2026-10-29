@@ -17,11 +17,11 @@ hoe:
     - fase: C
       kop: Kiezen
       tekst: Samen met bewoners kijken we welke onderwerpen het meest geschikt zijn
-        voor een buurtonderzoek
+        voor een buurtonderzoek.
     - fase: D
       kop: Plannen
       tekst: Buurtbewoners, onderzoekers en de gemeente maken samen een aanpak die
-        past bij de buurt en het onderwerp
+        past bij de buurt en het onderwerp.
     - fase: E
       kop: Onderzoeken
       tekst: Het buurtonderzoek gaat van start. Bewoners meten zelf, begeleid door
