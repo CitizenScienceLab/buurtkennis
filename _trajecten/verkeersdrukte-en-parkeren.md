@@ -4,7 +4,7 @@ stappen:
   - b1
   - b2
   - b3
-  - d1
+  - c1
 fase: C
 thema: veiligheid
 buurten:
