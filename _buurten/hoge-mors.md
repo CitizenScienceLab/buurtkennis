@@ -3,9 +3,11 @@ naam: Hoge Mors
 plek: BU05460602
 fase: B
 sinds: 2026-07
-doel: Wat speelt er in Huis van de Buurt Morschwijck? Een beeld van de wijk en
-  aanknopingspunten voor het verzamelen van kwesties. Hoe bereiken we de
-  bewoners hier het beste?
+doel: "Wat speelt er in de Hoge Mors? We zijn aanwezig in het Huis van de Buurt
+  Morschwijck en bouwen langzaam een beeld van de wijk. Hoe bereiken we de
+  bewoners hier bijvoorbeeld het beste? Wat werkt niet? Dat geeft
+  aanknopingspunten voor het verzamelen van onderwerpen die we kunnen
+  onderzoeken in de buurt. "
 activiteiten:
   - wat: Aanwezigheid op het Leefstijlfeest
     wanneer: juli 2026
