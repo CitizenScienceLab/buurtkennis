@@ -13,7 +13,7 @@ reden: Verkeer en parkeren is een onderwerp dat veel wordt besproken. Vaak zijn
   bestaande methode voor burgerwetenschap. Wij zijn aan het onderzoeken of de
   ervaring van verkeersdrukte een interessant onderzoek is voor de
   Stadscriminoloog, maar tot die tijd hebben wij deze kwestie geparkeerd.
-naar: De Gemeente
+naar: Gemeente Leiden
 thema: veiligheid
 buurten:
   - _buurten/groenoord.md
