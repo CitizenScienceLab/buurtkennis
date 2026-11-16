@@ -26,7 +26,7 @@ doel: >-
   onderzoeken waar hittestress het meeste speelt en wat maatregelen zijn die
   zouden kunnen helpen.
 activiteiten:
-  - wat: Co-creatieworkshop over hittestress
+  - wat: Co-creatieworkshop over hittestress I
     wanneer: 27 augustus 2026
     waar: Leiden
     wie: wijkpartners, kennisinstellingen en gemeente
